@@ -54,6 +54,7 @@
         ]
       }
     },
+    "output": "static",
     "plugins": [
       "expo-router",
       "expo-font"

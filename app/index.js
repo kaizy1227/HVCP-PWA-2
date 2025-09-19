@@ -14,6 +14,31 @@ import PaymentScreen from "./screens/PaymentScreen";
 
 const Stack = createNativeStackNavigator();
 export default function Index() {
+// chạy khi web
+  if (typeof window !== "undefined") {
+    if (!document.querySelector('link[rel="manifest"]')) {
+      const link = document.createElement("link");
+      link.rel = "manifest";
+      link.href = "/manifest.json";
+      document.head.appendChild(link);
+    }
+
+    if (!document.querySelector('meta[name="theme-color"]')) {
+      const theme = document.createElement("meta");
+      theme.name = "theme-color";
+      theme.content = "#0ea5e9";
+      document.head.appendChild(theme);
+    }
+
+    if (typeof window !== "undefined" && "serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker
+          .register("/sw.js")
+          .then(reg => console.log("SW registered:", reg))
+          .catch(err => console.error("SW registration failed:", err));
+      });
+    }
+  }
   return (
     <>
       <StatusBar style="dark" />
