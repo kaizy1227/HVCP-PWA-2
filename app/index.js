@@ -78,31 +78,61 @@ export default function Index() {
     addMetaTag("og:image", "/icons/icon-512.png", true);
     addMetaTag("og:type", "website", true);
 
-    // Service Worker Registration với debug chi tiết
+    // Service Worker Registration với iOS compatibility
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {
-        console.log("Attempting to register service worker...");
+        console.log("🍎 Attempting to register service worker for iOS...");
+
+        // Detect iOS Safari
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+        const isIOSSafari = isIOS && /Safari/.test(navigator.userAgent) && !/Chrome|CriOS|FxiOS/.test(navigator.userAgent);
+
+        console.log("Device info:", { isIOS, isIOSSafari });
+
         navigator.serviceWorker
-          .register("/service-worker.js")
+          .register("/service-worker.js", {
+            scope: "/", // Explicit scope for iOS
+            updateViaCache: 'none' // iOS Safari compatibility
+          })
           .then(reg => {
             console.log("✅ SW registered successfully:", reg);
             console.log("SW scope:", reg.scope);
             console.log("SW state:", reg.installing ? 'installing' : reg.waiting ? 'waiting' : reg.active ? 'active' : 'unknown');
 
+            // iOS specific handling
+            if (isIOSSafari) {
+              console.log("🍎 iOS Safari detected - using conservative approach");
+
+              // Don't force update on iOS - let it handle naturally
+              if (reg.waiting) {
+                console.log("SW update waiting - letting iOS handle it");
+              }
+            }
+
             // Check if SW is controlling the page
             if (navigator.serviceWorker.controller) {
               console.log("✅ SW is controlling this page");
             } else {
-              console.log("⚠️ SW is NOT controlling this page yet");
+              console.log("⚠️ SW is NOT controlling this page yet - iOS may need page reload");
             }
 
             reg.addEventListener('updatefound', () => {
               console.log('🔄 New service worker version available');
+              const newWorker = reg.installing;
+              if (newWorker) {
+                newWorker.addEventListener('statechange', () => {
+                  console.log('SW state changed:', newWorker.state);
+                });
+              }
             });
           })
           .catch(err => {
             console.error("❌ SW registration failed:", err);
             console.error("Error details:", err.message);
+
+            if (isIOSSafari) {
+              console.error("🍎 iOS Safari SW registration failed - this is critical for PWA");
+            }
           });
 
         // Listen for SW messages
@@ -110,9 +140,9 @@ export default function Index() {
           console.log('📨 Message from SW:', event.data);
         });
 
-        // Check SW state changes
+        // Check SW state changes - important for iOS
         navigator.serviceWorker.addEventListener('controllerchange', () => {
-          console.log('🔄 SW controller changed');
+          console.log('🔄 SW controller changed - iOS may reload page');
         });
       });
     } else {

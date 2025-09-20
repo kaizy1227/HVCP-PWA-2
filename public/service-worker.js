@@ -1,151 +1,203 @@
-const CACHE_NAME = "hvcp-fixed-v3";
-const RUNTIME_CACHE = "runtime-cache-v3";
+// iOS Safari compatible service worker
+const CACHE_NAME = "hvcp-ios-v1";
 
-// Chỉ cache root page
-const PRECACHE_ASSETS = [
-  "/"
-];
-
-// Install: cache tối thiểu
+// Very simple install
 self.addEventListener("install", (event) => {
-  console.log("🔧 Service Worker installing...");
+  console.log("SW install - iOS");
   event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then((cache) => {
-        console.log("📦 Caching root page");
-        return cache.add("/");
-      })
-      .catch((error) => {
-        console.error("❌ Install failed:", error);
-      })
-  );
-  self.skipWaiting();
-});
-
-// Activate: cleanup
-self.addEventListener("activate", (event) => {
-  console.log("🚀 Service Worker activating...");
-  event.waitUntil(
-    caches.keys().then((cacheNames) => {
-      return Promise.all(
-        cacheNames
-          .filter((cacheName) =>
-            cacheName !== CACHE_NAME && cacheName !== RUNTIME_CACHE
-          )
-          .map((cacheName) => {
-            console.log("🗑️ Deleting old cache:", cacheName);
-            return caches.delete(cacheName);
-          })
-      );
+    Promise.resolve().then(() => {
+      console.log("Install complete");
     })
   );
-  self.clients.claim();
+  // Don't use skipWaiting() - iOS Safari có thể không thích
 });
 
-// Fetch: CHỈ handle navigation requests, bỏ qua tất cả assets
+// Simple activate
+self.addEventListener("activate", (event) => {
+  console.log("SW activate - iOS");
+  event.waitUntil(
+    Promise.resolve().then(() => {
+      console.log("Activate complete");
+    })
+  );
+  // Don't use clients.claim() - để iOS Safari tự quản lý
+});
+
+// Fetch handler - CỰC KỲ conservative cho iOS
 self.addEventListener("fetch", (event) => {
-  const { request } = event;
+  const request = event.request;
   const url = new URL(request.url);
 
-  // CHỈ handle navigation requests (page loads)
-  // BỎ QUA tất cả assets, images, API calls
-  if (request.mode !== "navigate") {
-    return; // Để browser tự handle
-  }
+  // CHỈ handle navigation requests tới chính domain này
+  // VÀ CHỈ handle root path
+  if (
+    request.method === 'GET' &&
+    request.mode === 'navigate' &&
+    url.origin === self.location.origin &&
+    (url.pathname === '/' || url.pathname === '')
+  ) {
 
-  console.log("🧭 Navigation request:", request.url);
+    console.log("iOS SW: Handling root navigation");
 
-  event.respondWith(
-    fetch(request)
-      .then((response) => {
-        console.log("✅ Network OK:", response.status);
+    event.respondWith(
+      // Network first - iOS Safari thích thế này hơn
+      fetch(request, {
+        cache: 'no-cache', // Force fresh request
+        credentials: 'same-origin'
+      })
+      .then(response => {
+        console.log("iOS SW: Network success");
 
-        // Cache page nếu thành công
-        if (response.ok) {
-          const responseClone = response.clone();
-          caches.open(RUNTIME_CACHE)
-            .then((cache) => cache.put(request, responseClone))
-            .catch(() => {}); // Ignore cache errors
+        // Kiểm tra response hợp lệ
+        if (!response || !response.ok) {
+          throw new Error(`Network response not ok: ${response.status}`);
         }
 
         return response;
       })
-      .catch((networkError) => {
-        console.log("🚫 Network failed, trying cache...");
+      .catch(error => {
+        console.log("iOS SW: Network failed, providing offline fallback");
+        console.error("Network error:", error);
 
-        // Thử tìm trong cache
-        return caches.match(request)
-          .then((cachedResponse) => {
-            if (cachedResponse) {
-              console.log("✅ Found in cache");
-              return cachedResponse;
+        // Fallback đơn giản cho iOS
+        return new Response(`
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <title>Offline - Học Viện Cà Phê</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+        .emoji {
+            font-size: 60px;
+            margin-bottom: 20px;
+        }
+        h1 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        .subtitle {
+            color: #8B4513;
+            font-size: 16px;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+        p {
+            color: #666;
+            line-height: 1.5;
+            margin-bottom: 30px;
+        }
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            width: 100%;
+        }
+        .btn:active {
+            transform: scale(0.98);
+        }
+        .status {
+            background: #f8f9fa;
+            color: #6c757d;
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 12px;
+            margin-top: 20px;
+        }
+        /* iOS Safari safe area */
+        @supports(padding: max(0px)) {
+            body {
+                padding-top: max(20px, env(safe-area-inset-top));
+                padding-bottom: max(20px, env(safe-area-inset-bottom));
             }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="emoji">☕</div>
+        <h1>Học Viện Cà Phê</h1>
+        <div class="subtitle">Coffee Academy</div>
+        <p>Ứng dụng hiện đang ở chế độ offline.<br>Vui lòng kiểm tra kết nối mạng và thử lại.</p>
+        <button class="btn" onclick="handleReload()">Kết nối lại</button>
+        <div class="status">
+            Chế độ PWA - Offline Ready ✨
+        </div>
+    </div>
 
-            // Fallback to root page
-            return caches.match("/")
-              .then((rootResponse) => {
-                if (rootResponse) {
-                  console.log("✅ Fallback to root");
-                  return rootResponse;
-                }
+    <script>
+        function handleReload() {
+            // Smooth reload for iOS
+            const btn = document.querySelector('.btn');
+            btn.textContent = 'Đang kết nối...';
+            btn.disabled = true;
 
-                // Final fallback
-                console.log("🏠 Creating offline page");
-                return new Response(`
-                  <!DOCTYPE html>
-                  <html>
-                  <head>
-                    <meta charset="utf-8">
-                    <meta name="viewport" content="width=device-width, initial-scale=1">
-                    <title>Offline - Học Viện Cà Phê</title>
-                    <style>
-                      body {
-                        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-                        text-align: center;
-                        padding: 50px;
-                        color: #333;
-                        background: #f6f6f6;
-                      }
-                      .container {
-                        max-width: 400px;
-                        margin: 0 auto;
-                        background: white;
-                        padding: 30px;
-                        border-radius: 10px;
-                        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-                      }
-                      button {
-                        background: #0ea5e9;
-                        color: white;
-                        border: none;
-                        padding: 15px 30px;
-                        border-radius: 8px;
-                        font-size: 16px;
-                        cursor: pointer;
-                        margin-top: 20px;
-                      }
-                      button:hover {
-                        background: #0284c7;
-                      }
-                    </style>
-                  </head>
-                  <body>
-                    <div class="container">
-                      <h1>☕ Học Viện Cà Phê</h1>
-                      <p>Bạn đang trong chế độ offline</p>
-                      <p>Vui lòng kiểm tra kết nối mạng</p>
-                      <button onclick="window.location.reload()">Thử lại</button>
-                    </div>
-                  </body>
-                  </html>
-                `, {
-                  headers: {
-                    "Content-Type": "text/html; charset=utf-8",
-                    "Cache-Control": "no-cache"
-                  }
-                });
-              });
-          });
+            setTimeout(() => {
+                window.location.reload();
+            }, 500);
+        }
+
+        // Check network status
+        function updateNetworkStatus() {
+            if (navigator.onLine) {
+                console.log('Network: Online');
+            } else {
+                console.log('Network: Offline');
+            }
+        }
+
+        window.addEventListener('online', updateNetworkStatus);
+        window.addEventListener('offline', updateNetworkStatus);
+        updateNetworkStatus();
+    </script>
+</body>
+</html>`, {
+          status: 200,
+          statusText: 'OK',
+          headers: {
+            'Content-Type': 'text/html; charset=utf-8',
+            'Cache-Control': 'no-cache, no-store, must-revalidate',
+            'Pragma': 'no-cache',
+            'Expires': '0'
+          }
+        });
       })
-  );
+    );
+  }
+
+  // Tất cả requests khác: ĐỂ BROWSER TỰ XỬ LÝ
+  // Không return gì cả = browser sẽ handle bình thường
 });
