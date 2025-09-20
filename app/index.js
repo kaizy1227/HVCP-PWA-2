@@ -78,8 +78,9 @@ export default function Index() {
     addMetaTag("og:image", "/icons/icon-512.png", true);
     addMetaTag("og:type", "website", true);
 
+    // TẠM THỜI BỎ Service Worker để test
     // Service Worker Registration với iOS compatibility
-    if ("serviceWorker" in navigator) {
+    if (false && "serviceWorker" in navigator) { // Tạm tắt SW
       window.addEventListener("load", () => {
         console.log("🍎 Attempting to register service worker for iOS...");
 
