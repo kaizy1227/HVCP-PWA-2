@@ -1,65 +1,39 @@
 const CACHE_NAME = "hvcp-pwa-v1";
+const urlsToCache = ["/", "/index.html", "/manifest.json"];
 
-// Các file cần cache sẵn khi cài đặt
-const urlsToCache = [
-  "/",
-  "/index.html",
-  "/manifest.json",
-  "/offline.html",
-  "/static/js/bundle.js",
-  "/static/js/main.js",
-  "/static/css/main.css",
-  "/icons/icon-192.png",
-  "/icons/icon-512.png"
-];
-
-// Cài đặt service worker và cache file tĩnh
-self.addEventListener("install", (event) => {
+// Cài đặt: cache các file cần thiết
+self.addEventListener("install", event => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
+    caches.open(CACHE_NAME).then(cache => {
       return cache.addAll(urlsToCache);
     })
   );
   self.skipWaiting();
 });
 
-// Kích hoạt và xóa cache cũ
-self.addEventListener("activate", (event) => {
+// Kích hoạt
+self.addEventListener("activate", event => {
   event.waitUntil(
-    caches.keys().then((cacheNames) => {
-      return Promise.all(
-        cacheNames
-          .filter((name) => name !== CACHE_NAME)
-          .map((name) => caches.delete(name))
-      );
-    })
+    caches.keys().then(keys =>
+      Promise.all(keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k)))
+    )
   );
   self.clients.claim();
 });
 
-// Lấy dữ liệu từ cache khi offline + cache động
-self.addEventListener("fetch", (event) => {
-  if (event.request.method !== "GET") return;
-
+// Bắt request
+self.addEventListener("fetch", event => {
   event.respondWith(
-    caches.match(event.request).then((cachedResponse) => {
-      if (cachedResponse) {
-        return cachedResponse;
+    caches.match(event.request).then(response => {
+      if (response) {
+        return response; // ưu tiên cache
       }
-
-      return fetch(event.request)
-        .then((networkResponse) => {
-          return caches.open(CACHE_NAME).then((cache) => {
-            cache.put(event.request, networkResponse.clone());
-            return networkResponse;
-          });
-        })
-        .catch(() => {
-          // Nếu offline và request là HTML → trả về offline.html
-          if (event.request.headers.get("accept").includes("text/html")) {
-            return caches.match("/offline.html");
-          }
-        });
+      return fetch(event.request).catch(() => {
+        // fallback khi offline
+        if (event.request.mode === "navigate") {
+          return caches.match("/index.html");
+        }
+      });
     })
   );
 });
