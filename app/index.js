@@ -78,20 +78,45 @@ export default function Index() {
     addMetaTag("og:image", "/icons/icon-512.png", true);
     addMetaTag("og:type", "website", true);
 
-    // Service Worker Registration
+    // Service Worker Registration với debug chi tiết
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {
+        console.log("Attempting to register service worker...");
         navigator.serviceWorker
           .register("/service-worker.js")
           .then(reg => {
-            console.log("SW registered:", reg);
-            // Optional: Check for updates
+            console.log("✅ SW registered successfully:", reg);
+            console.log("SW scope:", reg.scope);
+            console.log("SW state:", reg.installing ? 'installing' : reg.waiting ? 'waiting' : reg.active ? 'active' : 'unknown');
+
+            // Check if SW is controlling the page
+            if (navigator.serviceWorker.controller) {
+              console.log("✅ SW is controlling this page");
+            } else {
+              console.log("⚠️ SW is NOT controlling this page yet");
+            }
+
             reg.addEventListener('updatefound', () => {
-              console.log('New service worker version available');
+              console.log('🔄 New service worker version available');
             });
           })
-          .catch(err => console.error("SW registration failed:", err));
+          .catch(err => {
+            console.error("❌ SW registration failed:", err);
+            console.error("Error details:", err.message);
+          });
+
+        // Listen for SW messages
+        navigator.serviceWorker.addEventListener('message', event => {
+          console.log('📨 Message from SW:', event.data);
+        });
+
+        // Check SW state changes
+        navigator.serviceWorker.addEventListener('controllerchange', () => {
+          console.log('🔄 SW controller changed');
+        });
       });
+    } else {
+      console.log("❌ Service Worker not supported");
     }
 
     // Listen for app install prompt (optional)

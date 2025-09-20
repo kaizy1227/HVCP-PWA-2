@@ -1,27 +1,49 @@
-const CACHE_NAME = "hvcp-test-v1";
-const RUNTIME_CACHE = "runtime-cache-v1";
+const CACHE_NAME = "hvcp-test-v2"; // Tăng version để force update
+const RUNTIME_CACHE = "runtime-cache-v2";
 
-// Assets cần cache ngay lập tức
+// Assets cần cache ngay lập tức - CHỈ cache những file chắc chắn tồn tại
 const PRECACHE_ASSETS = [
   "/",
-  "/index.html",
-  "/manifest.json",
-  "/icons/icon-192.png",
-  "/icons/icon-512.png",
-  "/icons/apple-touch-icon.png"
+  "/manifest.json"
+  // Tạm thời bỏ icons để tránh lỗi 404
 ];
 
 // Install: cache assets quan trọng
 self.addEventListener("install", (event) => {
-  console.log("Service Worker installing...");
+  console.log("🔧 Service Worker installing...");
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then((cache) => {
-        console.log("Precaching assets");
-        return cache.addAll(PRECACHE_ASSETS);
+        console.log("📦 Attempting to precache assets:", PRECACHE_ASSETS);
+        return Promise.allSettled(
+          PRECACHE_ASSETS.map(url => {
+            return fetch(url)
+              .then(response => {
+                if (response.ok) {
+                  console.log(`✅ Cached: ${url}`);
+                  return cache.put(url, response);
+                } else {
+                  console.warn(`⚠️ Failed to fetch ${url}: ${response.status}`);
+                  throw new Error(`HTTP ${response.status}`);
+                }
+              })
+              .catch(error => {
+                console.error(`❌ Failed to cache ${url}:`, error);
+                throw error;
+              });
+          })
+        ).then(results => {
+          const failed = results.filter(r => r.status === 'rejected');
+          if (failed.length > 0) {
+            console.warn(`⚠️ ${failed.length} assets failed to cache`);
+          } else {
+            console.log("✅ All assets cached successfully");
+          }
+        });
       })
       .catch((error) => {
-        console.error("Precaching failed:", error);
+        console.error("❌ Precaching failed:", error);
+        throw error;
       })
   );
   self.skipWaiting();
@@ -65,52 +87,78 @@ self.addEventListener("fetch", (event) => {
 
   // Handle navigation requests (page loads)
   if (request.mode === "navigate") {
+    console.log("🧭 Navigation request:", request.url);
     event.respondWith(
       fetch(request)
         .then((response) => {
+          console.log("✅ Network response for navigation:", response.status);
           // Clone response to cache
           const responseClone = response.clone();
           caches.open(RUNTIME_CACHE)
-            .then((cache) => cache.put(request, responseClone));
+            .then((cache) => cache.put(request, responseClone))
+            .catch(err => console.warn("Cache put failed:", err));
           return response;
         })
-        .catch(() => {
+        .catch((networkError) => {
+          console.log("🚫 Network failed for navigation, trying cache...", networkError.message);
           // Fallback hierarchy for offline
           return caches.match(request)
             .then((cachedResponse) => {
               if (cachedResponse) {
+                console.log("✅ Found cached response for:", request.url);
                 return cachedResponse;
               }
-              // Final fallback to index.html
-              return caches.match("/index.html")
-                .then((indexResponse) => {
-                  if (indexResponse) {
-                    return indexResponse;
+
+              console.log("🔍 Trying to match root path...");
+              // Try root path
+              return caches.match("/")
+                .then((rootResponse) => {
+                  if (rootResponse) {
+                    console.log("✅ Returning cached root");
+                    return rootResponse;
                   }
-                  // If even index.html is not cached, return a basic offline page
+
+                  console.log("🏠 Creating fallback offline page...");
+                  // Final fallback to inline offline page
                   return new Response(
                     `<!DOCTYPE html>
                     <html>
                     <head>
                       <meta charset="utf-8">
                       <meta name="viewport" content="width=device-width, initial-scale=1">
-                      <title>Offline - ExpoPWA</title>
+                      <title>Offline - Học Viện Cà Phê</title>
                       <style>
                         body {
                           font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
                           text-align: center;
                           padding: 50px;
                           color: #333;
+                          background: #f6f6f6;
                         }
                         .offline-message {
                           max-width: 400px;
                           margin: 0 auto;
+                          background: white;
+                          padding: 30px;
+                          border-radius: 10px;
+                          box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+                        }
+                        button {
+                          background: #0ea5e9;
+                          color: white;
+                          border: none;
+                          padding: 10px 20px;
+                          border-radius: 5px;
+                          font-size: 16px;
+                          cursor: pointer;
+                          margin-top: 20px;
                         }
                       </style>
                     </head>
                     <body>
                       <div class="offline-message">
-                        <h1>Bạn đang offline</h1>
+                        <h1>☕ Học Viện Cà Phê</h1>
+                        <p>Hiện tại bạn đang offline</p>
                         <p>Vui lòng kiểm tra kết nối mạng và thử lại.</p>
                         <button onclick="location.reload()">Thử lại</button>
                       </div>
@@ -118,7 +166,7 @@ self.addEventListener("fetch", (event) => {
                     </html>`,
                     {
                       headers: {
-                        "Content-Type": "text/html",
+                        "Content-Type": "text/html; charset=utf-8",
                       },
                     }
                   );
