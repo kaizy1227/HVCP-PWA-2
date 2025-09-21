@@ -1,52 +1,45 @@
+// scripts/inject-manifest.js
 const fs = require("fs");
 const path = require("path");
 
-const distDir = path.join(__dirname, "../dist");
-const swPath = path.join(__dirname, "../public/service-worker.js");
+const DIST_DIR = path.join(__dirname, "..", "dist");
+const INDEX_FILE = path.join(DIST_DIR, "index.html");
 
-// Các file cố định
-const baseAssets = [
-  "/",
-  "/index.html",
-  "/manifest.json",
-  "/icons/icon-192.png",
-  "/icons/icon-512.png",
-  "/icons/apple-touch-icon.png"
-];
-
-// Quét dist để lấy thêm JS/CSS
-function getDistAssets(dir) {
-  let results = [];
-  const files = fs.readdirSync(dir);
-
-  files.forEach(file => {
-    const fullPath = path.join(dir, file);
-    const stat = fs.statSync(fullPath);
-
-    if (stat.isDirectory()) {
-      results = results.concat(getDistAssets(fullPath));
-    } else {
-      const relPath = "/" + path.relative(distDir, fullPath).replace(/\\/g, "/");
-      // chỉ lấy js, css
-      if (relPath.endsWith(".js") || relPath.endsWith(".css")) {
-        results.push(relPath);
-      }
-    }
-  });
-
-  return results;
+if (!fs.existsSync(INDEX_FILE)) {
+  console.error("❌ Không tìm thấy dist/index.html. Hãy chạy `npm run build:web` trước.");
+  process.exit(1);
 }
 
-const distAssets = getDistAssets(distDir);
-const precacheList = JSON.stringify([...baseAssets, ...distAssets], null, 2);
+let html = fs.readFileSync(INDEX_FILE, "utf-8");
 
-// Đọc service-worker.js template
-let swContent = fs.readFileSync(swPath, "utf8");
+// Chèn manifest nếu chưa có
+if (!html.includes("manifest.json")) {
+  html = html.replace(
+    "</head>",
+    `  <link rel="manifest" href="/manifest.json" />
+  <meta name="theme-color" content="#0ea5e9" />
+  </head>`
+  );
+  console.log("✅ Manifest + theme-color đã được thêm.");
+}
 
-// Thay placeholder __PRECACHE_ASSETS__
-swContent = swContent.replace("__PRECACHE_ASSETS__", precacheList);
+// Chèn service worker register script nếu chưa có
+if (!html.includes("navigator.serviceWorker.register")) {
+  html = html.replace(
+    "</body>",
+    `  <script>
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker.register("/service-worker.js")
+            .then(reg => console.log("✅ Service Worker registered:", reg))
+            .catch(err => console.error("❌ SW registration failed:", err));
+        });
+      }
+    </script>
+  </body>`
+  );
+  console.log("✅ Script register service worker đã được thêm.");
+}
 
-// Ghi đè lại file
-fs.writeFileSync(swPath, swContent);
-
-console.log("✅ Injected precache assets vào service-worker.js");
+fs.writeFileSync(INDEX_FILE, html, "utf-8");
+console.log("🎉 inject-manifest.js chạy thành công!");
