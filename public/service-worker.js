@@ -1,6 +1,6 @@
-const CACHE_NAME = "hvcp-pwa-v2";
+const CACHE_NAME = "hvcp-pwa-v3";
 
-// Những file quan trọng cần precache
+// Các file cần cache trước
 const PRECACHE_URLS = [
   "/",
   "/index.html",
@@ -10,7 +10,7 @@ const PRECACHE_URLS = [
   "/icons/apple-touch-icon.png"
 ];
 
-// Install: cache sẵn các file cơ bản
+// Install
 self.addEventListener("install", (event) => {
   console.log("[SW] Installing...");
   event.waitUntil(
@@ -19,51 +19,49 @@ self.addEventListener("install", (event) => {
   self.skipWaiting();
 });
 
-// Activate: dọn dẹp cache cũ
+// Activate
 self.addEventListener("activate", (event) => {
   console.log("[SW] Activating...");
   event.waitUntil(
-    caches.keys().then((cacheNames) =>
-      Promise.all(
-        cacheNames
-          .filter((name) => name !== CACHE_NAME)
-          .map((name) => caches.delete(name))
-      )
+    caches.keys().then((names) =>
+      Promise.all(names.filter((n) => n !== CACHE_NAME).map((n) => caches.delete(n)))
     )
   );
   self.clients.claim();
 });
 
-// Fetch: SPA offline routing + cache assets
+// Fetch
 self.addEventListener("fetch", (event) => {
   if (event.request.method !== "GET") return;
 
   event.respondWith(
-    caches.match(event.request).then((cachedResponse) => {
-      if (cachedResponse) {
-        return cachedResponse; // Nếu có cache thì trả luôn
-      }
-
-      return fetch(event.request)
-        .then((networkResponse) => {
-          // Nếu là file hợp lệ thì lưu vào cache
-          if (
-            networkResponse &&
-            networkResponse.status === 200 &&
-            networkResponse.type === "basic"
-          ) {
-            const responseToCache = networkResponse.clone();
-            caches.open(CACHE_NAME).then((cache) => {
-              cache.put(event.request, responseToCache);
-            });
+    fetch(event.request)
+      .then((networkResponse) => {
+        // Nếu online → lưu vào cache
+        if (
+          networkResponse &&
+          networkResponse.status === 200 &&
+          networkResponse.type === "basic"
+        ) {
+          const responseToCache = networkResponse.clone();
+          caches.open(CACHE_NAME).then((cache) => {
+            cache.put(event.request, responseToCache);
+          });
+        }
+        return networkResponse;
+      })
+      .catch(() => {
+        // Nếu offline → thử cache
+        return caches.match(event.request).then((cachedResponse) => {
+          if (cachedResponse) {
+            return cachedResponse;
           }
-          return networkResponse;
-        })
-        .catch(() => {
-          // Nếu offline và request là trang HTML -> fallback về index.html
+
+          // 👇 Fallback SPA routing
           if (event.request.headers.get("accept")?.includes("text/html")) {
             return caches.match("/index.html");
           }
         });
-    })
+      })
   );
+});
