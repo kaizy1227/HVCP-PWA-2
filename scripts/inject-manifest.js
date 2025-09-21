@@ -1,57 +1,52 @@
 const fs = require("fs");
 const path = require("path");
 
-const distDir = path.join(__dirname, "..", "dist");
-const indexPath = path.join(distDir, "index.html");
-const swSrc = path.join(__dirname, "..", "public", "service-worker.js");
-const swDest = path.join(distDir, "service-worker.js");
-const manifestSrc = path.join(__dirname, "..", "public", "manifest.json");
-const manifestDest = path.join(distDir, "manifest.json");
+const distDir = path.join(__dirname, "../dist");
+const swPath = path.join(__dirname, "../public/service-worker.js");
 
-// 1. Copy service-worker.js
-if (fs.existsSync(swSrc)) {
-  fs.copyFileSync(swSrc, swDest);
-  console.log("✅ Copied service-worker.js to dist/");
-}
+// Các file cố định
+const baseAssets = [
+  "/",
+  "/index.html",
+  "/manifest.json",
+  "/icons/icon-192.png",
+  "/icons/icon-512.png",
+  "/icons/apple-touch-icon.png"
+];
 
-// 2. Copy manifest.json
-if (fs.existsSync(manifestSrc)) {
-  fs.copyFileSync(manifestSrc, manifestDest);
-  console.log("✅ Copied manifest.json to dist/");
-}
+// Quét dist để lấy thêm JS/CSS
+function getDistAssets(dir) {
+  let results = [];
+  const files = fs.readdirSync(dir);
 
-// 3. Inject manifest + register SW
-if (fs.existsSync(indexPath)) {
-  let html = fs.readFileSync(indexPath, "utf-8");
+  files.forEach(file => {
+    const fullPath = path.join(dir, file);
+    const stat = fs.statSync(fullPath);
 
-  // Thêm manifest link nếu chưa có
-  if (!html.includes("manifest.json")) {
-    html = html.replace(
-      "</head>",
-      `  <link rel="manifest" href="/manifest.json" />
-  <meta name="theme-color" content="#0ea5e9" />
-</head>`
-    );
-  }
-
-  // Thêm script register service worker
-  if (!html.includes("navigator.serviceWorker.register")) {
-    html = html.replace(
-      "</body>",
-      `  <script>
-    if ("serviceWorker" in navigator) {
-      window.addEventListener("load", () => {
-        navigator.serviceWorker
-          .register("/service-worker.js")
-          .then(reg => console.log("✅ SW registered:", reg))
-          .catch(err => console.error("❌ SW failed:", err));
-      });
+    if (stat.isDirectory()) {
+      results = results.concat(getDistAssets(fullPath));
+    } else {
+      const relPath = "/" + path.relative(distDir, fullPath).replace(/\\/g, "/");
+      // chỉ lấy js, css
+      if (relPath.endsWith(".js") || relPath.endsWith(".css")) {
+        results.push(relPath);
+      }
     }
-  </script>
-</body>`
-    );
-  }
+  });
 
-  fs.writeFileSync(indexPath, html, "utf-8");
-  console.log("✅ Injected manifest & SW register into dist/index.html");
+  return results;
 }
+
+const distAssets = getDistAssets(distDir);
+const precacheList = JSON.stringify([...baseAssets, ...distAssets], null, 2);
+
+// Đọc service-worker.js template
+let swContent = fs.readFileSync(swPath, "utf8");
+
+// Thay placeholder __PRECACHE_ASSETS__
+swContent = swContent.replace("__PRECACHE_ASSETS__", precacheList);
+
+// Ghi đè lại file
+fs.writeFileSync(swPath, swContent);
+
+console.log("✅ Injected precache assets vào service-worker.js");
