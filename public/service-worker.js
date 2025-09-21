@@ -1,67 +1,79 @@
-const CACHE_NAME = "hvcp-pwa-v3";
-
-// Các file cần cache trước
+const CACHE_NAME = "hvcp-pwa-v1";
 const PRECACHE_URLS = [
   "/",
   "/index.html",
   "/manifest.json",
+  "/favicon.ico",
   "/icons/icon-192.png",
   "/icons/icon-512.png",
-  "/icons/apple-touch-icon.png"
 ];
 
-// Install
+// Cài đặt ban đầu
 self.addEventListener("install", (event) => {
-  console.log("[SW] Installing...");
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(PRECACHE_URLS))
+    caches.open(CACHE_NAME).then((cache) => {
+      return cache.addAll(PRECACHE_URLS);
+    })
   );
   self.skipWaiting();
 });
 
-// Activate
+// Kích hoạt
 self.addEventListener("activate", (event) => {
-  console.log("[SW] Activating...");
   event.waitUntil(
-    caches.keys().then((names) =>
-      Promise.all(names.filter((n) => n !== CACHE_NAME).map((n) => caches.delete(n)))
+    caches.keys().then((keys) =>
+      Promise.all(keys.filter((k) => k !== CACHE_NAME).map((k) => caches.delete(k)))
     )
   );
   self.clients.claim();
 });
 
-// Fetch
+// Fetch handler
 self.addEventListener("fetch", (event) => {
-  if (event.request.method !== "GET") return;
+  const req = event.request;
 
+  // Bỏ qua request không phải http/https
+  if (!req.url.startsWith("http")) return;
+
+  // SPA offline routing fallback
+  if (req.mode === "navigate") {
+    event.respondWith(
+      caches.match("/index.html").then((cached) => {
+        return cached || fetch(req).catch(() => cached);
+      })
+    );
+    return;
+  }
+
+  // Ảnh/icon: Stale While Revalidate
+  if (req.destination === "image" || req.url.includes("/icons/")) {
+    event.respondWith(
+      caches.open(CACHE_NAME).then((cache) =>
+        cache.match(req).then(
+          (resp) =>
+            resp ||
+            fetch(req).then((netResp) => {
+              cache.put(req, netResp.clone());
+              return netResp;
+            })
+        )
+      )
+    );
+    return;
+  }
+
+  // Mặc định: Cache First, fallback Network
   event.respondWith(
-    fetch(event.request)
-      .then((networkResponse) => {
-        // Nếu online → lưu vào cache
-        if (
-          networkResponse &&
-          networkResponse.status === 200 &&
-          networkResponse.type === "basic"
-        ) {
-          const responseToCache = networkResponse.clone();
-          caches.open(CACHE_NAME).then((cache) => {
-            cache.put(event.request, responseToCache);
+    caches.match(req).then((resp) => {
+      return (
+        resp ||
+        fetch(req).then((netResp) => {
+          return caches.open(CACHE_NAME).then((cache) => {
+            cache.put(req, netResp.clone());
+            return netResp;
           });
-        }
-        return networkResponse;
-      })
-      .catch(() => {
-        // Nếu offline → thử cache
-        return caches.match(event.request).then((cachedResponse) => {
-          if (cachedResponse) {
-            return cachedResponse;
-          }
-
-          // 👇 Fallback SPA routing
-          if (event.request.headers.get("accept")?.includes("text/html")) {
-            return caches.match("/index.html");
-          }
-        });
-      })
+        })
+      );
+    })
   );
 });
