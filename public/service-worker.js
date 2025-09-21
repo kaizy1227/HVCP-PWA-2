@@ -1,6 +1,6 @@
-const CACHE_NAME = "hvcp-pwa-v1";
+const CACHE_NAME = "hvcp-pwa-v2";
 
-// Những file cần cache ngay khi cài đặt (precache)
+// Những file quan trọng cần precache
 const PRECACHE_URLS = [
   "/",
   "/index.html",
@@ -10,43 +10,43 @@ const PRECACHE_URLS = [
   "/icons/apple-touch-icon.png"
 ];
 
-// Cài đặt Service Worker
+// Install: cache sẵn các file cơ bản
 self.addEventListener("install", (event) => {
-  console.log("[SW] Install event");
+  console.log("[SW] Installing...");
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(PRECACHE_URLS);
-    }).then(() => self.skipWaiting())
+    caches.open(CACHE_NAME).then((cache) => cache.addAll(PRECACHE_URLS))
   );
+  self.skipWaiting();
 });
 
-// Activate và dọn dẹp cache cũ
+// Activate: dọn dẹp cache cũ
 self.addEventListener("activate", (event) => {
-  console.log("[SW] Activate event");
+  console.log("[SW] Activating...");
   event.waitUntil(
-    caches.keys().then((cacheNames) => {
-      return Promise.all(
+    caches.keys().then((cacheNames) =>
+      Promise.all(
         cacheNames
           .filter((name) => name !== CACHE_NAME)
           .map((name) => caches.delete(name))
-      );
-    }).then(() => self.clients.claim())
+      )
+    )
   );
+  self.clients.claim();
 });
 
-// Fetch: lấy từ cache trước, nếu không có thì fetch từ network
+// Fetch: SPA offline routing + cache assets
 self.addEventListener("fetch", (event) => {
   if (event.request.method !== "GET") return;
 
   event.respondWith(
     caches.match(event.request).then((cachedResponse) => {
       if (cachedResponse) {
-        return cachedResponse;
+        return cachedResponse; // Nếu có cache thì trả luôn
       }
 
       return fetch(event.request)
         .then((networkResponse) => {
-          // Cache lại response mới nếu hợp lệ
+          // Nếu là file hợp lệ thì lưu vào cache
           if (
             networkResponse &&
             networkResponse.status === 200 &&
@@ -60,11 +60,10 @@ self.addEventListener("fetch", (event) => {
           return networkResponse;
         })
         .catch(() => {
-          // Nếu offline mà request HTML → fallback về index.html
+          // Nếu offline và request là trang HTML -> fallback về index.html
           if (event.request.headers.get("accept")?.includes("text/html")) {
             return caches.match("/index.html");
           }
         });
     })
   );
-});
