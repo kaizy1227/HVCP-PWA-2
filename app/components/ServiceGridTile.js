@@ -15,7 +15,10 @@ export const ServiceGridTile = ({ title, imageUrl, onPress }) => {
         onPress={onPress}
       >
         <View style={styles.container}>
-          <Image source={ imageUrl } style={styles.image} />
+          <Image
+            source={ typeof imageUrl === 'string' ? { uri: imageUrl } : imageUrl }
+            style={styles.image}
+          />
           <View style={styles.titleContainer}>
             <Text style={styles.title}>{title}</Text>
           </View>
