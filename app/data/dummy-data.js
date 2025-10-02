@@ -5,6 +5,8 @@ import Machine from "../models/machine"
 import Equipment from "../models/equipment"
 import CatDrink from "../models/catdrink"
 import Drink from "../models/drink"
+import Ingredient from "../models/ingredient"
+import CatIngredient from "../models/catingredient"
 import FullService from "../models/fullservice"
 import CatFullService from "../models/catfullservice"
 
@@ -58,6 +60,23 @@ export const CATDRINKS = [
     new CatDrink("7", "Sinh tố đá xay"),
     new CatDrink("8", "Matcha"),
 ];
+export const CATINGREDIENTS = [
+    new CatIngredient("1","Trà"),
+    new CatIngredient("2","Mứt"),
+    new CatIngredient("3","Topping"),
+    new CatIngredient("4","Hải"),
+];
+
+export const INGREDIENTS = [
+    new Ingredient("1a", ["1"], "Sản phẩm 1a","100,000vnd","100,000vnd", require('../images/catdrink/tra1.jpg')),
+    new Ingredient("1b", ["1"], "Sản phẩm 1b","200,000vnd","100,000vnd", require('../images/catdrink/tra2.jpg')),
+    new Ingredient("1c", ["1"], "Sản phẩm 1c","300,000vnd","100,000vnd", require('../images/catdrink/tra3.jpg')),
+
+    new Ingredient("1a", ["2"], "Sản phẩm 1a","100,000vnd","100,000vnd", require('../images/catdrink/tra1.jpg')),
+    new Ingredient("1b", ["2"], "Sản phẩm 1b","200,000vnd","100,000vnd",require('../images/catdrink/tra2.jpg')),
+    new Ingredient("1c", ["2"], "Sản phẩm 1c","300,000vnd","100,000vnd", require('../images/catdrink/tra3.jpg')),
+
+];
 
 export const DRINKS = [
     new Drink("1a", ["1"], "Sản phẩm 1a", require('../images/catdrink/tra1.jpg')),
@@ -98,14 +117,14 @@ export const DRINKS = [
 
 
 export const SERVICES = [
-    new Service("s1", "Đào tạo pha chế", require('../images/daotaophache/daotaophache.png')),
-    new Service("s2", "Danh mục đồ uống", require('../images/daotaophache/danhmucdouong.png')),
-    new Service("s3", "Máy pha chế", require('../images/daotaophache/mayphache.png')),
-    new Service("s4", "Nguyên liệu pha chế", require('../images/daotaophache/nguyenlieuphache2.png')),
-    new Service("s5", "Trọn bộ dịch vụ", require('../images/daotaophache/tronbodichvu.png')),
-    new Service("s7", "Vật liệu setup quán", require('../images/daotaophache/vatlieusetupquan.png')),
-    new Service("s9", "Form Đánh Giá Dịch Vụ", require('../images/daotaophache/danhgiadichvu2.png')),
-    new Service("s10", "Thanh toán dịch vụ", require('../images/daotaophache/thanhtoandichvu.png')),
+    new Service("s1", "Đào tạo pha chế", require('../images/ServicesScreen/daotaophache.jpg')),
+    new Service("s2", "Danh mục đồ uống", require('../images/ServicesScreen/danhmucdouong.jpg')),
+    new Service("s3", "Máy pha chế", require('../images/ServicesScreen/mayphache.jpg')),
+    new Service("s4", "Nguyên liệu pha chế", require('../images/ServicesScreen/nguyenlieuphache.jpg')),
+    new Service("s5", "Trọn bộ dịch vụ", require('../images/ServicesScreen/tronbodichvu.jpg')),
+    new Service("s7", "Vật liệu setup quán", require('../images/ServicesScreen/vatlieusetupquan.jpg')),
+    new Service("s9", "Form Đánh Giá Dịch Vụ", require('../images/ServicesScreen/danhgiadichvu.jpg')),
+    new Service("s10", "Thanh toán dịch vụ", require('../images/ServicesScreen/thanhtoandichvu.jpg')),
 ];
 
 export const MACHINES = [

@@ -27,14 +27,17 @@ function ServicesScreen({ navigation }) {
           ]}
           onPress={pressHandler}
         >
-          <View style={styles.container}>
+          {/* 70%: Image */}
+          <View style={styles.imageContainer}>
             <Image
               source={typeof imageUrl === "string" ? { uri: imageUrl } : imageUrl}
               style={styles.image}
             />
-            <View style={styles.titleContainer}>
-              <Text style={styles.title}>{title}</Text>
-            </View>
+          </View>
+
+          {/* 30%: Title */}
+          <View style={styles.titleContainer}>
+            <Text style={styles.title}>{title}</Text>
           </View>
         </Pressable>
       </View>
@@ -58,10 +61,9 @@ const styles = StyleSheet.create({
     flex: 1,
     margin: 16,
     borderRadius: 15,
-    backgroundColor: "#FFF7F0", // nền nhẹ nhàng
+    backgroundColor: "#FFF7F0",
     height: 260,
-    alignItems: "center",
-    justifyContent: "center",
+    overflow: "hidden",
     shadowColor: "#000",
     shadowOpacity: 0.1,
     shadowOffset: { width: 0, height: 3 },
@@ -70,41 +72,34 @@ const styles = StyleSheet.create({
   },
   pressable: {
     flex: 1,
-    borderRadius: 15,
-    overflow: "hidden",
   },
   buttonPressed: {
     opacity: 0.7,
   },
-  container: {
-    flex: 1,
+  imageContainer: {
+    flex: 7, // 70%
     alignItems: "center",
-    justifyContent: "flex-end",
-    paddingBottom: 20,
+    justifyContent: "center",
+    backgroundColor: "#fff",
   },
   image: {
-    width: "70%",
-    height: "60%",
-    borderRadius: 20,
-    marginTop: 15,
+    width: 120,        // chiều rộng cố định
+    height: 120,
+    aspectRatio: 1,   // giữ vuông
+    resizeMode: "contain",
+    borderRadius: 12,
   },
   titleContainer: {
-    marginTop: 15,
-    backgroundColor: "#A47148", // màu nâu cà phê đậm
-    paddingVertical: 8,
-    paddingHorizontal: 20,
-    borderRadius: 20,
-    shadowColor: "#000",
-    shadowOpacity: 0.2,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 4,
+    flex: 3, // 30%
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#A47148",
   },
   title: {
     color: "#fff",
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: "bold",
     textAlign: "center",
-    fontFamily: "sans-serif-medium",
     textTransform: "uppercase",
   },
 });
