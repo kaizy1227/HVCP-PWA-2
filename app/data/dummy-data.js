@@ -63,7 +63,7 @@ export const CATDRINKS = [
 export const CATINGREDIENTS = [
     new CatIngredient("1","Trà"),
     new CatIngredient("2","Mứt hoa quả Lermao"),
-    new CatIngredient("3","Cà phê"),
+    new CatIngredient("3","Topping tiện dụng Lermao"),
 
 ];
 
@@ -101,6 +101,8 @@ export const INGREDIENTS = [
     new Ingredient("231", ["2"], "Xí muội","100.000 vnđ","1.2kg/chai, 12 chai/ thùng", "70% Xí Muội Quảng Đông", require('../images/Nguyen_lieu_pha_che/PNG_mut/ximuoi.png')),
     new Ingredient("232", ["2"], "Sầu riêng","100.000 vnđ","1kg/ túi, 12 túi/ thùng", "30% Sầu riêng Musang King", require('../images/Nguyen_lieu_pha_che/PNG_mut/saurieng.png')),
     new Ingredient("233", ["2"], "Hoa Nhài","100.000 vnđ","1.2kg/ hộp, 12 hộp/ thùng", "Chưa có dữ liệu", require('../images/Nguyen_lieu_pha_che/PNG_mut/hoanhai.png')),
+
+    new Ingredient("301", ["3"], "Hoa Nhài","100.000 vnđ","1.2kg/ hộp, 12 hộp/ thùng", "Chưa có dữ liệu", require('../images/Nguyen_lieu_pha_che/PNG_mut/hoanhai.png')),
 
 ];
 
