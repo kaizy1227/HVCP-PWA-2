@@ -26,6 +26,9 @@ const IngredientScreen = ({ route, navigation }) => {
   const [selectedImageUrl, setSelectedImageUrl] = useState(null);
   const [selectedTitle, setSelectedTitle] = useState("");
   const [sidebarVisible, setSidebarVisible] = useState(true);
+  const [selectedPrice, setSelectedPrice] = useState('');
+  const [selectedPackaging, setSelectedPackaging] = useState('');
+  const [selectedMaterial, setSelectedMaterial] = useState('');
   const sidebarAnim = useRef(new Animated.Value(0)).current;
 
   const displayedIngredients = INGREDIENTS.filter((ingredient) =>
@@ -58,6 +61,9 @@ const IngredientScreen = ({ route, navigation }) => {
   const handlePress = (item) => {
     setSelectedImageUrl(item.imageUrl);
     setSelectedTitle(item.title);
+    setSelectedPrice(item.price);
+    setSelectedPackaging(item.packaging);
+    setSelectedMaterial(item.material);
     setModalVisible(true);
   };
 
@@ -131,6 +137,9 @@ const IngredientScreen = ({ route, navigation }) => {
                 />
                 <View style={{ padding: isDesktop ? 20 : 10 }}>
                   <Text style={styles.cardTitle}>{item.title}</Text>
+                  <Text style={styles.cardText}>Giá: {item.price}</Text>
+                  <Text style={styles.cardText}>Quy cách đóng gói: {item.packaging}</Text>
+                  <Text style={styles.cardText}>Thành phần nguyên liệu: {item.material}</Text>
                 </View>
               </TouchableOpacity>
             )}
@@ -156,6 +165,12 @@ const IngredientScreen = ({ route, navigation }) => {
               resizeMode="contain"
             />
             <Text style={styles.modalTitle}>{selectedTitle}</Text>
+
+            {/* Thêm giá và quy cách trong modal */}
+            <Text style={styles.modalInfo}>Giá: {selectedPrice}</Text>
+            <Text style={styles.modalInfo}>Quy cách đóng gói: {selectedPackaging}</Text>
+            <Text style={styles.modalInfo}>Thành phần nguyên liệu: {selectedMaterial}</Text>
+
             <TouchableOpacity
               onPress={() => setModalVisible(false)}
               style={styles.closeButton}
@@ -252,6 +267,17 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 16,
     fontWeight: "600",
+  },
+  cardText: {
+    fontSize: 14,
+    color: "#fff",
+    marginTop: 4,
+  },
+  modalInfo: {
+    fontSize: 18,
+    color: "#fff",
+    marginVertical: 5,
+    textAlign: "center",
   },
 });
 

@@ -6,6 +6,7 @@ class Ingredient {
     title,
     price,
     packaging,
+    material,
     imageUrl,
   ) {
     this.id = id;
@@ -13,6 +14,7 @@ class Ingredient {
     this.title = title;
     this.price = price;
     this.packaging = packaging;
+    this.material = material;
     this.imageUrl = imageUrl;
   }
 }

@@ -62,19 +62,45 @@ export const CATDRINKS = [
 ];
 export const CATINGREDIENTS = [
     new CatIngredient("1","Trà"),
-    new CatIngredient("2","Mứt"),
-    new CatIngredient("3","Topping"),
-    new CatIngredient("4","Hải"),
+    new CatIngredient("2","Mứt hoa quả Lermao"),
+    new CatIngredient("3","Cà phê"),
+
 ];
 
 export const INGREDIENTS = [
-    new Ingredient("1a", ["1"], "Sản phẩm 1a","100,000vnd","100,000vnd", require('../images/catdrink/tra1.jpg')),
-    new Ingredient("1b", ["1"], "Sản phẩm 1b","200,000vnd","100,000vnd", require('../images/catdrink/tra2.jpg')),
-    new Ingredient("1c", ["1"], "Sản phẩm 1c","300,000vnd","100,000vnd", require('../images/catdrink/tra3.jpg')),
-
-    new Ingredient("1a", ["2"], "Sản phẩm 1a","100,000vnd","100,000vnd", require('../images/catdrink/tra1.jpg')),
-    new Ingredient("1b", ["2"], "Sản phẩm 1b","200,000vnd","100,000vnd",require('../images/catdrink/tra2.jpg')),
-    new Ingredient("1c", ["2"], "Sản phẩm 1c","300,000vnd","100,000vnd", require('../images/catdrink/tra3.jpg')),
+    new Ingredient("201", ["2"], "Việt quất","100.000 vnđ","1kg/ túi, 12 túi/ thùng", "50% Việt Quất tươi thuộc dãy Bạch Trường Sơn", require('../images/Nguyen_lieu_pha_che/PNG_mut/vietquat.png')),
+    new Ingredient("202", ["2"], "Sốt việt quất","100.000 vnđ","1kg/ túi, 12 túi/ thùng", "30% Việt Quất tươi thuộc dãy Bạch Trường Sơn", require('../images/Nguyen_lieu_pha_che/PNG_mut/sotvq.png')),
+    new Ingredient("203", ["2"], "Xoài","100.000 vnđ","1kg/ túi, 12 túi/ thùng", "37% Xoài Ấn Độ Alphonso", require('../images/Nguyen_lieu_pha_che/PNG_mut/xoai.png')),
+    new Ingredient("204", ["2"], "Trái cây nhiệt đới","100.000 vnđ","1kg/ túi, 12 túi/ thùng", "35% từ các loại trái cây tươi như chanh leo, xoài, dứa...", require('../images/Nguyen_lieu_pha_che/PNG_mut/nhietdoi.png')),
+    new Ingredient("205", ["2"], "Dâu","100.000 vnđ","1kg/ túi, 12 túi/ thùng", "Chưa có dữ liệu", require('../images/Nguyen_lieu_pha_che/PNG_mut/dau.png')),
+    new Ingredient("206", ["2"], "Hồng","100.000 vnđ","1kg/ túi, 12 túi/ thùng", " 44% Hồng Dẻo Hạc Thành Thiểm Tây", require('../images/Nguyen_lieu_pha_che/PNG_mut/hong.png')),
+    new Ingredient("207", ["2"], "Dứa","100.000 vnđ","1kg/ túi, 12 túi/ thùng", "49% Dứa Ngọt Đài Loan", require('../images/Nguyen_lieu_pha_che/PNG_mut/dua.png')),
+    new Ingredient("208", ["2"], "Đào mật ong","100.000 vnđ","1kg/ túi, 12 túi/ thùng", "30% Sơn Đông Bình Ất Đào Xuân Tuyết", require('../images/Nguyen_lieu_pha_che/PNG_mut/dao.png')),
+    new Ingredient("209", ["2"], "Me","100.000 vnđ","1kg/ túi, 12 túi/ thùng", "20% Me Nguyên Mưu Vân Nam", require('../images/Nguyen_lieu_pha_che/PNG_mut/me.png')),
+    new Ingredient("210", ["2"], "Nho xanh","100.000 vnđ","1kg/ túi, 12 túi/ thùng", "49% Dứa Ngọt Đài Loan", require('../images/Nguyen_lieu_pha_che/PNG_mut/nhoxanh.png')),
+    new Ingredient("211", ["2"], "Lê","100.000 vnđ","1kg/ túi, 12 túi/ thùng", "25% Lê Kim Xuyên Hồ Bắc", require('../images/Nguyen_lieu_pha_che/PNG_mut/le.png')),
+    new Ingredient("212", ["2"], "Ổi","100.000 vnđ","1kg/ túi, 12 túi/ thùng", "31% Ổi Hồng Đài Loan", require('../images/Nguyen_lieu_pha_che/PNG_mut/oihong.png')),
+    new Ingredient("213", ["2"], "Dâu tằm","100.000 vnđ","1kg/ túi, 12 túi/ thùng", "30% Dâu Tằm Đại Lượng Sơn Tứ Xuyên", require('../images/Nguyen_lieu_pha_che/PNG_mut/dautam.png')),
+    new Ingredient("214", ["2"], "Lựu","100.000 vnđ","1kg/ túi, 12 túi/ thùng", "30% Lựu Vĩnh Thành Hà Nam", require('../images/Nguyen_lieu_pha_che/PNG_mut/luu.png')),
+    new Ingredient("215", ["2"], "Quýt","100.000 vnđ","1kg/ túi, 12 túi/ thùng", "27% Quýt Quảng Đông Tứ Hội", require('../images/Nguyen_lieu_pha_che/PNG_mut/quyt.png')),
+    new Ingredient("216", ["2"], "Hoa hồng","100.000 vnđ","1kg/ túi, 12 túi/ thùng", "51% Hoa Hồng Vân Nam", require('../images/Nguyen_lieu_pha_che/PNG_mut/hoahong.png')),
+    new Ingredient("217", ["2"], "Quế hoa","100.000 vnđ","1kg/ túi, 12 túi/ thùng", "51% Quảng Tây Kim Quế", require('../images/Nguyen_lieu_pha_che/PNG_mut/quehoa.png')),
+    new Ingredient("218", ["2"], "Lá dứa","100.000 vnđ","1kg/ túi, 12 túi/ thùng", "50% Lá Dứa Việt Nam", require('../images/Nguyen_lieu_pha_che/PNG_mut/ladua.png')),
+    new Ingredient("219", ["2"], "Dưa lưới","100.000 vnđ","1kg/ túi, 12 túi/ thùng", "20% Dưa Lưới Hà Nam", require('../images/Nguyen_lieu_pha_che/PNG_mut/dualuoi.png')),
+    new Ingredient("220", ["2"], "Chanh leo","100.000 vnđ","1kg/ túi, 12 túi/ thùng", "20% Chanh Leo Quảng Tây Bắc Lưu", require('../images/Nguyen_lieu_pha_che/PNG_mut/chanhleo.png')),
+    new Ingredient("221", ["2"], "Kumquat","100.000 vnđ","1kg/ túi, 12 túi/ thùng", " 20% Kumquat Tứ Xuyên", require('../images/Nguyen_lieu_pha_che/PNG_mut/kumquat.png')),
+    new Ingredient("222", ["2"], "Thanh mai","100.000 vnđ","1kg/ túi, 12 túi/ thùng", "15% Thanh Mai Đông Khôi", require('../images/Nguyen_lieu_pha_che/PNG_mut/thanhmai.png')),
+    new Ingredient("223", ["2"], "Dâu Đan Đông","100.000 vnđ","1kg/ túi, 12 túi/ thùng", "35% Dâu Hồng Nhan Đan Đông", require('../images/Nguyen_lieu_pha_che/PNG_mut/daudandong.png')),
+    new Ingredient("224", ["2"], "Siro đường đen","100.000 vnđ","1kg/ túi, 12 túi/ thùng", "Chưa có dữ liệu", require('../images/Nguyen_lieu_pha_che/PNG_mut/siroduongden.png')),
+    new Ingredient("225", ["2"], "Mận","100.000 vnđ","1.2kg/ hộp, 12 hộp/ thùng", "40% Mận Shanhua Quảng Đông", require('../images/Nguyen_lieu_pha_che/PNG_mut/man.png')),
+    new Ingredient("226", ["2"], "Mơ vàng","100.000 vnđ","1.2kg/ hộp, 12 hộp/ thùng", "40% Mơ Vàng Tân Cương", require('../images/Nguyen_lieu_pha_che/PNG_mut/movang.png')),
+    new Ingredient("227", ["2"], "Nhãn","100.000 vnđ","1.2kg/ hộp, 12 hộp/ thùng", " 47% Nhãn Long An Xuất Khẩu", require('../images/Nguyen_lieu_pha_che/PNG_mut/nhan.png')),
+    new Ingredient("228", ["2"], "Quất hồng bì","100.000 vnđ","1.2kg/ hộp, 12 hộp/ thùng", "28.8% Hồng Bì Quảng Đông", require('../images/Nguyen_lieu_pha_che/PNG_mut/quathongbi.png')),
+    new Ingredient("229", ["2"], "Vải","100.000 vnđ","1.2kg/ hộp, 12 hộp/ thùng", "30% Vải Thiều Mậu Danh", require('../images/Nguyen_lieu_pha_che/PNG_mut/vai.png')),
+    new Ingredient("230", ["2"], "Yuzu mật ong","100.000 vnđ","1.2kg/ hộp, 12 hộp/ thùng", "22% Yuzu Nhật Bản", require('../images/Nguyen_lieu_pha_che/PNG_mut/yuzu.png')),
+    new Ingredient("231", ["2"], "Xí muội","100.000 vnđ","1.2kg/chai, 12 chai/ thùng", "70% Xí Muội Quảng Đông", require('../images/Nguyen_lieu_pha_che/PNG_mut/ximuoi.png')),
+    new Ingredient("232", ["2"], "Sầu riêng","100.000 vnđ","1kg/ túi, 12 túi/ thùng", "30% Sầu riêng Musang King", require('../images/Nguyen_lieu_pha_che/PNG_mut/saurieng.png')),
+    new Ingredient("233", ["2"], "Hoa Nhài","100.000 vnđ","1.2kg/ hộp, 12 hộp/ thùng", "Chưa có dữ liệu", require('../images/Nguyen_lieu_pha_che/PNG_mut/hoanhai.png')),
 
 ];
 
