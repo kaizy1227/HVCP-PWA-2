@@ -29,11 +29,16 @@ const IngredientScreen = ({ route, navigation }) => {
   const [selectedPrice, setSelectedPrice] = useState('');
   const [selectedPackaging, setSelectedPackaging] = useState('');
   const [selectedMaterial, setSelectedMaterial] = useState('');
+
+
+
   const sidebarAnim = useRef(new Animated.Value(0)).current;
 
   const displayedIngredients = INGREDIENTS.filter((ingredient) =>
     ingredient.catingredientIds.includes(selectedCategory)
   );
+
+
 
   useEffect(() => {
     const service = SERVICES.find((service) => service.id === mccID);
