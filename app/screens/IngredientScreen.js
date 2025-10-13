@@ -142,7 +142,7 @@ const IngredientScreen = ({ route, navigation }) => {
 
         <View style={{ alignItems: "flex-end", marginBottom: 10 }}>
           <TouchableOpacity
-            onPress={() => navigation.navigate("CartScreen", { cartItems })}
+            onPress={() => navigation.navigate("Giỏ hàng", { cartItems })}
             style={{
               backgroundColor: "#F4C542",
               padding: 10,

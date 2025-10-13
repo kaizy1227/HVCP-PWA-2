@@ -12,6 +12,7 @@ import FullServiceScreen from "./screens/FullServiceScreen";
 import MarketingScreen from "./screens/MarketingScreen";
 import ServiceReviewScreen from "./screens/ServiceReviewScreen";
 import PaymentScreen from "./screens/PaymentScreen";
+import CartScreen from "./screens/CartScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -77,6 +78,17 @@ export default function Index() {
             component={ServiceReviewScreen}
           />
           <Stack.Screen name="Thanh Toán Dịch Vụ" component={PaymentScreen} />
+          <Stack.Screen
+            name="Giỏ hàng"
+            component={CartScreen}
+            options={{
+              title: "GIỎ HÀNG",
+              headerStyle: { backgroundColor: "rgba(74,35,6,0.9)" },
+              headerTintColor: "#fff",
+              headerTitleStyle: { fontWeight: "bold", textTransform: "uppercase" },
+            }}
+          />
+
         </Stack.Navigator>
       </NavigationContainer>
     </>
