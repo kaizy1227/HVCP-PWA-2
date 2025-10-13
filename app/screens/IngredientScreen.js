@@ -10,9 +10,16 @@ import {
   TouchableOpacity,
   Modal,
   ScrollView,
+  TextInput,
+  Alert,
 } from "react-native";
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from "react-native-responsive-screen";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 import { SERVICES, INGREDIENTS, CATINGREDIENTS } from "../data/dummy-data";
+import { useNavigation } from "@react-navigation/native";
+
 
 const IngredientScreen = ({ route, navigation }) => {
   const mccID = route.params.serviceId;
@@ -25,12 +32,14 @@ const IngredientScreen = ({ route, navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedImageUrl, setSelectedImageUrl] = useState(null);
   const [selectedTitle, setSelectedTitle] = useState("");
-  const [sidebarVisible, setSidebarVisible] = useState(true);
-  const [selectedPrice, setSelectedPrice] = useState('');
-  const [selectedPackaging, setSelectedPackaging] = useState('');
-  const [selectedMaterial, setSelectedMaterial] = useState('');
+  const [selectedPrice, setSelectedPrice] = useState("");
+  const [selectedPackaging, setSelectedPackaging] = useState("");
+  const [selectedMaterial, setSelectedMaterial] = useState("");
+  const [quantity, setQuantity] = useState("1");
+  const [cartItems, setCartItems] = useState([]);
 
-
+  const [searchText, setSearchText] = useState("");
+  const [filteredIngredients, setFilteredIngredients] = useState([]);
 
   const sidebarAnim = useRef(new Animated.Value(0)).current;
 
@@ -39,6 +48,20 @@ const IngredientScreen = ({ route, navigation }) => {
   );
 
 
+
+  const handleSearch = () => {
+    const text = searchText.toLowerCase().trim();
+    if (text === "") {
+      setFilteredIngredients([]);
+      return;
+    }
+    const filtered = INGREDIENTS.filter(
+      (item) =>
+        item.title.toLowerCase().includes(text) ||
+        item.material?.toLowerCase().includes(text)
+    );
+    setFilteredIngredients(filtered);
+  };
 
   useEffect(() => {
     const service = SERVICES.find((service) => service.id === mccID);
@@ -63,18 +86,39 @@ const IngredientScreen = ({ route, navigation }) => {
     }).start(() => setSidebarVisible(!sidebarVisible));
   };
 
+  const [sidebarVisible, setSidebarVisible] = useState(true);
+
   const handlePress = (item) => {
     setSelectedImageUrl(item.imageUrl);
     setSelectedTitle(item.title);
     setSelectedPrice(item.price);
     setSelectedPackaging(item.packaging);
     setSelectedMaterial(item.material);
+    setQuantity("1");
     setModalVisible(true);
+  };
+
+  const handleAddToCart = () => {
+    const qty = parseInt(quantity);
+    if (isNaN(qty) || qty <= 0) {
+      Alert.alert("Lỗi", "Vui lòng nhập số lượng hợp lệ");
+      return;
+    }
+
+    const newItem = {
+      title: selectedTitle,
+      price: selectedPrice,
+      quantity: qty,
+      total: parseFloat(selectedPrice) * qty,
+    };
+
+    setCartItems((prev) => [...prev, newItem]);
+    Alert.alert("🛒 Thành công", `${selectedTitle} đã được thêm vào giỏ hàng!`);
+    setModalVisible(false);
   };
 
   return (
     <View style={{ flex: 1, flexDirection: isDesktop ? "row" : "column" }}>
-      {/* Toggle Button */}
       {!isDesktop && (
         <TouchableOpacity onPress={toggleSidebar} style={styles.toggleButton}>
           <Text style={{ color: "white" }}>
@@ -83,7 +127,6 @@ const IngredientScreen = ({ route, navigation }) => {
         </TouchableOpacity>
       )}
 
-      {/* Sidebar */}
       {(!isDesktop || sidebarVisible) && (
         <Animated.View
           style={[
@@ -96,6 +139,20 @@ const IngredientScreen = ({ route, navigation }) => {
             },
           ]}
         >
+
+        <View style={{ alignItems: "flex-end", marginBottom: 10 }}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("CartScreen", { cartItems })}
+            style={{
+              backgroundColor: "#F4C542",
+              padding: 10,
+              borderRadius: 8,
+            }}
+          >
+            <Text style={{ fontWeight: "bold" }}>🛒 Xem giỏ hàng ({cartItems.length})</Text>
+          </TouchableOpacity>
+        </View>
+
           <FlatList
             data={CATINGREDIENTS}
             keyExtractor={(item) => item.id}
@@ -103,6 +160,7 @@ const IngredientScreen = ({ route, navigation }) => {
               <TouchableOpacity
                 onPress={() => {
                   setSelectedCategory(item.id);
+                  setFilteredIngredients([]);
                   if (!isDesktop) toggleSidebar();
                 }}
               >
@@ -113,7 +171,6 @@ const IngredientScreen = ({ route, navigation }) => {
         </Animated.View>
       )}
 
-      {/* Main Content */}
       <View
         style={{
           flex: 1,
@@ -121,9 +178,27 @@ const IngredientScreen = ({ route, navigation }) => {
           padding: isDesktop ? 30 : 15,
         }}
       >
-        {selectedCategory && (
+        {/* Thanh tìm kiếm */}
+        <View style={styles.searchContainer}>
+          <TextInput
+            style={styles.searchInput}
+            placeholder="Tìm sản phẩm, nguyên liệu..."
+            value={searchText}
+            onChangeText={setSearchText}
+          />
+          <TouchableOpacity onPress={handleSearch} style={styles.searchButton}>
+            <Text style={styles.searchButtonText}>Tìm</Text>
+          </TouchableOpacity>
+        </View>
+
+        {/* Hiển thị sản phẩm */}
+        {(filteredIngredients.length > 0 || selectedCategory) && (
           <FlatList
-            data={displayedIngredients}
+            data={
+              filteredIngredients.length > 0
+                ? filteredIngredients
+                : displayedIngredients
+            }
             keyExtractor={(item) => item.id}
             numColumns={isDesktop ? 2 : isTablet ? 3 : 2}
             renderItem={({ item }) => (
@@ -143,8 +218,8 @@ const IngredientScreen = ({ route, navigation }) => {
                 <View style={{ padding: isDesktop ? 20 : 10 }}>
                   <Text style={styles.cardTitle}>{item.title}</Text>
                   <Text style={styles.cardText}>Giá: {item.price}</Text>
-                  <Text style={styles.cardText}>Quy cách đóng gói: {item.packaging}</Text>
-                  <Text style={styles.cardText}>Thành phần nguyên liệu: {item.material}</Text>
+                  <Text style={styles.cardText}>Quy cách: {item.packaging}</Text>
+                  <Text style={styles.cardText}>Thành phần: {item.material}</Text>
                 </View>
               </TouchableOpacity>
             )}
@@ -152,7 +227,7 @@ const IngredientScreen = ({ route, navigation }) => {
         )}
       </View>
 
-      {/* Modal */}
+      {/* Modal chi tiết sản phẩm */}
       <Modal
         visible={modalVisible}
         animationType="slide"
@@ -170,11 +245,39 @@ const IngredientScreen = ({ route, navigation }) => {
               resizeMode="contain"
             />
             <Text style={styles.modalTitle}>{selectedTitle}</Text>
-
-            {/* Thêm giá và quy cách trong modal */}
             <Text style={styles.modalInfo}>Giá: {selectedPrice}</Text>
-            <Text style={styles.modalInfo}>Quy cách đóng gói: {selectedPackaging}</Text>
-            <Text style={styles.modalInfo}>Thành phần nguyên liệu: {selectedMaterial}</Text>
+            <Text style={styles.modalInfo}>
+              Quy cách đóng gói: {selectedPackaging}
+            </Text>
+            <Text style={styles.modalInfo}>
+              Thành phần nguyên liệu: {selectedMaterial}
+            </Text>
+
+            {/* Nhập số lượng (với nút tăng giảm) */}
+            <View style={styles.quantityRow}>
+              <TouchableOpacity
+                style={styles.qtyButton}
+                onPress={() => setQuantity((prev) => (parseInt(prev) > 1 ? (parseInt(prev) - 1).toString() : "1"))}
+              >
+                <Text style={styles.qtyButtonText}>-</Text>
+              </TouchableOpacity>
+
+              <View style={styles.qtyBox}>
+                <Text style={styles.qtyText}>{quantity}</Text>
+              </View>
+
+              <TouchableOpacity
+                style={styles.qtyButton}
+                onPress={() => setQuantity((parseInt(quantity) + 1).toString())}
+              >
+                <Text style={styles.qtyButtonText}>+</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity onPress={handleAddToCart} style={styles.addButtonHorizontal}>
+                <Text style={styles.addButtonText}>🛒 Thêm vào giỏ hàng</Text>
+              </TouchableOpacity>
+            </View>
+
 
             <TouchableOpacity
               onPress={() => setModalVisible(false)}
@@ -219,6 +322,31 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginBottom: 10,
   },
+  searchContainer: {
+    flexDirection: "row",
+    marginBottom: 15,
+    alignItems: "center",
+  },
+  searchInput: {
+    flex: 1,
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 8,
+    padding: 10,
+    backgroundColor: "#fff",
+    fontSize: 16,
+  },
+  searchButton: {
+    marginLeft: 10,
+    backgroundColor: "#A47148",
+    paddingVertical: 10,
+    paddingHorizontal: 18,
+    borderRadius: 8,
+  },
+  searchButtonText: {
+    color: "#fff",
+    fontWeight: "600",
+  },
   card: {
     backgroundColor: "rgba(74, 35, 6, 0.67)",
     borderRadius: 10,
@@ -237,6 +365,11 @@ const styles = StyleSheet.create({
     color: "#fff",
     textAlign: "center",
   },
+  cardText: {
+    fontSize: 14,
+    color: "#fff",
+    marginTop: 4,
+  },
   modalContainer: {
     flex: 1,
     backgroundColor: "rgba(74, 35, 6, 0.95)",
@@ -248,7 +381,7 @@ const styles = StyleSheet.create({
   },
   modalImage: {
     width: wp("90%"),
-    height: hp("70%"),
+    height: hp("60%"),
     borderRadius: 12,
     marginBottom: 20,
   },
@@ -260,30 +393,94 @@ const styles = StyleSheet.create({
     textAlign: "center",
     textTransform: "uppercase",
   },
-  closeButton: {
-    marginTop: 30,
-    backgroundColor: "#A47148",
-    paddingVertical: 12,
-    paddingHorizontal: 30,
-    borderRadius: 25,
-    elevation: 5,
-  },
-  closeButtonText: {
-    color: "#fff",
-    fontSize: 16,
-    fontWeight: "600",
-  },
-  cardText: {
-    fontSize: 14,
-    color: "#fff",
-    marginTop: 4,
-  },
   modalInfo: {
     fontSize: 18,
     color: "#fff",
     marginVertical: 5,
     textAlign: "center",
   },
+  quantityInput: {
+    borderWidth: 1,
+    borderColor: "#fff",
+    backgroundColor: "#fff",
+    borderRadius: 8,
+    width: 100,
+    padding: 8,
+    marginVertical: 10,
+    textAlign: "center",
+  },
+  addButton: {
+    backgroundColor: "#fff",
+    paddingVertical: 12,
+    paddingHorizontal: 30,
+    borderRadius: 25,
+    marginTop: 10,
+  },
+  addButtonText: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  closeButton: {
+    marginTop: 20,
+    backgroundColor: "#A47148",
+    paddingVertical: 10,
+    paddingHorizontal: 30,
+    borderRadius: 25,
+  },
+  closeButtonText: {
+    color: "#fff",
+    fontSize: 16,
+  },
+  quantityRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    marginVertical: 15,
+    gap: 10,
+  },
+
+  qtyButton: {
+    backgroundColor: "#A47148",
+    borderRadius: 8,
+    width: 35,
+    height: 35,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  qtyButtonText: {
+    color: "#fff",
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+
+  qtyBox: {
+    backgroundColor: "#fff",
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: "#ccc",
+    paddingVertical: 6,
+    paddingHorizontal: 20,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  qtyText: {
+    fontSize: 16,
+    fontWeight: "600",
+    color: "#333",
+  },
+
+  addButtonHorizontal: {
+    backgroundColor: "#A47148",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 8,
+    marginLeft: 10,
+    borderWidth: 1,
+  },
+
 });
 
 export default IngredientScreen;

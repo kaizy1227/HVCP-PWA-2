@@ -1,5 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+import CartScreen from './screens/CartScreen';
+
 
 export default function App() {
   return (
@@ -8,6 +10,7 @@ export default function App() {
       <StatusBar style="auto" />
     </View>
   );
+
 }
 
 const styles = StyleSheet.create({
