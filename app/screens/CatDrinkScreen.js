@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from "react";
 import {
   View,
   Text,
@@ -10,9 +10,13 @@ import {
   Modal,
   useWindowDimensions,
   Animated,
-} from 'react-native';
-import { SERVICES, CATDRINKS, DRINKS } from "../data/dummy-data";
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+} from "react-native";
+import { SERVICES, CATDRINKS, DRINKS, INGREDIENTS } from "../data/dummy-data";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
+import { CartContext } from "../context/CartContext";
 
 const CatDrinkScreen = ({ route, navigation }) => {
   const seID = route.params.serviceId;
@@ -23,14 +27,18 @@ const CatDrinkScreen = ({ route, navigation }) => {
 
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
+  const [selectedDrink, setSelectedDrink] = useState(null);
   const [selectedImageUrl, setSelectedImageUrl] = useState(null);
-  const [selectedTitle, setSelectedTitle] = useState('');
+  const [selectedTitle, setSelectedTitle] = useState("");
+  const [selectedRecipe, setSelectedRecipe] = useState("");
   const [sidebarVisible, setSidebarVisible] = useState(true);
-  const sidebarAnim = useRef(new Animated.Value(0)).current; // Animation value
+  const sidebarAnim = useRef(new Animated.Value(0)).current;
+
+  const { addToCart } = useContext(CartContext);
 
   const displayedDrinks = DRINKS.filter((drink) =>
-        drink.catdrinkIds.includes(selectedCategory)
-      );
+    drink.catdrinkIds.includes(selectedCategory)
+  );
 
   useEffect(() => {
     const service = SERVICES.find((service) => service.id === seID);
@@ -38,15 +46,13 @@ const CatDrinkScreen = ({ route, navigation }) => {
       navigation.setOptions({
         title: service.title.toUpperCase(),
         headerTintColor: "white",
-        headerStyle: {
-          backgroundColor: "rgba(74, 35, 6, 0.67)",
-        },
+        headerStyle: { backgroundColor: "rgba(74, 35, 6, 0.67)" },
       });
     }
   }, [seID, navigation]);
 
   const toggleSidebar = () => {
-    const toValue = sidebarVisible ? -wp('70%') : 0; // slide left when hide
+    const toValue = sidebarVisible ? -wp("70%") : 0;
     Animated.timing(sidebarAnim, {
       toValue,
       duration: 300,
@@ -55,34 +61,37 @@ const CatDrinkScreen = ({ route, navigation }) => {
   };
 
   const handlePress = (item) => {
+    setSelectedDrink(item); // ✅ Lưu đối tượng Drink đang chọn
     setSelectedImageUrl(item.imageUrl);
     setSelectedTitle(item.title);
+    setSelectedRecipe(item.recipe || "Chưa có công thức.");
     setModalVisible(true);
   };
 
+  const linkedIngredients = INGREDIENTS.filter((ing) =>
+    (selectedDrink?.ingredientRefs || []).includes(ing.id)
+  );
+
   return (
-    <View style={{ flex: 1, flexDirection: isDesktop ? 'row' : 'column' }}>
-      {/* Toggle Button */}
+    <View style={{ flex: 1, flexDirection: isDesktop ? "row" : "column" }}>
+      {/* Toggle Sidebar Button */}
       {!isDesktop && (
-        <TouchableOpacity
-          onPress={toggleSidebar}
-          style={styles.toggleButton}
-        >
-          <Text style={{ color: 'white' }}>
+        <TouchableOpacity onPress={toggleSidebar} style={styles.toggleButton}>
+          <Text style={{ color: "white" }}>
             {sidebarVisible ? "Ẩn Menu" : "☰ Menu"}
           </Text>
         </TouchableOpacity>
       )}
 
-      {/* Animated Sidebar */}
+      {/* Sidebar */}
       {(!isDesktop || sidebarVisible) && (
         <Animated.View
           style={[
             styles.sidebar,
             {
-              width: isDesktop ? '25%' : wp('70%'),
+              width: isDesktop ? "25%" : wp("70%"),
               left: sidebarAnim,
-              position: isDesktop ? 'relative' : 'absolute',
+              position: isDesktop ? "relative" : "absolute",
               zIndex: 10,
             },
           ]}
@@ -94,7 +103,7 @@ const CatDrinkScreen = ({ route, navigation }) => {
               <TouchableOpacity
                 onPress={() => {
                   setSelectedCategory(item.id);
-                  if (!isDesktop) toggleSidebar(); // auto close on mobile
+                  if (!isDesktop) toggleSidebar();
                 }}
               >
                 <Text style={styles.coursetitle}>{item.title}</Text>
@@ -108,7 +117,7 @@ const CatDrinkScreen = ({ route, navigation }) => {
       <View
         style={{
           flex: 1,
-          marginLeft: !isDesktop && sidebarVisible ? wp('70%') : 0,
+          marginLeft: !isDesktop && sidebarVisible ? wp("70%") : 0,
           padding: isDesktop ? 30 : 15,
         }}
       >
@@ -121,6 +130,7 @@ const CatDrinkScreen = ({ route, navigation }) => {
               <TouchableOpacity
                 style={styles.card}
                 onPress={() => handlePress(item)}
+                activeOpacity={0.85}
               >
                 <Image
                   source={item.imageUrl}
@@ -129,13 +139,13 @@ const CatDrinkScreen = ({ route, navigation }) => {
                 />
                 <View style={{ padding: isDesktop ? 20 : 10 }}>
                   <Text style={styles.cardTitle}>{item.title}</Text>
-                  {/* ✅ Thêm nút "Xem" ở đây */}
-                          <TouchableOpacity
-                            onPress={() => handlePress(item)}
-                            style={styles.viewButton}
-                          >
-                            <Text style={styles.viewButtonText}>Xem chi tiết</Text>
-                          </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => handlePress(item)}
+                    style={styles.viewButton}
+                    activeOpacity={0.8}
+                  >
+                    <Text style={styles.viewButtonText}>Xem</Text>
+                  </TouchableOpacity>
                 </View>
               </TouchableOpacity>
             )}
@@ -143,7 +153,7 @@ const CatDrinkScreen = ({ route, navigation }) => {
         )}
       </View>
 
-      {/* Modal */}
+      {/* Modal chi tiết món */}
       <Modal
         visible={modalVisible}
         animationType="slide"
@@ -158,9 +168,45 @@ const CatDrinkScreen = ({ route, navigation }) => {
             />
             <Text style={styles.modalTitle}>{selectedTitle}</Text>
 
+            {selectedRecipe ? (
+              <View style={styles.recipeBox}>
+                <Text style={styles.recipeTitle}>🍹 Công thức pha chế</Text>
+                <Text style={styles.recipeText}>{selectedRecipe}</Text>
+              </View>
+            ) : null}
+
+            {linkedIngredients.length > 0 && (
+              <View style={styles.relatedBox}>
+                <Text style={styles.relatedTitle}>🧂 Nguyên liệu sử dụng</Text>
+                {linkedIngredients.map((ing) => (
+                  <View key={ing.id} style={styles.ingredientItem}>
+                    <Image
+                      source={ing.imageUrl}
+                      style={styles.ingredientImage}
+                    />
+                    <Text style={styles.ingredientName}>{ing.title}</Text>
+                    <TouchableOpacity
+                      style={styles.addButton}
+                      onPress={() =>
+                        addToCart({
+                          title: ing.title,
+                          price: parseInt(ing.price.replace(/[^\d]/g, "")),
+                          quantity: 1,
+                          imageUrl: ing.imageUrl,
+                        })
+                      }
+                    >
+                      <Text style={styles.addButtonText}>+ Giỏ hàng</Text>
+                    </TouchableOpacity>
+                  </View>
+                ))}
+              </View>
+            )}
+
             <TouchableOpacity
               onPress={() => setModalVisible(false)}
               style={styles.closeButton}
+              activeOpacity={0.85}
             >
               <Text style={styles.closeButtonText}>Đóng</Text>
             </TouchableOpacity>
@@ -170,6 +216,8 @@ const CatDrinkScreen = ({ route, navigation }) => {
     </View>
   );
 };
+
+export default CatDrinkScreen;
 
 const styles = StyleSheet.create({
   toggleButton: {
@@ -220,6 +268,20 @@ const styles = StyleSheet.create({
     color: "#fff",
     textAlign: "center",
   },
+  viewButton: {
+    marginTop: 10,
+    backgroundColor: "#A47148",
+    paddingVertical: 8,
+    paddingHorizontal: 25,
+    borderRadius: 25,
+    alignSelf: "center",
+    elevation: 4,
+  },
+  viewButtonText: {
+    color: "#fff",
+    fontWeight: "600",
+    fontSize: 15,
+  },
   modalContainer: {
     flex: 1,
     backgroundColor: "rgba(74, 35, 6, 0.95)",
@@ -243,11 +305,73 @@ const styles = StyleSheet.create({
     textAlign: "center",
     textTransform: "uppercase",
   },
+  recipeBox: {
+    marginTop: 10,
+    backgroundColor: "rgba(255,255,255,0.08)",
+    borderRadius: 12,
+    padding: 15,
+    width: "85%",
+    alignSelf: "center",
+  },
+  recipeTitle: {
+    color: "#F4C542",
+    fontSize: 18,
+    fontWeight: "bold",
+    textAlign: "center",
+    marginBottom: 10,
+  },
+  recipeText: {
+    color: "#fff",
+    fontSize: 15,
+    lineHeight: 22,
+    textAlign: "center",
+  },
+  relatedBox: {
+    marginTop: 20,
+    width: "90%",
+    backgroundColor: "rgba(255,255,255,0.08)",
+    borderRadius: 12,
+    padding: 15,
+  },
+  relatedTitle: {
+    color: "#F4C542",
+    fontWeight: "bold",
+    fontSize: 18,
+    marginBottom: 10,
+    textAlign: "center",
+  },
+  ingredientItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginVertical: 6,
+  },
+  ingredientImage: {
+    width: 45,
+    height: 45,
+    borderRadius: 8,
+    marginRight: 10,
+  },
+  ingredientName: {
+    flex: 1,
+    color: "#fff",
+    fontSize: 14,
+  },
+  addButton: {
+    backgroundColor: "#A47148",
+    borderRadius: 20,
+    paddingVertical: 5,
+    paddingHorizontal: 12,
+  },
+  addButtonText: {
+    color: "#fff",
+    fontWeight: "bold",
+  },
   closeButton: {
     marginTop: 30,
     backgroundColor: "#A47148",
-    paddingVertical: 12,
-    paddingHorizontal: 30,
+    paddingVertical: 10,
+    paddingHorizontal: 25,
     borderRadius: 25,
     elevation: 5,
   },
@@ -256,22 +380,4 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "600",
   },
-viewButton: {
-    marginTop: 30,
-    backgroundColor: "#A47148",
-    paddingVertical: 12,
-    paddingHorizontal: 30,
-    borderRadius: 25,
-    alignSelf: "center",
-    elevation: 5,
-},
-viewButtonText: {
-  color: "#fff",
-  fontWeight: "600",
-  fontSize: 16,
-},
-
-
 });
-
-export default CatDrinkScreen;

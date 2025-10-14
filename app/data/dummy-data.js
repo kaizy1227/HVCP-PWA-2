@@ -241,7 +241,19 @@ export const INGREDIENTS = [
 ];
 
 export const DRINKS = [
-    new Drink("100", ["1"], "Kombucha chanh dâu", require('../images/catdrink/Drink_GV_An_webp/37. Kombucha chanh dâu.webp')),
+    new Drink(
+      "100",
+      ["1"],
+      "Kombucha chanh dâu",
+      require("../images/catdrink/Drink_GV_An_webp/37. Kombucha chanh dâu.webp"),
+      `- 100ml Kombucha
+    - 30g mứt dâu Lermao
+    - 10g chanh thơm
+    - 30ml trà lục hoa nhài
+    - 50g dâu tươi
+    - 30g đường`,
+    ["SP000552","SP000012"] // 🧠 liên kết đến các nguyên liệu
+    ),
 
     new Drink("101", ["1"], "Hồng hoa lệ chi", require('../images/catdrink/Drink_GV_An_webp/1. Hồng hoa lệ chi.webp')),
     new Drink("102", ["1"], "Cung hỷ phát tài", require('../images/catdrink/Drink_GV_An_webp/2. Cung hỷ phát tài.webp')),
