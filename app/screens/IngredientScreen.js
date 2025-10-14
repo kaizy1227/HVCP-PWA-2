@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import {
   View,
   Text,
@@ -19,35 +19,29 @@ import {
 } from "react-native-responsive-screen";
 import { SERVICES, INGREDIENTS, CATINGREDIENTS } from "../data/dummy-data";
 import { useNavigation } from "@react-navigation/native";
-
+import { CartContext } from "../context/CartContext";
 
 const IngredientScreen = ({ route, navigation }) => {
   const mccID = route.params.serviceId;
   const { width } = Dimensions.get("window");
+  const { addToCart, cartItems } = useContext(CartContext);
 
   const isTablet = width >= 768 && width < 1024;
   const isDesktop = width >= 1024;
 
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
-  const [selectedImageUrl, setSelectedImageUrl] = useState(null);
-  const [selectedTitle, setSelectedTitle] = useState("");
-  const [selectedPrice, setSelectedPrice] = useState("");
-  const [selectedPackaging, setSelectedPackaging] = useState("");
-  const [selectedMaterial, setSelectedMaterial] = useState("");
+  const [selectedIngredient, setSelectedIngredient] = useState(null);
   const [quantity, setQuantity] = useState("1");
-  const [cartItems, setCartItems] = useState([]);
-
   const [searchText, setSearchText] = useState("");
   const [filteredIngredients, setFilteredIngredients] = useState([]);
 
   const sidebarAnim = useRef(new Animated.Value(0)).current;
+  const [sidebarVisible, setSidebarVisible] = useState(true);
 
   const displayedIngredients = INGREDIENTS.filter((ingredient) =>
     ingredient.catingredientIds.includes(selectedCategory)
   );
-
-
 
   const handleSearch = () => {
     const text = searchText.toLowerCase().trim();
@@ -70,12 +64,31 @@ const IngredientScreen = ({ route, navigation }) => {
       navigation.setOptions({
         title: serviceTitle,
         headerTintColor: "white",
-        headerStyle: {
-          backgroundColor: "rgba(74, 35, 6, 0.67)",
-        },
+        headerStyle: { backgroundColor: "rgba(74, 35, 6, 0.67)" },
       });
     }
   }, [mccID, navigation]);
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <TouchableOpacity
+          onPress={() => navigation.navigate("Giỏ hàng")}
+          style={{
+            backgroundColor: "#F4C542",
+            paddingVertical: 8,
+            paddingHorizontal: 12,
+            borderRadius: 8,
+            marginRight: 10,
+          }}
+        >
+          <Text style={{ fontWeight: "bold", color: "#4A2306" }}>
+            🛒 Xem giỏ hàng ({cartItems.length})
+          </Text>
+        </TouchableOpacity>
+      ),
+    });
+  }, [cartItems]);
 
   const toggleSidebar = () => {
     const toValue = sidebarVisible ? -wp("70%") : 0;
@@ -86,14 +99,8 @@ const IngredientScreen = ({ route, navigation }) => {
     }).start(() => setSidebarVisible(!sidebarVisible));
   };
 
-  const [sidebarVisible, setSidebarVisible] = useState(true);
-
   const handlePress = (item) => {
-    setSelectedImageUrl(item.imageUrl);
-    setSelectedTitle(item.title);
-    setSelectedPrice(item.price);
-    setSelectedPackaging(item.packaging);
-    setSelectedMaterial(item.material);
+    setSelectedIngredient(item);
     setQuantity("1");
     setModalVisible(true);
   };
@@ -105,15 +112,20 @@ const IngredientScreen = ({ route, navigation }) => {
       return;
     }
 
-    const newItem = {
-      title: selectedTitle,
-      price: selectedPrice,
-      quantity: qty,
-      total: parseFloat(selectedPrice) * qty,
-    };
+    const numericPrice = parseInt(
+      String(selectedIngredient.price).replace(/[^\d]/g, "")
+    );
 
-    setCartItems((prev) => [...prev, newItem]);
-    Alert.alert("🛒 Thành công", `${selectedTitle} đã được thêm vào giỏ hàng!`);
+    addToCart({
+      id: selectedIngredient.id,
+      title: selectedIngredient.title,
+      price: numericPrice,
+      quantity: qty,
+      imageUrl: selectedIngredient.imageUrl,
+      catingredientIds: selectedIngredient.catingredientIds, // ✅ giữ để hiển thị danh mục đúng
+    });
+
+    Alert.alert("🛒 Thành công", `${selectedIngredient.title} đã được thêm!`);
     setModalVisible(false);
   };
 
@@ -139,20 +151,6 @@ const IngredientScreen = ({ route, navigation }) => {
             },
           ]}
         >
-
-        <View style={{ alignItems: "flex-end", marginBottom: 10 }}>
-          <TouchableOpacity
-            onPress={() => navigation.navigate("Giỏ hàng", { cartItems })}
-            style={{
-              backgroundColor: "#F4C542",
-              padding: 10,
-              borderRadius: 8,
-            }}
-          >
-            <Text style={{ fontWeight: "bold" }}>🛒 Xem giỏ hàng ({cartItems.length})</Text>
-          </TouchableOpacity>
-        </View>
-
           <FlatList
             data={CATINGREDIENTS}
             keyExtractor={(item) => item.id}
@@ -200,7 +198,7 @@ const IngredientScreen = ({ route, navigation }) => {
                 : displayedIngredients
             }
             keyExtractor={(item) => item.id}
-            numColumns={isDesktop ? 2 : isTablet ? 3 : 2}
+            numColumns={isDesktop ? 3 : isTablet ? 2 : 1}
             renderItem={({ item }) => (
               <TouchableOpacity
                 style={styles.card}
@@ -215,11 +213,9 @@ const IngredientScreen = ({ route, navigation }) => {
                   style={styles.image}
                   resizeMode="cover"
                 />
-                <View style={{ padding: isDesktop ? 20 : 10 }}>
+                <View style={{ padding: 10 }}>
                   <Text style={styles.cardTitle}>{item.title}</Text>
-                  <Text style={styles.cardText}>Giá: {item.price}</Text>
-                  <Text style={styles.cardText}>Quy cách: {item.packaging}</Text>
-                  <Text style={styles.cardText}>Thành phần: {item.material}</Text>
+                  <Text style={styles.cardText}>Giá: {item.price}₫</Text>
                 </View>
               </TouchableOpacity>
             )}
@@ -235,62 +231,73 @@ const IngredientScreen = ({ route, navigation }) => {
       >
         <View style={styles.modalContainer}>
           <ScrollView contentContainerStyle={styles.scrollViewContent}>
-            <Image
-              source={
-                typeof selectedImageUrl === "string"
-                  ? { uri: selectedImageUrl }
-                  : selectedImageUrl
-              }
-              style={styles.modalImage}
-              resizeMode="contain"
-            />
-            <Text style={styles.modalTitle}>{selectedTitle}</Text>
-            <Text style={styles.modalInfo}>Giá: {selectedPrice}</Text>
-            <Text style={styles.modalInfo}>
-              Quy cách đóng gói: {selectedPackaging}
-            </Text>
-            <Text style={styles.modalInfo}>
-              Thành phần nguyên liệu: {selectedMaterial}
-            </Text>
+            {selectedIngredient && (
+              <>
+                <Image
+                  source={
+                    typeof selectedIngredient.imageUrl === "string"
+                      ? { uri: selectedIngredient.imageUrl }
+                      : selectedIngredient.imageUrl
+                  }
+                  style={styles.modalImage}
+                  resizeMode="contain"
+                />
+                <Text style={styles.modalTitle}>
+                  {selectedIngredient.title}
+                </Text>
+                <Text style={styles.modalInfo}>
+                  Giá: {selectedIngredient.price}₫
+                </Text>
 
-            {/* Nhập số lượng (với nút tăng giảm) */}
-            <View style={styles.quantityRow}>
-              <TouchableOpacity
-                style={styles.qtyButton}
-                onPress={() => setQuantity((prev) => (parseInt(prev) > 1 ? (parseInt(prev) - 1).toString() : "1"))}
-              >
-                <Text style={styles.qtyButtonText}>-</Text>
-              </TouchableOpacity>
+                <View style={styles.quantityRow}>
+                  <TouchableOpacity
+                    style={styles.qtyButton}
+                    onPress={() =>
+                      setQuantity((prev) =>
+                        Math.max(1, parseInt(prev) - 1).toString()
+                      )
+                    }
+                  >
+                    <Text style={styles.qtyButtonText}>-</Text>
+                  </TouchableOpacity>
 
-              <View style={styles.qtyBox}>
-                <Text style={styles.qtyText}>{quantity}</Text>
-              </View>
+                  <View style={styles.qtyBox}>
+                    <Text style={styles.qtyText}>{quantity}</Text>
+                  </View>
 
-              <TouchableOpacity
-                style={styles.qtyButton}
-                onPress={() => setQuantity((parseInt(quantity) + 1).toString())}
-              >
-                <Text style={styles.qtyButtonText}>+</Text>
-              </TouchableOpacity>
+                  <TouchableOpacity
+                    style={styles.qtyButton}
+                    onPress={() =>
+                      setQuantity((parseInt(quantity) + 1).toString())
+                    }
+                  >
+                    <Text style={styles.qtyButtonText}>+</Text>
+                  </TouchableOpacity>
+                </View>
 
-              <TouchableOpacity onPress={handleAddToCart} style={styles.addButtonHorizontal}>
-                <Text style={styles.addButtonText}>🛒 Thêm vào giỏ hàng</Text>
-              </TouchableOpacity>
-            </View>
+                <TouchableOpacity
+                  onPress={handleAddToCart}
+                  style={styles.addButtonHorizontal}
+                >
+                  <Text style={styles.addButtonText}>🛒 Thêm vào giỏ hàng</Text>
+                </TouchableOpacity>
 
-
-            <TouchableOpacity
-              onPress={() => setModalVisible(false)}
-              style={styles.closeButton}
-            >
-              <Text style={styles.closeButtonText}>Đóng</Text>
-            </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => setModalVisible(false)}
+                  style={styles.closeButton}
+                >
+                  <Text style={styles.closeButtonText}>Đóng</Text>
+                </TouchableOpacity>
+              </>
+            )}
           </ScrollView>
         </View>
       </Modal>
     </View>
   );
 };
+
+export default IngredientScreen;
 
 const styles = StyleSheet.create({
   toggleButton: {
@@ -369,6 +376,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#fff",
     marginTop: 4,
+    textAlign: "center",
   },
   modalContainer: {
     flex: 1,
@@ -399,39 +407,6 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     textAlign: "center",
   },
-  quantityInput: {
-    borderWidth: 1,
-    borderColor: "#fff",
-    backgroundColor: "#fff",
-    borderRadius: 8,
-    width: 100,
-    padding: 8,
-    marginVertical: 10,
-    textAlign: "center",
-  },
-  addButton: {
-    backgroundColor: "#fff",
-    paddingVertical: 12,
-    paddingHorizontal: 30,
-    borderRadius: 25,
-    marginTop: 10,
-  },
-  addButtonText: {
-    color: "#fff",
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-  closeButton: {
-    marginTop: 20,
-    backgroundColor: "#A47148",
-    paddingVertical: 10,
-    paddingHorizontal: 30,
-    borderRadius: 25,
-  },
-  closeButtonText: {
-    color: "#fff",
-    fontSize: 16,
-  },
   quantityRow: {
     flexDirection: "row",
     alignItems: "center",
@@ -439,7 +414,6 @@ const styles = StyleSheet.create({
     marginVertical: 15,
     gap: 10,
   },
-
   qtyButton: {
     backgroundColor: "#A47148",
     borderRadius: 8,
@@ -448,13 +422,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-
   qtyButtonText: {
     color: "#fff",
     fontSize: 20,
     fontWeight: "bold",
   },
-
   qtyBox: {
     backgroundColor: "#fff",
     borderRadius: 8,
@@ -465,22 +437,33 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-
   qtyText: {
     fontSize: 16,
     fontWeight: "600",
     color: "#333",
   },
-
   addButtonHorizontal: {
     backgroundColor: "#A47148",
-    paddingVertical: 10,
-    paddingHorizontal: 20,
+    paddingVertical: 12,
+    paddingHorizontal: 25,
     borderRadius: 8,
-    marginLeft: 10,
-    borderWidth: 1,
+    marginTop: 10,
   },
-
+  addButtonText: {
+    color: "#fff",
+    fontWeight: "bold",
+    fontSize: 16,
+  },
+  closeButton: {
+    marginTop: 20,
+    backgroundColor: "#F4C542",
+    paddingVertical: 10,
+    paddingHorizontal: 30,
+    borderRadius: 25,
+  },
+  closeButtonText: {
+    color: "#4A2306",
+    fontSize: 16,
+    fontWeight: "bold",
+  },
 });
-
-export default IngredientScreen;

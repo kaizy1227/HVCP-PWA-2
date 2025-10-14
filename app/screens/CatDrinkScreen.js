@@ -129,6 +129,13 @@ const CatDrinkScreen = ({ route, navigation }) => {
                 />
                 <View style={{ padding: isDesktop ? 20 : 10 }}>
                   <Text style={styles.cardTitle}>{item.title}</Text>
+                  {/* ✅ Thêm nút "Xem" ở đây */}
+                          <TouchableOpacity
+                            onPress={() => handlePress(item)}
+                            style={styles.viewButton}
+                          >
+                            <Text style={styles.viewButtonText}>Xem chi tiết</Text>
+                          </TouchableOpacity>
                 </View>
               </TouchableOpacity>
             )}
@@ -150,6 +157,7 @@ const CatDrinkScreen = ({ route, navigation }) => {
               resizeMode="contain"
             />
             <Text style={styles.modalTitle}>{selectedTitle}</Text>
+
             <TouchableOpacity
               onPress={() => setModalVisible(false)}
               style={styles.closeButton}
@@ -201,9 +209,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   image: {
-    width: "100%",
-    height: hp("25%"),
+    width: wp("18%"),
+    height: hp("18%"),
     borderRadius: 10,
+    alignSelf: "center",
   },
   cardTitle: {
     fontSize: 16,
@@ -247,6 +256,22 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "600",
   },
+viewButton: {
+    marginTop: 30,
+    backgroundColor: "#A47148",
+    paddingVertical: 12,
+    paddingHorizontal: 30,
+    borderRadius: 25,
+    alignSelf: "center",
+    elevation: 5,
+},
+viewButtonText: {
+  color: "#fff",
+  fontWeight: "600",
+  fontSize: 16,
+},
+
+
 });
 
 export default CatDrinkScreen;

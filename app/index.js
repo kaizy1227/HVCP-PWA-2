@@ -13,6 +13,8 @@ import MarketingScreen from "./screens/MarketingScreen";
 import ServiceReviewScreen from "./screens/ServiceReviewScreen";
 import PaymentScreen from "./screens/PaymentScreen";
 import CartScreen from "./screens/CartScreen";
+import { CartProvider } from "./context/CartContext";
+import LoginScreen from "./screens/LoginScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -34,63 +36,64 @@ if (typeof window !== "undefined") {
     });
   }
 }
-
 export default function Index() {
   return (
     <>
       <StatusBar style="dark" />
-      <NavigationContainer independent={true}>
-        <Stack.Navigator
-          screenOptions={{
-            headerStyle: { backgroundColor: "#f6f6f6" },
-            headerTintColor: "white",
-            contentStyle: { backgroundColor: "#f6f6f6" },
-          }}
-        >
-          <Stack.Screen
-            options={{
-              headerTitle: () => (
-                <View style={{ alignItems: "center" }}>
-                  <Image
-                    source={{
-                      uri: "https://hocviencaphe.vn/wp-content/uploads/2019/07/logo310x95-min.png",
-                    }}
-                    style={{ width: 300, height: 55 }}
-                    resizeMode="contain"
-                  />
-                </View>
-              ),
+      <CartProvider>
+        <NavigationContainer independent={true}>
+          <Stack.Navigator
+            initialRouteName="Đăng nhập"
+            screenOptions={{
+              headerStyle: { backgroundColor: "#f6f6f6" },
+              headerTintColor: "white",
+              contentStyle: { backgroundColor: "#f6f6f6" },
             }}
-            name="Học Viện Cà Phê"
-            component={ServicesScreen}
-          />
-          <Stack.Screen
-            name="Khóa Học Pha Chế"
-            component={CoursesOverviewScreen}
-          />
-          <Stack.Screen name="Máy Pha Chế" component={MachineScreen} />
-          <Stack.Screen name="Danh Mục Đồ Uống" component={CatDrinkScreen} />
-          <Stack.Screen name="Nguyên Liệu Pha Chế" component={IngredientScreen} />
-          <Stack.Screen name="Trọn Bộ Dịch Vụ" component={FullServiceScreen} />
-          <Stack.Screen name="Marketing" component={MarketingScreen} />
-          <Stack.Screen
-            name="Form Đánh Giá Dịch Vụ"
-            component={ServiceReviewScreen}
-          />
-          <Stack.Screen name="Thanh Toán Dịch Vụ" component={PaymentScreen} />
-          <Stack.Screen
-            name="Giỏ hàng"
-            component={CartScreen}
-            options={{
-              title: "GIỎ HÀNG",
-              headerStyle: { backgroundColor: "rgba(74,35,6,0.9)" },
-              headerTintColor: "#fff",
-              headerTitleStyle: { fontWeight: "bold", textTransform: "uppercase" },
-            }}
-          />
+          >
+            <Stack.Screen
+              name="Đăng nhập"
+              component={LoginScreen}
+              options={{ headerShown: false }}
+            />
 
-        </Stack.Navigator>
-      </NavigationContainer>
+            <Stack.Screen
+              name="Học Viện Cà Phê"
+              component={ServicesScreen}
+              options={{
+                headerTitle: () => (
+                  <View style={{ alignItems: "center" }}>
+                    <Image
+                      source={{
+                        uri: "https://hocviencaphe.vn/wp-content/uploads/2019/07/logo310x95-min.png",
+                      }}
+                      style={{ width: 300, height: 55 }}
+                      resizeMode="contain"
+                    />
+                  </View>
+                ),
+              }}
+            />
+            <Stack.Screen name="Khóa Học Pha Chế" component={CoursesOverviewScreen} />
+            <Stack.Screen name="Máy Pha Chế" component={MachineScreen} />
+            <Stack.Screen name="Danh Mục Đồ Uống" component={CatDrinkScreen} />
+            <Stack.Screen name="Nguyên Liệu Pha Chế" component={IngredientScreen} />
+            <Stack.Screen name="Trọn Bộ Dịch Vụ" component={FullServiceScreen} />
+            <Stack.Screen name="Marketing" component={MarketingScreen} />
+            <Stack.Screen name="Form Đánh Giá Dịch Vụ" component={ServiceReviewScreen} />
+            <Stack.Screen name="Thanh Toán Dịch Vụ" component={PaymentScreen} />
+            <Stack.Screen
+              name="Giỏ hàng"
+              component={CartScreen}
+              options={{
+                title: "GIỎ HÀNG",
+                headerStyle: { backgroundColor: "rgba(74,35,6,0.9)" },
+                headerTintColor: "#fff",
+                headerTitleStyle: { fontWeight: "bold", textTransform: "uppercase" },
+              }}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </CartProvider>
     </>
   );
 }
