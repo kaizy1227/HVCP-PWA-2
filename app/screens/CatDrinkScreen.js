@@ -126,6 +126,15 @@ const CatDrinkScreen = ({ route, navigation }) => {
             data={displayedDrinks}
             keyExtractor={(item) => item.id}
             numColumns={isDesktop ? 2 : isTablet ? 3 : 3}
+            initialNumToRender={6}          // Chỉ render 6 item đầu
+            maxToRenderPerBatch={5}         // Render thêm từng nhóm nhỏ
+            windowSize={5}                  // Giới hạn vùng viewport
+            removeClippedSubviews={true}    // Giải phóng item ngoài màn hình
+            getItemLayout={(data, index) => ({
+              length: hp("30%"),            // Ước lượng chiều cao 1 item
+              offset: hp("30%") * index,
+              index,
+            })}
             renderItem={({ item }) => (
               <TouchableOpacity
                 style={styles.card}
@@ -139,6 +148,8 @@ const CatDrinkScreen = ({ route, navigation }) => {
                 />
                 <View style={{ padding: isDesktop ? 20 : 10 }}>
                   <Text style={styles.cardTitle}>{item.title}</Text>
+
+                  {/* Nút xem chi tiết */}
                   <TouchableOpacity
                     onPress={() => handlePress(item)}
                     style={styles.viewButton}
