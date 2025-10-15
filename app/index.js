@@ -27,14 +27,19 @@ if (typeof window !== "undefined") {
     document.head.appendChild(link);
   }
 
-  if ("serviceWorker" in navigator) {
-    window.addEventListener("load", () => {
-      navigator.serviceWorker
-        .register("/service-worker.js")
-        .then((reg) => console.log("✅ Service Worker registered:", reg))
-        .catch((err) => console.error("❌ Service Worker failed:", err));
-    });
-  }
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.getRegistrations().then((regs) => {
+        regs.forEach((r) => r.unregister());
+      });
+
+      window.addEventListener("load", () => {
+        navigator.serviceWorker
+          .register("/service-worker.js", { scope: "/" })
+          .then(() => console.log("✅ SW registered"))
+          .catch((err) => console.log("❌ SW error:", err));
+      });
+    }
+
 }
 export default function Index() {
   return (
