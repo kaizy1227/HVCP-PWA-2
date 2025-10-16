@@ -11,6 +11,7 @@ import {
 import { SERVICES } from "../data/dummy-data";
 import { CartContext } from "../context/CartContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import HeaderRight from "../components/HeaderRight";
 
 function ServicesScreen({ navigation }) {
   const { cartItems } = useContext(CartContext);
@@ -35,83 +36,13 @@ function ServicesScreen({ navigation }) {
   };
 
   // 🛒 + 🚪 Gắn nút trên header
-  useEffect(() => {
-    navigation.setOptions({
-    headerRight: () => (
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          gap: 15,
-          marginRight: 10,
-        }}
-      >
-        {/* 🛒 Giỏ hàng */}
-        <TouchableOpacity
-          onPress={() => navigation.navigate("Giỏ hàng")}
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            backgroundColor: "#112D4E",
-            paddingVertical: 8,
-            paddingHorizontal: 12,
-            borderRadius: 8,
-          }}
-        >
-          <Text style={{ color: "#fff", fontWeight: "bold", marginRight: 6 }}>
-            🛒
-          </Text>
-          {cartItems.length > 0 && (
-            <View
-              style={{
-                position: "absolute",
-                top: -4,
-                right: -4,
-                backgroundColor: "red",
-                borderRadius: 10,
-                paddingHorizontal: 5,
-                paddingVertical: 1,
-              }}
-            >
-              <Text style={{ color: "#fff", fontSize: 10 }}>
-                {cartItems.length}
-              </Text>
-            </View>
-          )}
-          <Text style={{ color: "#fff", fontWeight: "bold" }}>Mua hàng</Text>
-        </TouchableOpacity>
-
-        {/* 👤 Tên người dùng */}
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <Text style={{ fontSize: 18 }}>👤</Text>
-          <Text
-            style={{
-              marginLeft: 6,
-              color: "#333",
-              fontWeight: "600",
-              fontSize: 14,
-            }}
-          >
-            {userName || "Tài khoản"}
-          </Text>
-        </View>
-
-        {/* 🚪 Đăng xuất */}
-        <TouchableOpacity
-          onPress={handleLogout}
-          style={{
-            backgroundColor: "#A47148",
-            paddingVertical: 8,
-            paddingHorizontal: 12,
-            borderRadius: 8,
-          }}
-        >
-          <Text style={{ color: "#fff", fontWeight: "bold" }}>Đăng xuất</Text>
-        </TouchableOpacity>
-      </View>
-    ),
+useEffect(() => {
+  navigation.setOptions({
+    headerRight: () => <HeaderRight />,
   });
-}, [cartItems, userName]);
+}, [navigation]);
+
+
 
   // ⚙️ Render từng dịch vụ
   function renderServiceItem(itemData) {

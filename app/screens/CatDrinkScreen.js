@@ -10,6 +10,7 @@ import {
   Modal,
   useWindowDimensions,
   Animated,
+  Easing,
 } from "react-native";
 import { SERVICES, CATDRINKS, DRINKS, INGREDIENTS } from "../data/dummy-data";
 import {
@@ -17,24 +18,25 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { CartContext } from "../context/CartContext";
+import HeaderRight from "../components/HeaderRight";
 
 const CatDrinkScreen = ({ route, navigation }) => {
   const seID = route.params.serviceId;
   const { width } = useWindowDimensions();
-
   const isTablet = width >= 768 && width < 1024;
   const isDesktop = width >= 1024;
+
+  const [ingredientModalVisible, setIngredientModalVisible] = useState(false);
+  const [selectedIngredient, setSelectedIngredient] = useState(null);
+  const [slideAnim] = useState(new Animated.Value(1000)); // hiệu ứng trượt
 
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedDrink, setSelectedDrink] = useState(null);
-  const [selectedImageUrl, setSelectedImageUrl] = useState(null);
-  const [selectedTitle, setSelectedTitle] = useState("");
-  const [selectedRecipe, setSelectedRecipe] = useState("");
   const [sidebarVisible, setSidebarVisible] = useState(true);
   const sidebarAnim = useRef(new Animated.Value(0)).current;
+  const { addToCart, cartItems } = useContext(CartContext);
 
-  const { addToCart } = useContext(CartContext);
 
   const displayedDrinks = DRINKS.filter((drink) =>
     drink.catdrinkIds.includes(selectedCategory)
@@ -51,6 +53,15 @@ const CatDrinkScreen = ({ route, navigation }) => {
     }
   }, [seID, navigation]);
 
+  // ✅ Hiển thị nút "Xem giỏ hàng" ở góc phải header
+useEffect(() => {
+  navigation.setOptions({
+    headerRight: () => <HeaderRight />,
+  });
+}, [navigation]);
+
+
+
   const toggleSidebar = () => {
     const toValue = sidebarVisible ? -wp("70%") : 0;
     Animated.timing(sidebarAnim, {
@@ -61,20 +72,50 @@ const CatDrinkScreen = ({ route, navigation }) => {
   };
 
   const handlePress = (item) => {
-    setSelectedDrink(item); // ✅ Lưu đối tượng Drink đang chọn
-    setSelectedImageUrl(item.imageUrl);
-    setSelectedTitle(item.title);
-    setSelectedRecipe(item.recipe || "Chưa có công thức.");
+    setSelectedDrink(item);
     setModalVisible(true);
   };
 
   const linkedIngredients = INGREDIENTS.filter((ing) =>
-    (selectedDrink?.ingredientRefs || []).includes(ing.id)
+    (selectedDrink?.ingredientRefs || []).some(
+      (ref) => ref?.trim().toLowerCase() === ing.id?.trim().toLowerCase()
+    )
   );
+
+  const getImageUri = (path) => {
+    if (!path) return null;
+    return path.startsWith("http") ? path : window.location.origin + path;
+  };
+
+  // 🔄 Hiệu ứng trượt cho modal phụ
+  const openIngredientModal = (ingredient) => {
+    setSelectedIngredient(ingredient);
+    setIngredientModalVisible(true);
+    setModalVisible(false);
+
+    slideAnim.setValue(width); // bắt đầu trượt từ phải
+    Animated.timing(slideAnim, {
+      toValue: 0,
+      duration: 350,
+      easing: Easing.out(Easing.ease),
+      useNativeDriver: true,
+    }).start();
+  };
+
+  const closeIngredientModal = () => {
+    Animated.timing(slideAnim, {
+      toValue: width,
+      duration: 300,
+      easing: Easing.in(Easing.ease),
+      useNativeDriver: true,
+    }).start(() => {
+      setIngredientModalVisible(false);
+      setModalVisible(true);
+    });
+  };
 
   return (
     <View style={{ flex: 1, flexDirection: isDesktop ? "row" : "column" }}>
-      {/* Toggle Sidebar Button */}
       {!isDesktop && (
         <TouchableOpacity onPress={toggleSidebar} style={styles.toggleButton}>
           <Text style={{ color: "white" }}>
@@ -83,7 +124,6 @@ const CatDrinkScreen = ({ route, navigation }) => {
         </TouchableOpacity>
       )}
 
-      {/* Sidebar */}
       {(!isDesktop || sidebarVisible) && (
         <Animated.View
           style={[
@@ -113,7 +153,6 @@ const CatDrinkScreen = ({ route, navigation }) => {
         </Animated.View>
       )}
 
-      {/* Main Content */}
       <View
         style={{
           flex: 1,
@@ -126,15 +165,6 @@ const CatDrinkScreen = ({ route, navigation }) => {
             data={displayedDrinks}
             keyExtractor={(item) => item.id}
             numColumns={isDesktop ? 2 : isTablet ? 3 : 3}
-            initialNumToRender={6}          // Chỉ render 6 item đầu
-            maxToRenderPerBatch={5}         // Render thêm từng nhóm nhỏ
-            windowSize={5}                  // Giới hạn vùng viewport
-            removeClippedSubviews={true}    // Giải phóng item ngoài màn hình
-            getItemLayout={(data, index) => ({
-              length: hp("30%"),            // Ước lượng chiều cao 1 item
-              offset: hp("30%") * index,
-              index,
-            })}
             renderItem={({ item }) => (
               <TouchableOpacity
                 style={styles.card}
@@ -142,14 +172,12 @@ const CatDrinkScreen = ({ route, navigation }) => {
                 activeOpacity={0.85}
               >
                 <Image
-                  source={item.imageUrl}
+                  source={{ uri: getImageUri(item.thumbnailUrl) }}
                   style={styles.image}
                   resizeMode="cover"
                 />
                 <View style={{ padding: isDesktop ? 20 : 10 }}>
                   <Text style={styles.cardTitle}>{item.title}</Text>
-
-                  {/* Nút xem chi tiết */}
                   <TouchableOpacity
                     onPress={() => handlePress(item)}
                     style={styles.viewButton}
@@ -164,7 +192,7 @@ const CatDrinkScreen = ({ route, navigation }) => {
         )}
       </View>
 
-      {/* Modal chi tiết món */}
+      {/* Modal chính: chi tiết đồ uống */}
       <Modal
         visible={modalVisible}
         animationType="slide"
@@ -173,18 +201,18 @@ const CatDrinkScreen = ({ route, navigation }) => {
         <View style={styles.modalContainer}>
           <ScrollView contentContainerStyle={styles.scrollViewContent}>
             <Image
-              source={selectedImageUrl}
+              source={{ uri: getImageUri(selectedDrink?.fullImageUrl) }}
               style={styles.modalImage}
               resizeMode="contain"
             />
-            <Text style={styles.modalTitle}>{selectedTitle}</Text>
+            <Text style={styles.modalTitle}>{selectedDrink?.title}</Text>
 
-            {selectedRecipe ? (
+            {selectedDrink?.recipe && (
               <View style={styles.recipeBox}>
                 <Text style={styles.recipeTitle}>🍹 Công thức pha chế</Text>
-                <Text style={styles.recipeText}>{selectedRecipe}</Text>
+                <Text style={styles.recipeText}>{selectedDrink.recipe}</Text>
               </View>
-            ) : null}
+            )}
 
             {linkedIngredients.length > 0 && (
               <View style={styles.relatedBox}>
@@ -192,22 +220,16 @@ const CatDrinkScreen = ({ route, navigation }) => {
                 {linkedIngredients.map((ing) => (
                   <View key={ing.id} style={styles.ingredientItem}>
                     <Image
-                      source={ing.imageUrl}
+                      source={{ uri: getImageUri(ing.imageUrl) }}
                       style={styles.ingredientImage}
+                      resizeMode="cover"
                     />
                     <Text style={styles.ingredientName}>{ing.title}</Text>
                     <TouchableOpacity
                       style={styles.addButton}
-                      onPress={() =>
-                        addToCart({
-                          title: ing.title,
-                          price: parseInt(ing.price.replace(/[^\d]/g, "")),
-                          quantity: 1,
-                          imageUrl: ing.imageUrl,
-                        })
-                      }
+                      onPress={() => openIngredientModal(ing)}
                     >
-                      <Text style={styles.addButtonText}>+ Giỏ hàng</Text>
+                      <Text style={styles.addButtonText}>Xem</Text>
                     </TouchableOpacity>
                   </View>
                 ))}
@@ -217,13 +239,110 @@ const CatDrinkScreen = ({ route, navigation }) => {
             <TouchableOpacity
               onPress={() => setModalVisible(false)}
               style={styles.closeButton}
-              activeOpacity={0.85}
             >
               <Text style={styles.closeButtonText}>Đóng</Text>
             </TouchableOpacity>
           </ScrollView>
         </View>
       </Modal>
+
+      {/* Modal phụ: chi tiết nguyên liệu với hiệu ứng trượt */}
+{ingredientModalVisible && (
+  <Animated.View
+    style={[
+      styles.animatedModal,
+      { transform: [{ translateX: slideAnim }] },
+    ]}
+  >
+    <View style={styles.modalContainer}>
+      <ScrollView contentContainerStyle={styles.scrollViewContent}>
+        {selectedIngredient && (
+          <>
+            <Image
+              source={{ uri: getImageUri(selectedIngredient.imageUrl) }}
+              style={styles.modalImage}
+              resizeMode="contain"
+            />
+            <Text style={styles.modalTitle}>{selectedIngredient.title}</Text>
+            <Text style={styles.recipeText}>
+              Giá: {selectedIngredient.price} ₫
+            </Text>
+            <Text style={styles.recipeText}>
+              Quy cách: {selectedIngredient.unit}
+            </Text>
+
+            {/* Chọn số lượng */}
+            <View style={styles.quantityRow}>
+              <TouchableOpacity
+                style={styles.qtyButton}
+                onPress={() =>
+                  setSelectedIngredient((prev) => ({
+                    ...prev,
+                    quantity: Math.max(1, (prev.quantity || 1) - 1),
+                  }))
+                }
+              >
+                <Text style={styles.qtyButtonText}>-</Text>
+              </TouchableOpacity>
+
+              <View style={styles.qtyBox}>
+                <Text style={styles.qtyText}>
+                  {selectedIngredient.quantity || 1}
+                </Text>
+              </View>
+
+              <TouchableOpacity
+                style={styles.qtyButton}
+                onPress={() =>
+                  setSelectedIngredient((prev) => ({
+                    ...prev,
+                    quantity: (prev.quantity || 1) + 1,
+                  }))
+                }
+              >
+                <Text style={styles.qtyButtonText}>+</Text>
+              </TouchableOpacity>
+            </View>
+
+            {/* Nút thêm giỏ hàng */}
+            <TouchableOpacity
+              style={styles.addButtonHorizontal}
+              onPress={() => {
+                const numericPrice = parseInt(
+                  String(selectedIngredient.price).replace(/[^\d]/g, "")
+                );
+                const quantity = selectedIngredient.quantity || 1;
+
+                addToCart({
+                  id: selectedIngredient.id,
+                  title: selectedIngredient.title,
+                  price: numericPrice,
+                  quantity,
+                  imageUrl: selectedIngredient.imageUrl,
+                });
+
+                alert(
+                  `🛒 Đã thêm ${quantity} x ${selectedIngredient.title} vào giỏ hàng!`
+                );
+              }}
+            >
+              <Text style={styles.addButtonText}>🛒 Thêm vào giỏ hàng</Text>
+            </TouchableOpacity>
+
+            {/* Quay lại đồ uống */}
+            <TouchableOpacity
+              onPress={closeIngredientModal}
+              style={styles.closeButton}
+            >
+              <Text style={styles.closeButtonText}>← Quay lại đồ uống</Text>
+            </TouchableOpacity>
+          </>
+        )}
+      </ScrollView>
+    </View>
+  </Animated.View>
+)}
+      )}
     </View>
   );
 };
@@ -239,8 +358,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#4A2306",
     padding: 10,
     borderRadius: 5,
-    alignSelf: "flex-start",
-    margin: 10,
   },
   sidebar: {
     backgroundColor: "#f0f0f0",
@@ -286,7 +403,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 25,
     borderRadius: 25,
     alignSelf: "center",
-    elevation: 4,
   },
   viewButtonText: {
     color: "#fff",
@@ -304,7 +420,7 @@ const styles = StyleSheet.create({
   },
   modalImage: {
     width: wp("90%"),
-    height: hp("90%"),
+    height: hp("60%"),
     borderRadius: 12,
     marginBottom: 20,
   },
@@ -322,7 +438,6 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     padding: 15,
     width: "85%",
-    alignSelf: "center",
   },
   recipeTitle: {
     color: "#F4C542",
@@ -384,11 +499,62 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 25,
     borderRadius: 25,
-    elevation: 5,
   },
   closeButtonText: {
     color: "#fff",
     fontSize: 16,
     fontWeight: "600",
   },
+  addButtonHorizontal: {
+    backgroundColor: "#A47148",
+    paddingVertical: 12,
+    paddingHorizontal: 25,
+    borderRadius: 8,
+    marginTop: 10,
+  },
+  animatedModal: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: "rgba(74, 35, 6, 0.97)",
+    zIndex: 999,
+  },
+  quantityRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    marginVertical: 15,
+    gap: 10,
+  },
+  qtyButton: {
+    backgroundColor: "#A47148",
+    borderRadius: 8,
+    width: 35,
+    height: 35,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  qtyButtonText: {
+    color: "#fff",
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+  qtyBox: {
+    backgroundColor: "#fff",
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: "#ccc",
+    paddingVertical: 6,
+    paddingHorizontal: 20,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  qtyText: {
+    fontSize: 16,
+    fontWeight: "600",
+    color: "#333",
+  },
+
 });

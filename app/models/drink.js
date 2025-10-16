@@ -1,19 +1,20 @@
-import { image } from "react-native";
 class Drink {
   constructor(
     id,
     catdrinkIds,
     title,
-    imageUrl,
-    recipe,
+    thumbnailUrl,   // ảnh nhẹ hiển thị trong list
+    fullImageUrl,   // ảnh HD hiển thị trong modal
+    recipe = "",
     ingredientRefs = []
   ) {
     this.id = id;
     this.catdrinkIds = catdrinkIds;
     this.title = title;
-    this.imageUrl = imageUrl;
-    this.recipe=recipe;
-    this.ingredientRefs = ingredientRefs; // 🆕 danh sách ID nguyên liệu
+    this.thumbnailUrl = thumbnailUrl;
+    this.fullImageUrl = fullImageUrl;
+    this.recipe = recipe;
+    this.ingredientRefs = ingredientRefs;
   }
 }
 

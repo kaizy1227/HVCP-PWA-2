@@ -20,6 +20,8 @@ import {
 import { SERVICES, INGREDIENTS, CATINGREDIENTS } from "../data/dummy-data";
 import { useNavigation } from "@react-navigation/native";
 import { CartContext } from "../context/CartContext";
+import HeaderRight from "../components/HeaderRight";
+
 
 const IngredientScreen = ({ route, navigation }) => {
   const mccID = route.params.serviceId;
@@ -69,26 +71,12 @@ const IngredientScreen = ({ route, navigation }) => {
     }
   }, [mccID, navigation]);
 
-  useEffect(() => {
-    navigation.setOptions({
-      headerRight: () => (
-        <TouchableOpacity
-          onPress={() => navigation.navigate("Giỏ hàng")}
-          style={{
-            backgroundColor: "#F4C542",
-            paddingVertical: 8,
-            paddingHorizontal: 12,
-            borderRadius: 8,
-            marginRight: 10,
-          }}
-        >
-          <Text style={{ fontWeight: "bold", color: "#4A2306" }}>
-            🛒 Xem giỏ hàng ({cartItems.length})
-          </Text>
-        </TouchableOpacity>
-      ),
-    });
-  }, [cartItems]);
+useEffect(() => {
+  navigation.setOptions({
+    headerRight: () => <HeaderRight />,
+  });
+}, [navigation]);
+
 
   const toggleSidebar = () => {
     const toValue = sidebarVisible ? -wp("70%") : 0;
