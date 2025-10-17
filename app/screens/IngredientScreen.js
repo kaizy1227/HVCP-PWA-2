@@ -22,7 +22,6 @@ import { useNavigation } from "@react-navigation/native";
 import { CartContext } from "../context/CartContext";
 import HeaderRight from "../components/HeaderRight";
 
-
 const IngredientScreen = ({ route, navigation }) => {
   const mccID = route.params.serviceId;
   const { width } = Dimensions.get("window");
@@ -71,12 +70,11 @@ const IngredientScreen = ({ route, navigation }) => {
     }
   }, [mccID, navigation]);
 
-useEffect(() => {
-  navigation.setOptions({
-    headerRight: () => <HeaderRight />,
-  });
-}, [navigation]);
-
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => <HeaderRight />,
+    });
+  }, [navigation]);
 
   const toggleSidebar = () => {
     const toValue = sidebarVisible ? -wp("70%") : 0;
@@ -110,12 +108,30 @@ useEffect(() => {
       price: numericPrice,
       quantity: qty,
       imageUrl: selectedIngredient.imageUrl,
-      catingredientIds: selectedIngredient.catingredientIds, // ✅ giữ để hiển thị danh mục đúng
+      catingredientIds: selectedIngredient.catingredientIds,
     });
 
     Alert.alert("🛒 Thành công", `${selectedIngredient.title} đã được thêm!`);
-    setModalVisible(false);
+    setModalVisible(false); // ✅ Đóng modal sau khi thêm giỏ hàng
   };
+
+  const handleQuickAdd = (item) => {
+    const numericPrice = parseInt(String(item.price).replace(/[^\d]/g, ""));
+    addToCart({
+      id: item.id,
+      title: item.title,
+      price: numericPrice,
+      quantity: 1,
+      imageUrl: item.imageUrl,
+      catingredientIds: item.catingredientIds,
+    });
+    Alert.alert("🛒", `${item.title} đã được thêm vào giỏ hàng`);
+  };
+
+  const totalPrice = cartItems.reduce(
+    (sum, item) => sum + item.price * (item.quantity || 1),
+    0
+  );
 
   return (
     <View style={{ flex: 1, flexDirection: isDesktop ? "row" : "column" }}>
@@ -201,9 +217,17 @@ useEffect(() => {
                   style={styles.image}
                   resizeMode="cover"
                 />
-                <View style={{ padding: 10 }}>
+                <View style={{ padding: 10, alignItems: "center" }}>
                   <Text style={styles.cardTitle}>{item.title}</Text>
                   <Text style={styles.cardText}>Giá: {item.price}₫</Text>
+
+                  {/* ✅ Dấu + ngay dưới giá tiền */}
+                  <TouchableOpacity
+                    style={styles.addQuickButton}
+                    onPress={() => handleQuickAdd(item)}
+                  >
+                    <Text style={styles.addQuickButtonText}>＋</Text>
+                  </TouchableOpacity>
                 </View>
               </TouchableOpacity>
             )}
@@ -281,11 +305,29 @@ useEffect(() => {
           </ScrollView>
         </View>
       </Modal>
+
+      {/* 🧾 Tổng tiền giỏ hàng */}
+      {cartItems.length > 0 && (
+        <View style={styles.cartSummaryContainer}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("Giỏ hàng")}
+            style={styles.cartSummaryButton}
+          >
+            <View>
+              <Text style={styles.cartTotalText}>
+                🛒 Tổng cộng: {totalPrice.toLocaleString("vi-VN")} ₫
+              </Text>
+              <Text style={styles.cartHintText}>Nhấn để xem giỏ hàng</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+      )}
     </View>
   );
 };
 
 export default IngredientScreen;
+
 
 const styles = StyleSheet.create({
   toggleButton: {
@@ -346,13 +388,13 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(74, 35, 6, 0.67)",
     borderRadius: 10,
     margin: 10,
-    padding: 10,
     flex: 1,
+    overflow: "hidden",
+    position: "relative",
   },
   image: {
     width: "100%",
     height: hp("25%"),
-    borderRadius: 10,
   },
   cardTitle: {
     fontSize: 16,
@@ -363,8 +405,23 @@ const styles = StyleSheet.create({
   cardText: {
     fontSize: 14,
     color: "#fff",
-    marginTop: 4,
     textAlign: "center",
+  },
+  addQuickButton: {
+    position: "absolute",
+    top: 10,
+    right: 10,
+    backgroundColor: "#A47148",
+    width: 35,
+    height: 35,
+    borderRadius: 18,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  addQuickButtonText: {
+    color: "#fff",
+    fontSize: 24,
+    fontWeight: "bold",
   },
   modalContainer: {
     flex: 1,
@@ -454,4 +511,47 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
   },
+  cartSummaryContainer: {
+    position: "absolute",
+    bottom: 10,
+    left: 10,
+    zIndex: 50,
+    backgroundColor: "#4A2306",
+    borderRadius: 12,
+    shadowColor: "#000",
+    shadowOpacity: 0.2,
+    shadowOffset: { width: 0, height: 3 },
+    shadowRadius: 5,
+    elevation: 5,
+  },
+  cartSummaryButton: {
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 12,
+  },
+  cartTotalText: {
+    color: "#fff",
+    fontWeight: "bold",
+    fontSize: 18,
+  },
+  cartHintText: {
+    color: "#F4C542",
+    fontSize: 13,
+    marginTop: 4,
+    textAlign: "left",
+  },
+    addQuickButton: {
+      marginTop: 8,
+      backgroundColor: "#A47148",
+      borderRadius: 20,
+      width: 35,
+      height: 35,
+      alignItems: "center",
+      justifyContent: "center",
+    },
+    addQuickButtonText: {
+      color: "#fff",
+      fontSize: 22,
+      fontWeight: "bold",
+    },
 });
