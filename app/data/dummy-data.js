@@ -1,7 +1,8 @@
 import Service from "../models/service";
 import Course from "../models/course";
 import Topic from "../models/topic"
-import Machine from "../models/machine"
+import Machine from "../models/machine";
+import CatMachine from "../models/catmachine";
 import Equipment from "../models/equipment"
 import CatDrink from "../models/catdrink"
 import Drink from "../models/drink"
@@ -16,14 +17,14 @@ export const USERS = [
     username: "admin",
     password: "123",
     role: "admin",
-    name: "Quản trị viên",
+    name: "Admin",
   },
   {
     id: "u2",
     username: "vuthanhhai126",
     password: "123",
     role: "it",
-    name: "Vũ Thanh Hải",
+    name: "Hải",
   },
   {
     id: "u3",
@@ -185,6 +186,10 @@ export const INGREDIENTS = [
     new Ingredient("SP000439", ["mut"], "Mứt Lá Dứa Mao Mao","110,000","1kg/ túi", "Chưa có dữ liệu", '/images/Nguyen_lieu_pha_che/mut/Mứt Lá Dứa Mao Mao.webp'),
     new Ingredient("SP000418", ["mut"], "Mứt khế ép Labon 1kg","165,000","1kg/ túi", "Chưa có dữ liệu", '/images/Nguyen_lieu_pha_che/mut/Mứt khế ép Labon 1kg.webp'),
     new Ingredient("SP000197", ["mut"], "Mứt vải Boduo 1kg","140,000","1kg/ hũ", "Chưa có dữ liệu", '/images/Nguyen_lieu_pha_che/mut/Mứt vải Boduo 1kg.webp'),
+    new Ingredient("SP000571", ["mut"], "Mứt Bưởi mật ong ColoMix","168,000","1.2kg/ hộp", "Chưa có dữ liệu", '/images/Nguyen_lieu_pha_che/mut/Mứt Bưởi mật ong ColoMix.webp'),
+    new Ingredient("SP000572", ["mut"], "Mứt Vải Hoa hồng ColoMix","125,000","900g/ hũ", "Chưa có dữ liệu", '/images/Nguyen_lieu_pha_che/mut/Mứt Vải Hoa hồng ColoMix.webp'),
+    new Ingredient("SP000573", ["mut"], "Siro Lựu ColoMix","128,000","900g/ hũ", "Chưa có dữ liệu", '/images/Nguyen_lieu_pha_che/mut/Siro Lựu ColoMix.webp'),
+
     new Ingredient("SP000083", ["siro"], "Siro nhiệt đới Mao Mao","155,000","1.3kg/ chai", "Chưa có dữ liệu", '/images/Nguyen_lieu_pha_che/siro/Siro nhiệt đới Mao Mao.webp'),
     new Ingredient("SP000526", ["siro"], "Siro bí đao Bạch Dương","155,000","2.5kg/ can", "Chưa có dữ liệu", '/images/Nguyen_lieu_pha_che/siro/Siro bí đao Bạch Dương.webp'),
     new Ingredient("SP000338", ["siro"], "Siro Caramel Maulin","218,000","1.3kg/ chai", "Chưa có dữ liệu", '/images/Nguyen_lieu_pha_che/siro/Siro Caramel Maulin.webp'),
@@ -238,6 +243,8 @@ export const INGREDIENTS = [
     new Ingredient("SP000541", ["tra"], "Trà OLONG kiều mạch 1kg","360,000","1kg/ bịch", "Chưa có dữ liệu", '/images/Nguyen_lieu_pha_che/tra/no_data.png'),
     new Ingredient("SP000531", ["tra"], "Hồng trà Sài Gòn - Túi 500gr","360,000","500g/ túi", "Chưa có dữ liệu", '/images/Nguyen_lieu_pha_che/tra/no_data.png'),
     new Ingredient("SP000206", ["tra"], "Trà Pha Máy - OLONG Mộc Lam","365,000","1kg/ bịch", "Chưa có dữ liệu", '/images/Nguyen_lieu_pha_che/tra/Trà Pha Máy - OLONG Mộc Lam.webp'),
+    new Ingredient("SP000574", ["tra"], "Trà Ô long Nhài thượng hạng Bạch Dương","372,000","1kg/ bịch", "Chưa có dữ liệu", '/images/Nguyen_lieu_pha_che/tra/no_data.png'),
+
 ];
 
 export const DRINKS = [
@@ -252,12 +259,12 @@ export const DRINKS = [
     ],
 
 
-      `- 100ml Kombucha
-      - 30g mứt dâu Lermao
-      - 10g chanh thơm
-      - 30ml trà lục hoa nhài
-      - 50g dâu tươi
-      - 30g đường`,
+      `100ml Kombucha
+      30g mứt dâu Lermao
+      10g chanh thơm
+      30ml trà lục hoa nhài
+      50g dâu tươi
+      30g đường`,
       ["SP000552", "SP000012"]
     ),
 
@@ -327,106 +334,69 @@ export const SERVICES = [
     new Service("s10", "Thanh toán dịch vụ", require('../images/ServicesScreen/thanhtoandichvu.jpg')),
 ];
 
+export const CATMACHINES = [
+//    new Machine(
+//                "maycaphe",
+//                ["s3"],
+//                "Máy pha cà phê",
+//                "https://hocviencaphe.vn/wp-content/uploads/2022/11/6.jpg",
+//                "Tổng hợp máy pha cà phê",
+//
+//            ),
+    new CatMachine("may_ep_hoa_qua","Máy ép hoa quả"),
+    new CatMachine("may_pha_ca_phe","Máy pha cà phê"),
+];
+
 export const MACHINES = [
     new Machine(
-                "maycaphe",
-                ["s3"],
-                "Máy pha cà phê",
-                "https://hocviencaphe.vn/wp-content/uploads/2022/11/6.jpg",
-                "Tổng hợp máy pha cà phê",
+                "101",
+                ["may_ep_hoa_qua"],
+                "Máy ép nhanh Uniblend SS-01",
+                "https://cdn2-retail-images.kiotviet.vn/khohvcpsg/3ef5ed36254f4cdb930d6a857f3cfad0.jpg",
+                "2,550,000",
 
             ),
     new Machine(
-                    "maytrasua",
-                    ["s3"],
-                    "Máy cho quán trà sữa",
-                    "https://hocviencaphe.vn/wp-content/uploads/2022/11/5.jpg",
-                    "Tổng hợp máy cho quán trà sữa",
+                    "102",
+                    ["may_ep_hoa_qua"],
+                    "Máy ép hoa quả chậm Promix PM-800",
+                    "https://cdn-images.kiotviet.vn/mayphache/0605ff1f18c2463487135a2b00cf60a9.jpg",
+                    "3,000,000",
 
+                ),
+    new Machine(
+                    "103",
+                    ["may_ep_hoa_qua"],
+                    "Máy ép nhanh Promix FJ-04",
+                    "https://cdn2-retail-images.kiotviet.vn/mayphache/e0b425463dd74bab870d69e274fa1797.jpg",
+                    "2,800,000",
                 ),
 ];
 
 export const EQUIPMENTS = [
     new Equipment(
-                "coffee1",
-                ["maycaphe"],
-                "Quầy bar inox",
-                "https://hocviencaphe.vn/wp-content/uploads/2021/08/5bdc19a509f9e8a7b1e8_e979b23fef21fb56c225495ee15a70b7-500x500.jpg",
-                "Liên hệ báo giá",
+                "101",
+                ["may_ep_hoa_qua"],
+                "Máy ép nhanh Uniblend SS-01",
+                "https://cdn2-retail-images.kiotviet.vn/khohvcpsg/3ef5ed36254f4cdb930d6a857f3cfad0.jpg",
+                "2,550,000",
 
             ),
     new Equipment(
-                    "coffee2",
-                    ["maycaphe"],
-                    "Máy xay cà phê hạt Bali",
-                    "https://hocviencaphe.vn/wp-content/uploads/2019/05/sma20191310941.jpg",
-                    "2.800.000 vnđ",
+                    "102",
+                    ["may_ep_hoa_qua"],
+                    "Máy ép hoa quả chậm Promix PM-800",
+                    "https://cdn-images.kiotviet.vn/mayphache/0605ff1f18c2463487135a2b00cf60a9.jpg",
+                    "3,000,000",
 
                 ),
     new Equipment(
-                        "coffee3",
-                        ["maycaphe"],
-                        "MÁY PHA CÀ PHÊ NUOVA SIMONELLI OSCAR II",
-                        "https://hocviencaphe.vn/wp-content/uploads/2019/05/sma2019116104547.jpg",
-                        "50.000.000 vnđ",
-
-                    ),
-        new Equipment(
-                            "coffee4",
-                            ["maycaphe"],
-                            "MÁY PHA CÀ PHÊ NS MUSICA BLACK",
-                            "https://hocviencaphe.vn/wp-content/uploads/2019/05/sma201812171044.jpg",
-                            "51.000.000 vnđ",
-
-                        ),
-                new Equipment(
-                                    "coffee5",
-                                    ["maycaphe"],
-                                    "MÁY PHA CÀ PHÊ NUOVA SIMONELLI OSCAR II",
-                                    "https://hocviencaphe.vn/wp-content/uploads/2019/05/sma20181217103724.jpg",
-                                    "31.000.000 vnđ",
-
-                                ),
-                        new Equipment(
-                                            "coffee6",
-                                            ["maycaphe"],
-                                            "CỐI XAY CÀ PHÊ BẰNG TAY INOX 304",
-                                            "https://hocviencaphe.vn/wp-content/uploads/2019/05/sma201952164642.jpg",
-                                            "350.000 vnđ",
-
-                                        ),
-                        new Equipment(
-                                            "milktea1",
-                                            ["maytrasua"],
-                                            "Nồi ủ trân châu",
-                                            "https://hocviencaphe.vn/wp-content/uploads/2021/08/sma2019211222537.jpg",
-                                            "1.300.000 vnđ",
-
-                                        ),
-                        new Equipment(
-                                            "milktea2",
-                                            ["maytrasua"],
-                                            "Máy định lượng đường Fest",
-                                            "https://hocviencaphe.vn/wp-content/uploads/2021/08/fest-16-6-750x750.jpg",
-                                            "2.600.000 vnđ",
-
-                                        ),
-                        new Equipment(
-                                            "milktea3",
-                                            ["maytrasua"],
-                                            "Máy làm đá",
-                                            "https://hocviencaphe.vn/wp-content/uploads/2019/05/sma2019422161114.jpg",
-                                            "65.000.000 vnđ",
-
-                                        ),
-                        new Equipment(
-                                            "milktea4",
-                                            ["maytrasua"],
-                                            "MÁY DẬP NẮP CỐC BÁN TỰ ĐỘNG WILLY WY-680",
-                                            "https://hocviencaphe.vn/wp-content/uploads/2019/05/M%C3%A1y-d%E1%BA%ADp-n%E1%BA%AFp-c%E1%BB%91c-t%E1%BB%B1-%C4%91%E1%BB%99ng.jpg",
-                                            "5.500.000 vnđ",
-
-                                        ),
+                    "103",
+                    ["may_ep_hoa_qua"],
+                    "Máy ép nhanh Promix FJ-04",
+                    "https://cdn2-retail-images.kiotviet.vn/mayphache/e0b425463dd74bab870d69e274fa1797.jpg",
+                    "2,800,000",
+                ),
 ];
 
 

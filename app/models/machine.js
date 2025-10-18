@@ -1,11 +1,12 @@
 import { image } from "react-native";
 class Machine {
-  constructor(id, serviceIds, title, imageUrl, affordability) {
+  constructor(id, catmachineIds, title, imageUrl, price, packaging) {
     this.id = id;
-    this.serviceIds = serviceIds;
+    this.catmachineIds = catmachineIds;
     this.title = title;
     this.imageUrl = imageUrl;
-    this.affordability = affordability;
+    this.price = price;
+    this.packaging = packaging;
   }
 }
 

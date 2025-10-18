@@ -9,7 +9,7 @@ import MachineScreen from "./screens/MachineScreen";
 import CatDrinkScreen from "./screens/CatDrinkScreen";
 import IngredientScreen from "./screens/IngredientScreen";
 import FullServiceScreen from "./screens/FullServiceScreen";
-import MarketingScreen from "./screens/MarketingScreen";
+import EquipmentScreen from "./screens/EquipmentScreen";
 import ServiceReviewScreen from "./screens/ServiceReviewScreen";
 import PaymentScreen from "./screens/PaymentScreen";
 import CartScreen from "./screens/CartScreen";
@@ -83,7 +83,7 @@ export default function Index() {
             <Stack.Screen name="Danh Mục Đồ Uống" component={CatDrinkScreen} />
             <Stack.Screen name="Nguyên Liệu Pha Chế" component={IngredientScreen} />
             <Stack.Screen name="Trọn Bộ Dịch Vụ" component={FullServiceScreen} />
-            <Stack.Screen name="Marketing" component={MarketingScreen} />
+            <Stack.Screen name="Vật Liệu Setup Quán" component={EquipmentScreen} />
             <Stack.Screen name="Form Đánh Giá Dịch Vụ" component={ServiceReviewScreen} />
             <Stack.Screen name="Thanh Toán Dịch Vụ" component={PaymentScreen} />
             <Stack.Screen

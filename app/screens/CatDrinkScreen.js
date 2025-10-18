@@ -36,10 +36,37 @@ const CatDrinkScreen = ({ route, navigation }) => {
   const [sidebarVisible, setSidebarVisible] = useState(true);
   const sidebarAnim = useRef(new Animated.Value(0)).current;
   const { addToCart, cartItems } = useContext(CartContext);
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const displayedDrinks = DRINKS.filter((drink) =>
     drink.catdrinkIds.includes(selectedCategory)
   );
+    // Hiệu ứng fade ảnh
+    const fadeAnim = useRef(new Animated.Value(1)).current;
+
+    const changeImage = (direction) => {
+      if (!Array.isArray(selectedDrink?.fullImageUrl)) return;
+      const total = selectedDrink.fullImageUrl.length;
+
+      // Fade out
+      Animated.timing(fadeAnim, {
+        toValue: 0,
+        duration: 200,
+        useNativeDriver: true,
+      }).start(() => {
+        setCurrentImageIndex((prev) =>
+          direction === "next"
+            ? (prev + 1) % total
+            : (prev - 1 + total) % total
+        );
+        // Fade in
+        Animated.timing(fadeAnim, {
+          toValue: 1,
+          duration: 200,
+          useNativeDriver: true,
+        }).start();
+      });
+    };
 
   useEffect(() => {
     const service = SERVICES.find((service) => service.id === seID);
@@ -155,8 +182,8 @@ const CatDrinkScreen = ({ route, navigation }) => {
           flex: 1,
           marginLeft: !isDesktop && sidebarVisible ? wp("70%") : 0,
           padding: isDesktop ? 30 : 15,
-        }}
-      >
+        }}>
+
         {selectedCategory && (
           <FlatList
             data={displayedDrinks}
@@ -168,12 +195,12 @@ const CatDrinkScreen = ({ route, navigation }) => {
                 onPress={() => handlePress(item)}
                 activeOpacity={0.85}
               >
-                <Image
-                  source={{ uri: getImageUri(item.thumbnailUrl) }}
-                  style={styles.image}
-                  resizeMode="contain"
-                />
-                <View style={{ padding: isDesktop ? 20 : 10 }}>
+                <View style={styles.cardContent}>
+                  <Image
+                    source={{ uri: getImageUri(item.thumbnailUrl) }}
+                    style={styles.image}
+                    resizeMode="contain"
+                  />
                   <Text style={styles.cardTitle}>{item.title}</Text>
                   <TouchableOpacity
                     onPress={() => handlePress(item)}
@@ -186,6 +213,7 @@ const CatDrinkScreen = ({ route, navigation }) => {
               </TouchableOpacity>
             )}
           />
+
         )}
       </View>
 
@@ -197,20 +225,79 @@ const CatDrinkScreen = ({ route, navigation }) => {
 
         <View style={styles.modalContainer}>
           <ScrollView contentContainerStyle={styles.scrollViewContent}>
-            <Image
-              source={{ uri: getImageUri(selectedDrink?.fullImageUrl) }}
-              style={styles.modalImage}
-              resizeMode="contain"
-            />
-            <Text style={styles.modalTitle}>{selectedDrink?.title}</Text>
+            {/* ✅ Ảnh có hiệu ứng chuyển mượt */}
+            {selectedDrink?.fullImageUrl && (
+              <View style={{ alignItems: "center" }}>
+                <Animated.Image
+                  source={{
+                    uri: Array.isArray(selectedDrink.fullImageUrl)
+                      ? getImageUri(selectedDrink.fullImageUrl[currentImageIndex])
+                      : getImageUri(selectedDrink.fullImageUrl),
+                  }}
+                  style={[styles.modalImage, { opacity: fadeAnim }]}
+                  resizeMode="contain"
+                />
 
-            {selectedDrink?.recipe && (
-              <View style={styles.recipeBox}>
-                <Text style={styles.recipeTitle}>🍹 Công thức pha chế</Text>
-                <Text style={styles.recipeText}>{selectedDrink.recipe}</Text>
+                {/* ✅ Nút điều hướng trái/phải */}
+                {Array.isArray(selectedDrink.fullImageUrl) &&
+                  selectedDrink.fullImageUrl.length > 1 && (
+                    <>
+                      <TouchableOpacity
+                        style={[styles.navButton, { left: 10 }]}
+                        onPress={() => changeImage("prev")}
+                      >
+                        <Text style={styles.navButtonText}>‹</Text>
+                      </TouchableOpacity>
+
+                      <TouchableOpacity
+                        style={[styles.navButton, { right: 10 }]}
+                        onPress={() => changeImage("next")}
+                      >
+                        <Text style={styles.navButtonText}>›</Text>
+                      </TouchableOpacity>
+
+                      {/* ✅ Dấu “...” hiển thị vị trí ảnh */}
+                      <View style={styles.dotContainer}>
+                        {selectedDrink.fullImageUrl.map((_, i) => (
+                          <View
+                            key={i}
+                            style={[
+                              styles.dot,
+                              i === currentImageIndex && styles.dotActive,
+                            ]}
+                          />
+                        ))}
+                      </View>
+                    </>
+                  )}
               </View>
             )}
 
+            {/* Tên món */}
+            <Text style={styles.modalTitle}>{selectedDrink?.title}</Text>
+
+            {/* Công thức */}
+            {selectedDrink?.recipe && (
+              <View style={styles.recipeBox}>
+                <Text style={styles.recipeTitle}>🍹 Công thức pha chế</Text>
+
+                {/* ✅ Bọc thêm container để căn giữa */}
+                <View style={styles.recipeListContainer}>
+                  {selectedDrink.recipe
+                    .split("\n")
+                    .filter((line) => line.trim() !== "")
+                    .map((line, index) => (
+                      <Text key={index} style={styles.recipeLine}>
+                        • {line.trim()}
+                      </Text>
+                    ))}
+                </View>
+              </View>
+            )}
+
+
+
+            {/* Nguyên liệu liên quan */}
             {linkedIngredients.length > 0 && (
               <View style={styles.relatedBox}>
                 <Text style={styles.relatedTitle}>🧂 Nguyên liệu sử dụng</Text>
@@ -242,6 +329,7 @@ const CatDrinkScreen = ({ route, navigation }) => {
           </ScrollView>
         </View>
       </Modal>
+
 
       {/* Modal phụ: chi tiết nguyên liệu với hiệu ứng trượt */}
       {ingredientModalVisible && (
@@ -373,38 +461,69 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginBottom: 10,
   },
-  card: {
-    backgroundColor: "rgba(74, 35, 6, 0.67)",
-    borderRadius: 10,
-    margin: 10,
-    padding: 10,
-    flex: 1,
-  },
-  image: {
-    width: wp("16%"),
-    height: hp("16%"),
-    borderRadius: 10,
-    alignSelf: "center",
-  },
-  cardTitle: {
-    fontSize: 16,
-    fontWeight: "bold",
-    color: "#fff",
-    textAlign: "center",
-  },
-  viewButton: {
-    marginTop: 10,
-    backgroundColor: "#A47148",
-    paddingVertical: 8,
-    paddingHorizontal: 25,
-    borderRadius: 25,
-    alignSelf: "center",
-  },
-  viewButtonText: {
-    color: "#fff",
-    fontWeight: "600",
-    fontSize: 15,
-  },
+
+card: {
+  backgroundColor: "rgba(74, 35, 6, 0.85)",
+  borderRadius: 15,
+  margin: 8,
+  padding: 10,
+  flex: 1,
+  alignItems: "center",
+  shadowColor: "#000",
+  shadowOffset: { width: 0, height: 3 },
+  shadowOpacity: 0.25,
+  shadowRadius: 4,
+  elevation: 5,
+  transition: "all 0.2s ease-in-out", // để hiệu ứng mượt hơn trên web
+},
+
+cardContent: {
+  flex: 1,
+  justifyContent: "space-between",
+  alignItems: "center",
+  width: "100%",
+  paddingVertical: 10,
+},
+
+image: {
+  width: wp("22%"),
+  height: hp("14%"),
+  borderRadius: 10,
+  alignSelf: "center",
+  marginBottom: 8,
+  resizeMode: "contain",
+},
+
+cardTitle: {
+  fontSize: 16,
+  fontWeight: "bold",
+  color: "#fff",
+  textAlign: "center",
+  lineHeight: 22,
+  minHeight: 44,
+  maxWidth: "90%",
+  marginBottom: 10,
+},
+
+viewButton: {
+  backgroundColor: "#A47148",
+  paddingVertical: 8,
+  paddingHorizontal: 25,
+  borderRadius: 25,
+  alignSelf: "center",
+  shadowColor: "#000",
+  shadowOffset: { width: 0, height: 2 },
+  shadowOpacity: 0.2,
+  shadowRadius: 3,
+  elevation: 4,
+},
+
+viewButtonText: {
+  color: "#fff",
+  fontWeight: "600",
+  fontSize: 15,
+},
+
   modalContainer: {
     flex: 1,
     backgroundColor: "rgba(74, 35, 6, 0.95)",
@@ -428,67 +547,77 @@ const styles = StyleSheet.create({
     textAlign: "center",
     textTransform: "uppercase",
   },
-  recipeBox: {
-    marginTop: 10,
-    backgroundColor: "rgba(255,255,255,0.08)",
-    borderRadius: 12,
-    padding: 15,
-    width: "85%",
-  },
-  recipeTitle: {
-    color: "#F4C542",
-    fontSize: 18,
-    fontWeight: "bold",
-    textAlign: "center",
-    marginBottom: 10,
-  },
+
   recipeText: {
     color: "#fff",
     fontSize: 15,
     lineHeight: 22,
     textAlign: "center",
   },
-  relatedBox: {
-    marginTop: 20,
-    width: "90%",
-    backgroundColor: "rgba(255,255,255,0.08)",
-    borderRadius: 12,
-    padding: 15,
-  },
-  relatedTitle: {
-    color: "#F4C542",
-    fontWeight: "bold",
-    fontSize: 18,
-    marginBottom: 10,
-    textAlign: "center",
-  },
-  ingredientItem: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    marginVertical: 6,
-  },
-  ingredientImage: {
-    width: 45,
-    height: 45,
-    borderRadius: 8,
-    marginRight: 10,
-  },
-  ingredientName: {
-    flex: 1,
-    color: "#fff",
-    fontSize: 14,
-  },
-  addButton: {
-    backgroundColor: "#A47148",
-    borderRadius: 20,
-    paddingVertical: 5,
-    paddingHorizontal: 12,
-  },
-  addButtonText: {
-    color: "#fff",
-    fontWeight: "bold",
-  },
+relatedBox: {
+  marginTop: 20,
+  backgroundColor: "rgba(255,255,255,0.08)",
+  borderRadius: 12,
+  paddingVertical: 18,
+  paddingHorizontal: 12,
+  width: "60%",              // ✅ giống recipeBox
+  alignSelf: "center",       // ✅ căn giữa khung
+  alignItems: "center",
+  borderWidth: 1,
+  borderColor: "rgba(255,255,255,0.15)",
+  shadowColor: "#000",
+  shadowOffset: { width: 0, height: 2 },
+  shadowOpacity: 0.15,
+  shadowRadius: 4,
+  elevation: 3,
+},
+
+relatedTitle: {
+  color: "#F4C542",
+  fontWeight: "bold",
+  fontSize: 18,
+  marginBottom: 10,
+  textAlign: "center",
+},
+
+ingredientItem: {
+  flexDirection: "row",
+  alignItems: "center",
+  justifyContent: "space-between",
+  backgroundColor: "rgba(255,255,255,0.05)", // ✅ nhẹ nhàng tạo lớp tách biệt từng dòng
+  borderRadius: 10,
+  paddingVertical: 6,
+  paddingHorizontal: 10,
+  marginVertical: 4,
+  width: "100%",
+},
+
+ingredientImage: {
+  width: 45,
+  height: 45,
+  borderRadius: 8,
+  marginRight: 10,
+},
+
+ingredientName: {
+  flex: 1,
+  color: "#fff",
+  fontSize: 14,
+  textAlign: "left",
+},
+
+addButton: {
+  backgroundColor: "#A47148",
+  borderRadius: 20,
+  paddingVertical: 5,
+  paddingHorizontal: 12,
+},
+
+addButtonText: {
+  color: "#fff",
+  fontWeight: "bold",
+},
+
   closeButton: {
     marginTop: 30,
     backgroundColor: "#A47148",
@@ -552,4 +681,101 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     color: "#333",
   },
+  navButton: {
+    position: "absolute",
+    top: "40%",
+    backgroundColor: "rgba(0,0,0,0.3)",
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    borderRadius: 50,
+    zIndex: 5,
+  },
+  navButtonText: {
+    color: "#fff",
+    fontSize: 32,
+    fontWeight: "bold",
+  },
+  imageCounter: {
+    color: "#fff",
+    marginTop: 8,
+    fontSize: 16,
+    textAlign: "center",
+  },
+navButton: {
+  position: "absolute",
+  top: "40%",
+  backgroundColor: "rgba(0,0,0,0.3)",
+  paddingVertical: 10,
+  paddingHorizontal: 15,
+  borderRadius: 50,
+  zIndex: 5,
+},
+navButtonText: {
+  color: "#fff",
+  fontSize: 32,
+  fontWeight: "bold",
+},
+dotContainer: {
+  flexDirection: "row",
+  justifyContent: "center",
+  alignItems: "center",
+  marginTop: 10,
+  gap: 6,
+},
+dot: {
+  width: 8,
+  height: 8,
+  borderRadius: 4,
+  backgroundColor: "rgba(255,255,255,0.4)",
+},
+dotActive: {
+  backgroundColor: "#F4C542",
+  width: 10,
+  height: 10,
+},
+
+
+recipeTitle: {
+  color: "#F4C542",
+  fontSize: 18,
+  fontWeight: "bold",
+  textAlign: "center",
+  marginBottom: 8,
+},
+
+recipeBox: {
+  marginTop: 15,
+  backgroundColor: "rgba(255,255,255,0.08)",
+  borderRadius: 12,
+  paddingVertical: 18,
+  paddingHorizontal: 12,
+  width: "60%",              // Giữ khung gọn gàng
+  alignSelf: "center",       // Căn giữa toàn bộ khung
+  borderWidth: 1,
+  borderColor: "rgba(255,255,255,0.15)",
+  shadowColor: "#000",
+  shadowOffset: { width: 0, height: 2 },
+  shadowOpacity: 0.15,
+  shadowRadius: 4,
+  elevation: 3,
+  alignItems: "center",      // ✅ Căn giữa cả tiêu đề và danh sách
+},
+
+recipeListContainer: {
+  alignItems: "center",      // ✅ Căn giữa các dòng nguyên liệu
+  justifyContent: "center",
+  width: "100%",             // ✅ Cho phép text chiếm đều toàn khung
+  marginTop: 5,
+},
+
+recipeLine: {
+  color: "#fff",
+  fontSize: 15,
+  lineHeight: 26,
+  textAlign: "center",       // ✅ Giúp từng dòng căn giữa đẹp mắt
+  marginVertical: 2,
+},
+
+
+
 });

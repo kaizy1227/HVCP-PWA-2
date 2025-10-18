@@ -82,7 +82,7 @@ const HeaderRight = () => {
           borderRadius: 8,
         }}
       >
-        <Text style={{ color: "#fff", fontWeight: "bold" }}>Đăng xuất</Text>
+        <Text style={{ color: "#fff", fontWeight: "bold" }}>Logout</Text>
       </TouchableOpacity>
     </View>
   );

@@ -60,7 +60,7 @@ useEffect(() => {
       else if (id === "s5")
         navigation.navigate("Trọn Bộ Dịch Vụ", { serviceId: id });
       else if (id === "s7")
-        navigation.navigate("Marketing", { serviceId: id });
+        navigation.navigate("Vật Liệu Setup Quán", { serviceId: id });
       else if (id === "s9")
         navigation.navigate("Form Đánh Giá Dịch Vụ", { serviceId: id });
       else if (id === "s10")
