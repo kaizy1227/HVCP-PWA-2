@@ -53,7 +53,7 @@ const HeaderRight = () => {
         }}
       >
         <Text style={{ fontWeight: "bold", color: "#4A2306" }}>
-          🛒 Xem giỏ hàng ({cartItems?.length || 0})
+          🛒 ({cartItems?.length || 0})
         </Text>
       </TouchableOpacity>
 

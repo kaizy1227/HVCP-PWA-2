@@ -37,7 +37,6 @@ const CatDrinkScreen = ({ route, navigation }) => {
   const sidebarAnim = useRef(new Animated.Value(0)).current;
   const { addToCart, cartItems } = useContext(CartContext);
 
-
   const displayedDrinks = DRINKS.filter((drink) =>
     drink.catdrinkIds.includes(selectedCategory)
   );
@@ -54,13 +53,11 @@ const CatDrinkScreen = ({ route, navigation }) => {
   }, [seID, navigation]);
 
   // ✅ Hiển thị nút "Xem giỏ hàng" ở góc phải header
-useEffect(() => {
-  navigation.setOptions({
-    headerRight: () => <HeaderRight />,
-  });
-}, [navigation]);
-
-
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => <HeaderRight />,
+    });
+  }, [navigation]);
 
   const toggleSidebar = () => {
     const toValue = sidebarVisible ? -wp("70%") : 0;
@@ -174,7 +171,7 @@ useEffect(() => {
                 <Image
                   source={{ uri: getImageUri(item.thumbnailUrl) }}
                   style={styles.image}
-                  resizeMode="cover"
+                  resizeMode="contain"
                 />
                 <View style={{ padding: isDesktop ? 20 : 10 }}>
                   <Text style={styles.cardTitle}>{item.title}</Text>
@@ -192,12 +189,12 @@ useEffect(() => {
         )}
       </View>
 
-      {/* Modal chính: chi tiết đồ uống */}
+    {/* Modal chính: chi tiết đồ uống */}
       <Modal
         visible={modalVisible}
         animationType="slide"
-        onRequestClose={() => setModalVisible(false)}
-      >
+        onRequestClose={() => setModalVisible(false)}>
+
         <View style={styles.modalContainer}>
           <ScrollView contentContainerStyle={styles.scrollViewContent}>
             <Image
@@ -247,101 +244,100 @@ useEffect(() => {
       </Modal>
 
       {/* Modal phụ: chi tiết nguyên liệu với hiệu ứng trượt */}
-{ingredientModalVisible && (
-  <Animated.View
-    style={[
-      styles.animatedModal,
-      { transform: [{ translateX: slideAnim }] },
-    ]}
-  >
-    <View style={styles.modalContainer}>
-      <ScrollView contentContainerStyle={styles.scrollViewContent}>
-        {selectedIngredient && (
-          <>
-            <Image
-              source={{ uri: getImageUri(selectedIngredient.imageUrl) }}
-              style={styles.modalImage}
-              resizeMode="contain"
-            />
-            <Text style={styles.modalTitle}>{selectedIngredient.title}</Text>
-            <Text style={styles.recipeText}>
-              Giá: {selectedIngredient.price} ₫
-            </Text>
-            <Text style={styles.recipeText}>
-              Quy cách: {selectedIngredient.unit}
-            </Text>
+      {ingredientModalVisible && (
+        <Animated.View
+          style={[
+            styles.animatedModal,
+            { transform: [{ translateX: slideAnim }] },
+          ]}
+        >
+          <View style={styles.modalContainer}>
+            <ScrollView contentContainerStyle={styles.scrollViewContent}>
+              {selectedIngredient && (
+                <>
+                  <Image
+                    source={{ uri: getImageUri(selectedIngredient.imageUrl) }}
+                    style={styles.modalImage}
+                    resizeMode="contain"
+                  />
+                  <Text style={styles.modalTitle}>{selectedIngredient.title}</Text>
+                  <Text style={styles.recipeText}>
+                    Giá: {selectedIngredient.price} ₫
+                  </Text>
+                  <Text style={styles.recipeText}>
+                    Quy cách: {selectedIngredient.unit}
+                  </Text>
 
-            {/* Chọn số lượng */}
-            <View style={styles.quantityRow}>
-              <TouchableOpacity
-                style={styles.qtyButton}
-                onPress={() =>
-                  setSelectedIngredient((prev) => ({
-                    ...prev,
-                    quantity: Math.max(1, (prev.quantity || 1) - 1),
-                  }))
-                }
-              >
-                <Text style={styles.qtyButtonText}>-</Text>
-              </TouchableOpacity>
+                  {/* Chọn số lượng */}
+                  <View style={styles.quantityRow}>
+                    <TouchableOpacity
+                      style={styles.qtyButton}
+                      onPress={() =>
+                        setSelectedIngredient((prev) => ({
+                          ...prev,
+                          quantity: Math.max(1, (prev.quantity || 1) - 1),
+                        }))
+                      }
+                    >
+                      <Text style={styles.qtyButtonText}>-</Text>
+                    </TouchableOpacity>
 
-              <View style={styles.qtyBox}>
-                <Text style={styles.qtyText}>
-                  {selectedIngredient.quantity || 1}
-                </Text>
-              </View>
+                    <View style={styles.qtyBox}>
+                      <Text style={styles.qtyText}>
+                        {selectedIngredient.quantity || 1}
+                      </Text>
+                    </View>
 
-              <TouchableOpacity
-                style={styles.qtyButton}
-                onPress={() =>
-                  setSelectedIngredient((prev) => ({
-                    ...prev,
-                    quantity: (prev.quantity || 1) + 1,
-                  }))
-                }
-              >
-                <Text style={styles.qtyButtonText}>+</Text>
-              </TouchableOpacity>
-            </View>
+                    <TouchableOpacity
+                      style={styles.qtyButton}
+                      onPress={() =>
+                        setSelectedIngredient((prev) => ({
+                          ...prev,
+                          quantity: (prev.quantity || 1) + 1,
+                        }))
+                      }
+                    >
+                      <Text style={styles.qtyButtonText}>+</Text>
+                    </TouchableOpacity>
+                  </View>
 
-            {/* Nút thêm giỏ hàng */}
-            <TouchableOpacity
-              style={styles.addButtonHorizontal}
-              onPress={() => {
-                const numericPrice = parseInt(
-                  String(selectedIngredient.price).replace(/[^\d]/g, "")
-                );
-                const quantity = selectedIngredient.quantity || 1;
+                  {/* Nút thêm giỏ hàng */}
+                  <TouchableOpacity
+                    style={styles.addButtonHorizontal}
+                    onPress={() => {
+                      const numericPrice = parseInt(
+                        String(selectedIngredient.price).replace(/[^\d]/g, "")
+                      );
+                      const quantity = selectedIngredient.quantity || 1;
 
-                addToCart({
-                  id: selectedIngredient.id,
-                  title: selectedIngredient.title,
-                  price: numericPrice,
-                  quantity,
-                  imageUrl: selectedIngredient.imageUrl,
-                });
+                      addToCart({
+                        id: selectedIngredient.id,
+                        title: selectedIngredient.title,
+                        price: numericPrice,
+                        quantity,
+                        imageUrl: selectedIngredient.imageUrl,
+                      });
 
-                alert(
-                  `🛒 Đã thêm ${quantity} x ${selectedIngredient.title} vào giỏ hàng!`
-                );
-              }}
-            >
-              <Text style={styles.addButtonText}>🛒 Thêm vào giỏ hàng</Text>
-            </TouchableOpacity>
+                      alert(
+                        `🛒 Đã thêm ${quantity} x ${selectedIngredient.title} vào giỏ hàng!`
+                      );
+                    }}
+                  >
+                    <Text style={styles.addButtonText}>🛒 Thêm vào giỏ hàng</Text>
+                  </TouchableOpacity>
 
-            {/* Quay lại đồ uống */}
-            <TouchableOpacity
-              onPress={closeIngredientModal}
-              style={styles.closeButton}
-            >
-              <Text style={styles.closeButtonText}>← Quay lại đồ uống</Text>
-            </TouchableOpacity>
-          </>
-        )}
-      </ScrollView>
-    </View>
-  </Animated.View>
-)}
+                  {/* Quay lại đồ uống */}
+                  <TouchableOpacity
+                    onPress={closeIngredientModal}
+                    style={styles.closeButton}
+                  >
+                    <Text style={styles.closeButtonText}>← Quay lại đồ uống</Text>
+                  </TouchableOpacity>
+                </>
+              )}
+            </ScrollView>
+          </View>
+        </Animated.View>
       )}
     </View>
   );
@@ -385,8 +381,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   image: {
-    width: wp("18%"),
-    height: hp("18%"),
+    width: wp("16%"),
+    height: hp("16%"),
     borderRadius: 10,
     alignSelf: "center",
   },
@@ -556,5 +552,4 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     color: "#333",
   },
-
 });

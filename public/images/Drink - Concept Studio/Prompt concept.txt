@@ -1,0 +1,9 @@
+Generate a high-resolution, professional product photograph of the subject in the provided image.
+
+Key requirements:
+- Lighting: Illuminate the scene with a Natural Light style. The lighting should be flattering and highlight the product's details.
+- Camera Perspective: Capture the product from a Front View.
+- Background: The background should be clean, non-distracting, and complementary to the product. A subtle, high-end studio setting is preferred.
+- Overall Mood: The image should feel premium, clean, and aspirational.
+
+- Style Reference: Strictly adhere to the aesthetic of the provided style reference image, which has a A bright, naturally lit aesthetic with warm earthy tones, fresh vibrant accents, and a refreshing, serene mood.. The goal is to make the product look as if it belongs in the same visual world.

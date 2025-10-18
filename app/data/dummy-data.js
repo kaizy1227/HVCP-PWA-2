@@ -241,15 +241,28 @@ export const INGREDIENTS = [
 ];
 
 export const DRINKS = [
-  new Drink("100", ["1"], "Kombucha chanh dâu", "/images/thumbnails/catdrink/Drink_GV_An_webp/37. Kombucha chanh dâu.webp", "/images/full/catdrink/Drink_GV_An_webp/37. Kombucha chanh dâu.png",
-  `- 100ml Kombucha
-  - 30g mứt dâu Lermao
-  - 10g chanh thơm
-  - 30ml trà lục hoa nhài
-  - 50g dâu tươi
-  - 30g đường`, ["SP000552", "SP000012"]),
+    new Drink(
+      "100",
+      ["1"],
+      "Kombucha chanh dâu",
+      "/images/thumbnails/catdrink/Drink_GV_An_webp/37. Kombucha chanh dâu.webp",
+    [
+    "/images/full/catdrink/Drink_GV_An_webp/37. Kombucha chanh dâu.png",
+    "/images/full/catdrink/Drink_GV_An_webp/37. Kombucha chanh dâu bg.png",
+    ],
 
-  new Drink("101", ["1"], "Hồng hoa lệ chi", "/images/thumbnails/catdrink/Drink_GV_An_webp/1. Hồng hoa lệ chi.webp", "/images/full/catdrink/Drink_GV_An_webp/1. Hồng hoa lệ chi.png"),
+
+      `- 100ml Kombucha
+      - 30g mứt dâu Lermao
+      - 10g chanh thơm
+      - 30ml trà lục hoa nhài
+      - 50g dâu tươi
+      - 30g đường`,
+      ["SP000552", "SP000012"]
+    ),
+
+
+  new Drink("101", ["1"], "Hồng hoa lệ chi", "/images/full/catdrink/Drink_GV_An_webp/1. Hồng hoa lệ chi bg.png", "/images/full/catdrink/Drink_GV_An_webp/1. Hồng hoa lệ chi bg.png"),
   new Drink("102", ["1"], "Cung hỷ phát tài", "/images/thumbnails/catdrink/Drink_GV_An_webp/2. Cung hỷ phát tài.webp", "/images/full/catdrink/Drink_GV_An_webp/2. Cung hỷ phát tài.png"),
   new Drink("103", ["1"], "Lục ngọc thiên hương", "/images/thumbnails/catdrink/Drink_GV_An_webp/3. Lục ngọc thiên hương.webp", "/images/full/catdrink/Drink_GV_An_webp/3. Lục ngọc thiên hương.png"),
   new Drink("104", ["1"], "Túy lựu đào hoa", "/images/thumbnails/catdrink/Drink_GV_An_webp/4. Túy lựu đào hoa.webp", "/images/full/catdrink/Drink_GV_An_webp/4. Túy lựu đào hoa.png"),
