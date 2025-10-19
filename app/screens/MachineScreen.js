@@ -61,7 +61,7 @@ const MachineScreen = ({ route, navigation }) => {
   useEffect(() => {
     const service = SERVICES.find((service) => service.id === mccID);
     if (service) {
-      const serviceTitle = service.title.toUpperCase();
+      const serviceTitle = service.title;
       navigation.setOptions({
         title: serviceTitle,
         headerTintColor: "white",
@@ -346,7 +346,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 20,
     padding: 10,
-    textTransform: "uppercase",
     borderWidth: 2,
     borderColor: "#ffffff",
     borderRadius: 5,

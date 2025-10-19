@@ -37,7 +37,7 @@ const CatDrinkScreen = ({ route, navigation }) => {
   const sidebarAnim = useRef(new Animated.Value(0)).current;
   const { addToCart, cartItems } = useContext(CartContext);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
-
+    const fadeListAnim = useRef(new Animated.Value(0)).current;
   const displayedDrinks = DRINKS.filter((drink) =>
     drink.catdrinkIds.includes(selectedCategory)
   );
@@ -72,7 +72,7 @@ const CatDrinkScreen = ({ route, navigation }) => {
     const service = SERVICES.find((service) => service.id === seID);
     if (service) {
       navigation.setOptions({
-        title: service.title.toUpperCase(),
+        title: service.title,
         headerTintColor: "white",
         headerStyle: { backgroundColor: "rgba(74, 35, 6, 0.67)" },
       });
@@ -86,6 +86,18 @@ const CatDrinkScreen = ({ route, navigation }) => {
     });
   }, [navigation]);
 
+    useEffect(() => {
+      if (selectedCategory) {
+        fadeListAnim.setValue(0);
+        Animated.timing(fadeListAnim, {
+          toValue: 1,
+          duration: 1000,
+          easing: Easing.out(Easing.ease),
+          useNativeDriver: true,
+        }).start();
+      }
+    }, [selectedCategory]);
+
   const toggleSidebar = () => {
     const toValue = sidebarVisible ? -wp("70%") : 0;
     Animated.timing(sidebarAnim, {
@@ -97,6 +109,7 @@ const CatDrinkScreen = ({ route, navigation }) => {
 
   const handlePress = (item) => {
     setSelectedDrink(item);
+    setCurrentImageIndex(0); // ✅ Đảm bảo mở Modal bắt đầu từ ảnh đầu tiên
     setModalVisible(true);
   };
 
@@ -184,35 +197,39 @@ const CatDrinkScreen = ({ route, navigation }) => {
           padding: isDesktop ? 30 : 15,
         }}>
 
-        {selectedCategory && (
-          <FlatList
-            data={displayedDrinks}
-            keyExtractor={(item) => item.id}
-            numColumns={isDesktop ? 2 : isTablet ? 3 : 3}
-            renderItem={({ item }) => (
-              <TouchableOpacity
-                style={styles.card}
-                onPress={() => handlePress(item)}
-                activeOpacity={0.85}
-              >
-                <View style={styles.cardContent}>
-                  <Image
-                    source={{ uri: getImageUri(item.thumbnailUrl) }}
-                    style={styles.image}
-                    resizeMode="contain"
-                  />
-                  <Text style={styles.cardTitle}>{item.title}</Text>
-                  <TouchableOpacity
-                    onPress={() => handlePress(item)}
-                    style={styles.viewButton}
-                    activeOpacity={0.8}
-                  >
-                    <Text style={styles.viewButtonText}>Xem</Text>
-                  </TouchableOpacity>
-                </View>
-              </TouchableOpacity>
-            )}
-          />
+{selectedCategory && (
+  <Animated.View style={{ flex: 1, opacity: fadeListAnim }}>
+    <FlatList
+      data={displayedDrinks}
+      keyExtractor={(item) => item.id}
+      numColumns={isDesktop ? 2 : isTablet ? 3 : 3}
+      renderItem={({ item }) => (
+        <TouchableOpacity
+          style={styles.card}
+          onPress={() => handlePress(item)}
+          activeOpacity={0.85}
+        >
+          <View style={styles.cardContent}>
+            <Image
+              source={{ uri: getImageUri(item.thumbnailUrl) }}
+              style={styles.image}
+              resizeMode="contain"
+            />
+            <Text style={styles.cardTitle}>{item.title}</Text>
+            <TouchableOpacity
+              onPress={() => handlePress(item)}
+              style={styles.viewButton}
+              activeOpacity={0.8}
+            >
+              <Text style={styles.viewButtonText}>Xem</Text>
+            </TouchableOpacity>
+          </View>
+        </TouchableOpacity>
+      )}
+    />
+  </Animated.View>
+)}
+
 
         )}
       </View>
@@ -443,39 +460,42 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 5,
   },
-  sidebar: {
-    backgroundColor: "#f0f0f0",
-    padding: 10,
-    height: "100%",
-  },
-  coursetitle: {
-    lineHeight: 28,
-    color: "#ffffff",
-    backgroundColor: "rgba(74, 35, 6, 0.67)",
-    textAlign: "center",
-    fontSize: 20,
-    padding: 10,
-    textTransform: "uppercase",
-    borderWidth: 2,
-    borderColor: "#ffffff",
-    borderRadius: 5,
-    marginBottom: 10,
-  },
+sidebar: {
+  backgroundColor: "rgba(74, 35, 6, 0.9)",
+  padding: 15,
+  height: "100%",
+  borderRightWidth: 1,
+  borderColor: "rgba(255,255,255,0.1)",
+},
+coursetitle: {
+  backgroundColor: "#A47148",
+  color: "#fff",
+  fontSize: 18,
+  textAlign: "center",
+  paddingVertical: 12,
+  borderRadius: 10,
+  marginBottom: 12,
+  fontWeight: "600",
+  letterSpacing: 0.5,
+},
 
 card: {
-  backgroundColor: "rgba(74, 35, 6, 0.85)",
-  borderRadius: 15,
-  margin: 8,
-  padding: 10,
+  backgroundColor: "rgba(74, 35, 6, 0.82)",
+  borderRadius: 18,
+  margin: 10,
   flex: 1,
   alignItems: "center",
   shadowColor: "#000",
-  shadowOffset: { width: 0, height: 3 },
+  shadowOffset: { width: 0, height: 4 },
   shadowOpacity: 0.25,
-  shadowRadius: 4,
+  shadowRadius: 6,
   elevation: 5,
-  transition: "all 0.2s ease-in-out", // để hiệu ứng mượt hơn trên web
+  borderWidth: 1,
+  borderColor: "rgba(255,255,255,0.08)",
+  transition: "all 0.25s ease-in-out",
 },
+
+
 
 cardContent: {
   flex: 1,
@@ -486,12 +506,25 @@ cardContent: {
 },
 
 image: {
-  width: wp("22%"),
-  height: hp("14%"),
-  borderRadius: 10,
-  alignSelf: "center",
-  marginBottom: 8,
-  resizeMode: "contain",
+  width: "100%",
+  height: hp("25%"),
+  borderRadius: 12,
+  borderWidth: 1,
+  borderColor: "rgba(255,255,255,0.15)",
+  shadowColor: "#000",
+  shadowOffset: { width: 0, height: 4 },
+  shadowOpacity: 0.3,
+  shadowRadius: 5,
+},
+imageOverlay: {
+  position: "absolute",
+  bottom: 0,
+  left: 0,
+  right: 0,
+  height: "40%",
+  backgroundColor: "rgba(74,35,6,0.35)",
+  borderBottomLeftRadius: 12,
+  borderBottomRightRadius: 12,
 },
 
 cardTitle: {
@@ -512,10 +545,11 @@ viewButton: {
   borderRadius: 25,
   alignSelf: "center",
   shadowColor: "#000",
-  shadowOffset: { width: 0, height: 2 },
-  shadowOpacity: 0.2,
-  shadowRadius: 3,
+  shadowOffset: { width: 0, height: 3 },
+  shadowOpacity: 0.3,
+  shadowRadius: 5,
   elevation: 4,
+  transform: [{ scale: 1 }],
 },
 
 viewButtonText: {
@@ -524,21 +558,28 @@ viewButtonText: {
   fontSize: 15,
 },
 
-  modalContainer: {
-    flex: 1,
-    backgroundColor: "rgba(74, 35, 6, 0.95)",
-    paddingTop: 40,
-  },
+modalContainer: {
+  flex: 1,
+  backgroundColor: "rgba(58, 28, 8, 0.95)",
+  paddingTop: 40,
+  alignItems: "center",
+},
   scrollViewContent: {
     alignItems: "center",
     padding: 20,
   },
-  modalImage: {
-    width: wp("90%"),
-    height: hp("60%"),
-    borderRadius: 12,
-    marginBottom: 20,
-  },
+modalImage: {
+  width: wp("88%"),
+  height: hp("55%"),
+  borderRadius: 14,
+  borderWidth: 1,
+  borderColor: "rgba(255,255,255,0.15)",
+  shadowColor: "#000",
+  shadowOffset: { width: 0, height: 6 },
+  shadowOpacity: 0.35,
+  shadowRadius: 10,
+  elevation: 6,
+},
   modalTitle: {
     fontSize: 22,
     fontWeight: "bold",

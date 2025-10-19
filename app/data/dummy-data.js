@@ -77,7 +77,7 @@ export const FULLSERVICES = [
   ];
 
 export const CATDRINKS = [
-    new CatDrink("1", "Trà"),
+    new CatDrink("1", "Tất cả"),
     new CatDrink("2", "Coffee"),
     new CatDrink("3", "Trà sữa"),
     new CatDrink("4", "Trà trái cây"),
@@ -88,7 +88,7 @@ export const CATDRINKS = [
 ];
 export const CATINGREDIENTS = [
     new CatIngredient("bot","Bột"),
-    new CatIngredient("cafe_cacao","CAFE - CACAO"),
+    new CatIngredient("cafe_cacao","Cafe - Cacao"),
     new CatIngredient("do_dong_lanh","Đồ đông lạnh"),
     new CatIngredient("kem_suachua","Kem - Sữa chua"),
     new CatIngredient("mut","Mứt các loại"),
@@ -229,7 +229,7 @@ export const INGREDIENTS = [
     new Ingredient("SP000433", ["topping"], "Trân Châu OLONG MaoMao","47,000","1kg/ bịch", "Chưa có dữ liệu", '/images/Nguyen_lieu_pha_che/topping/no_data.png'),
     new Ingredient("SP000286", ["topping"], "Nha đam Đại Lộc","37,000","1kg/ bịch", "Chưa có dữ liệu", '/images/Nguyen_lieu_pha_che/topping/Nha đam Đại Lộc.webp'),
     new Ingredient("SP000050", ["topping"], "Cốm Màu Rắc","175,000","1kg/ bịch", "Chưa có dữ liệu", '/images/Nguyen_lieu_pha_che/topping/Cốm Màu Rắc.webp'),
-    new Ingredient("SP000549", ["tra"], "Trà Kombucha 1L","51,000","1L/ chai", "Chưa có dữ liệu", '/images/Nguyen_lieu_pha_che/tra/Trà Kombucha 1L.webp'),
+    new Ingredient("SP000549", ["tra"], "Trà Kombucha 1L","49,000","1L/ chai", "Chưa có dữ liệu", '/images/Nguyen_lieu_pha_che/tra/Trà Kombucha 1L.webp'),
     new Ingredient("SP000230", ["tra"], "Trà OLONG Truyền Thống Mộc Lam","250,000","1kg/ bịch", "Chưa có dữ liệu", '/images/Nguyen_lieu_pha_che/tra/Trà OLONG Truyền Thống Mộc Lam.webp'),
     new Ingredient("SP000012", ["tra"], "Lục Trà Nhài Mộc Lam 1kg","365,000","1kg/ bịch", "Chưa có dữ liệu", '/images/Nguyen_lieu_pha_che/tra/Lục Trà Nhài Mộc Lam 1kg.webp'),
     new Ingredient("SP000243", ["tra"], "Trà Pha Máy - Hồng Trà Mộc Lam","348,000","1kg/ bịch", "Chưa có dữ liệu", '/images/Nguyen_lieu_pha_che/tra/Trà Pha Máy - Hồng Trà Mộc Lam.webp'),
@@ -254,71 +254,878 @@ export const DRINKS = [
       "Kombucha chanh dâu",
       "/images/thumbnails/catdrink/Drink_GV_An_webp/37. Kombucha chanh dâu.webp",
     [
-    "/images/full/catdrink/Drink_GV_An_webp/37. Kombucha chanh dâu.png",
     "/images/full/catdrink/Drink_GV_An_webp/37. Kombucha chanh dâu bg.png",
+    "/images/full/catdrink/Drink_GV_An_webp/37. Kombucha chanh dâu.png",
     ],
-
-
       `100ml Kombucha
       30g mứt dâu Lermao
       10g chanh thơm
       30ml trà lục hoa nhài
       50g dâu tươi
       30g đường`,
-      ["SP000552", "SP000012"]
+      ["SP000552", "SP000012","SP000549"]
     ),
 
+    new Drink(
+      "101",
+      ["1"],
+      "Hồng hoa lệ chi",
+      "/images/thumbnails/catdrink/Drink_GV_An_webp/1. Hồng hoa lệ chi.webp",
+      [
+        "/images/full/catdrink/Drink_GV_An_webp/1. Hồng hoa lệ chi bg.png",
+        "/images/full/catdrink/Drink_GV_An_webp/1. Hồng hoa lệ chi.png",
+      ],
+      `100ml Trà hoa hồng
+      50ml nước vải ép
+      30g vải tươi bóc vỏ
+      20ml syrup hồng hoa
+      20g đường
+      Đá viên vừa đủ`,
+      ["SP000555", "SP000019", "SP000502"]
+    ),
 
-  new Drink("101", ["1"], "Hồng hoa lệ chi", "/images/full/catdrink/Drink_GV_An_webp/1. Hồng hoa lệ chi bg.png", "/images/full/catdrink/Drink_GV_An_webp/1. Hồng hoa lệ chi bg.png"),
-  new Drink("102", ["1"], "Cung hỷ phát tài", "/images/thumbnails/catdrink/Drink_GV_An_webp/2. Cung hỷ phát tài.webp", "/images/full/catdrink/Drink_GV_An_webp/2. Cung hỷ phát tài.png"),
-  new Drink("103", ["1"], "Lục ngọc thiên hương", "/images/thumbnails/catdrink/Drink_GV_An_webp/3. Lục ngọc thiên hương.webp", "/images/full/catdrink/Drink_GV_An_webp/3. Lục ngọc thiên hương.png"),
-  new Drink("104", ["1"], "Túy lựu đào hoa", "/images/thumbnails/catdrink/Drink_GV_An_webp/4. Túy lựu đào hoa.webp", "/images/full/catdrink/Drink_GV_An_webp/4. Túy lựu đào hoa.png"),
-  new Drink("105", ["1"], "Kim lý hoa quế", "/images/thumbnails/catdrink/Drink_GV_An_webp/5. Kim lý hoa quế.webp", "/images/full/catdrink/Drink_GV_An_webp/5. Kim lý hoa quế.png"),
-  new Drink("106", ["1"], "Oolong nhãn thanh trà", "/images/thumbnails/catdrink/Drink_GV_An_webp/6. Oolong nhãn thanh trà.webp", "/images/full/catdrink/Drink_GV_An_webp/6. Oolong nhãn thanh trà.png"),
-  new Drink("107", ["1"], "Hồng trà vàng son sủi bọt", "/images/thumbnails/catdrink/Drink_GV_An_webp/7. Hồng trà vàng son sủi bọt.webp", "/images/full/catdrink/Drink_GV_An_webp/7. Hồng trà vàng son sủi bọt.png"),
-  new Drink("108", ["1"], "Oolong lài sữa", "/images/thumbnails/catdrink/Drink_GV_An_webp/8. Oolong lài sữa.webp", "/images/full/catdrink/Drink_GV_An_webp/8. Oolong lài sữa.png"),
-  new Drink("109", ["1"], "Hồng trà sữa", "/images/thumbnails/catdrink/Drink_GV_An_webp/9. Hồng trà sữa.webp", "/images/full/catdrink/Drink_GV_An_webp/9. Hồng trà sữa.png"),
-  new Drink("110", ["1"], "Khoai môn kem lá dứa", "/images/thumbnails/catdrink/Drink_GV_An_webp/10. Khoai môn kem lá dứa.webp", "/images/full/catdrink/Drink_GV_An_webp/10. Khoai môn kem lá dứa.png"),
-  new Drink("111", ["1"], "Trà sữa hạt dẻ", "/images/thumbnails/catdrink/Drink_GV_An_webp/11. Trà sữa hạt dẻ.webp", "/images/full/catdrink/Drink_GV_An_webp/11. Trà sữa hạt dẻ.png"),
-  new Drink("112", ["1"], "Sầu riêng kem lá dứa", "/images/thumbnails/catdrink/Drink_GV_An_webp/12. Sầu riêng kem lá dứa.webp", "/images/full/catdrink/Drink_GV_An_webp/12. Sầu riêng kem lá dứa.png"),
-  new Drink("113", ["1"], "Hồng ngọc matcha", "/images/thumbnails/catdrink/Drink_GV_An_webp/13. Hồng ngọc matcha.webp", "/images/full/catdrink/Drink_GV_An_webp/13. Hồng ngọc matcha.png"),
-  new Drink("114", ["1"], "Matcha latte", "/images/thumbnails/catdrink/Drink_GV_An_webp/14. Matcha latte.webp", "/images/full/catdrink/Drink_GV_An_webp/14. Matcha latte.png"),
-  new Drink("115", ["1"], "Matcha creamy (1)", "/images/thumbnails/catdrink/Drink_GV_An_webp/15. Matcha creamy (1).webp", "/images/full/catdrink/Drink_GV_An_webp/15. Matcha creamy (1).png"),
-  new Drink("116", ["1"], "Matcha milktea", "/images/thumbnails/catdrink/Drink_GV_An_webp/16. Matcha milktea.webp", "/images/full/catdrink/Drink_GV_An_webp/16. Matcha milktea.png"),
-  new Drink("117", ["1"], "Đen đá", "/images/thumbnails/catdrink/Drink_GV_An_webp/17. Đen đá.webp", "/images/full/catdrink/Drink_GV_An_webp/17. Đen đá.png"),
-  new Drink("118", ["1"], "Matcha Ice blended", "/images/thumbnails/catdrink/Drink_GV_An_webp/18. Matcha Ice blended.webp", "/images/full/catdrink/Drink_GV_An_webp/18. Matcha Ice blended.png"),
-  new Drink("119", ["1"], "Oreo Ice Blended", "/images/thumbnails/catdrink/Drink_GV_An_webp/19. Oreo Ice Blended.webp", "/images/full/catdrink/Drink_GV_An_webp/19. Oreo Ice Blended.png"),
-  new Drink("120", ["1"], "Caramel Ice Blended", "/images/thumbnails/catdrink/Drink_GV_An_webp/20. Caramel Ice Blended.webp", "/images/full/catdrink/Drink_GV_An_webp/20. Caramel Ice Blended.png"),
-  new Drink("121", ["1"], "Sữa đá", "/images/thumbnails/catdrink/Drink_GV_An_webp/21. Sữa đá.webp", "/images/full/catdrink/Drink_GV_An_webp/21. Sữa đá.png"),
-  new Drink("122", ["1"], "Bạc xỉu", "/images/thumbnails/catdrink/Drink_GV_An_webp/22. Bạc xỉu.webp", "/images/full/catdrink/Drink_GV_An_webp/22. Bạc xỉu.png"),
-  new Drink("123", ["1"], "Cà phê muối", "/images/thumbnails/catdrink/Drink_GV_An_webp/23. Cà phê muối.webp", "/images/full/catdrink/Drink_GV_An_webp/23. Cà phê muối.png"),
-  new Drink("124", ["1"], "Americano đá", "/images/thumbnails/catdrink/Drink_GV_An_webp/24. Americano đá.webp", "/images/full/catdrink/Drink_GV_An_webp/24. Americano đá.png"),
-  new Drink("125", ["1"], "Matcha coco ice blended", "/images/thumbnails/catdrink/Drink_GV_An_webp/25. Matcha coco ice blended.webp", "/images/full/catdrink/Drink_GV_An_webp/25. Matcha coco ice blended.png"),
-  new Drink("126", ["1"], "Matcha taro ice blended", "/images/thumbnails/catdrink/Drink_GV_An_webp/26. Matcha taro ice blended.webp", "/images/full/catdrink/Drink_GV_An_webp/26. Matcha taro ice blended.png"),
-  new Drink("127", ["1"], "Cà phê cốt dừa", "/images/thumbnails/catdrink/Drink_GV_An_webp/27. Cà phê cốt dừa.webp", "/images/full/catdrink/Drink_GV_An_webp/27. Cà phê cốt dừa.png"),
-  new Drink("128", ["1"], "Latte nóng", "/images/thumbnails/catdrink/Drink_GV_An_webp/28. Latte nóng.webp", "/images/full/catdrink/Drink_GV_An_webp/28. Latte nóng.png"),
-  new Drink("129", ["1"], "Latte nóng", "/images/thumbnails/catdrink/Drink_GV_An_webp/29. Latte nóng.webp", "/images/full/catdrink/Drink_GV_An_webp/29. Latte nóng.png"),
-  new Drink("130", ["1"], "Cappuccino nóng", "/images/thumbnails/catdrink/Drink_GV_An_webp/30. Cappuccino nóng.webp", "/images/full/catdrink/Drink_GV_An_webp/30. Cappuccino nóng.png"),
-  new Drink("131", ["1"], "Americano đào", "/images/thumbnails/catdrink/Drink_GV_An_webp/31. Americano đào.webp", "/images/full/catdrink/Drink_GV_An_webp/31. Americano đào.png"),
-  new Drink("132", ["1"], "Bơ già dừa non", "/images/thumbnails/catdrink/Drink_GV_An_webp/32. Bơ già dừa non.webp", "/images/full/catdrink/Drink_GV_An_webp/32. Bơ già dừa non.png"),
-  new Drink("133", ["1"], "Cà phê sữa", "/images/thumbnails/catdrink/Drink_GV_An_webp/33. Cà phê sữa.webp", "/images/full/catdrink/Drink_GV_An_webp/33. Cà phê sữa.png"),
-  new Drink("134", ["1"], "Coldbrew cam", "/images/thumbnails/catdrink/Drink_GV_An_webp/34. Coldbrew cam.webp", "/images/full/catdrink/Drink_GV_An_webp/34. Coldbrew cam.png"),
-  new Drink("135", ["1"], "Coldbrew Kombucha ổi", "/images/thumbnails/catdrink/Drink_GV_An_webp/35. Coldbrew Kombucha ổi.webp", "/images/full/catdrink/Drink_GV_An_webp/35. Coldbrew Kombucha ổi.png"),
-  new Drink("136", ["1"], "Đào xoài macchiato", "/images/thumbnails/catdrink/Drink_GV_An_webp/36. Đào xoài macchiato.webp", "/images/full/catdrink/Drink_GV_An_webp/36. Đào xoài macchiato.png"),
-  new Drink("137", ["1"], "Kombucha chanh dâu", "/images/thumbnails/catdrink/Drink_GV_An_webp/37. Kombucha chanh dâu.webp", "/images/full/catdrink/Drink_GV_An_webp/37. Kombucha chanh dâu.png"),
-  new Drink("138", ["1"], "Kombucha chanh vàng", "/images/thumbnails/catdrink/Drink_GV_An_webp/38. Kombucha chanh vàng.webp", "/images/full/catdrink/Drink_GV_An_webp/38. Kombucha chanh vàng.png"),
-  new Drink("139", ["1"], "Kombucha táo đào", "/images/thumbnails/catdrink/Drink_GV_An_webp/39. Kombucha táo đào.webp", "/images/full/catdrink/Drink_GV_An_webp/39. Kombucha táo đào.png"),
-  new Drink("140", ["1"], "Kombucha xoài chanh leo", "/images/thumbnails/catdrink/Drink_GV_An_webp/40. Kombucha xoài chanh leo.webp", "/images/full/catdrink/Drink_GV_An_webp/40. Kombucha xoài chanh leo.png"),
-  new Drink("141", ["1"], "Matcha Creamy (2)", "/images/thumbnails/catdrink/Drink_GV_An_webp/41. Matcha Creamy (2).webp", "/images/full/catdrink/Drink_GV_An_webp/41. Matcha Creamy (2).png"),
-  new Drink("142", ["1"], "Matcha đậu đỏ", "/images/thumbnails/catdrink/Drink_GV_An_webp/42. Matcha đậu đỏ.webp", "/images/full/catdrink/Drink_GV_An_webp/42. Matcha đậu đỏ.png"),
-  new Drink("143", ["1"], "Trà đào cam sả", "/images/thumbnails/catdrink/Drink_GV_An_webp/43. Trà đào cam sả.webp", "/images/full/catdrink/Drink_GV_An_webp/43. Trà đào cam sả.png"),
-  new Drink("144", ["1"], "Trà sen vàng", "/images/thumbnails/catdrink/Drink_GV_An_webp/44. Trà sen vàng.webp", "/images/full/catdrink/Drink_GV_An_webp/44. Trà sen vàng.png"),
-  new Drink("145", ["1"], "Trà sữa bơ", "/images/thumbnails/catdrink/Drink_GV_An_webp/45. Trà sữa bơ.webp", "/images/full/catdrink/Drink_GV_An_webp/45. Trà sữa bơ.png"),
-  new Drink("146", ["1"], "Trà sữa chôm chôm", "/images/thumbnails/catdrink/Drink_GV_An_webp/46. Trà sữa chôm chôm.webp", "/images/full/catdrink/Drink_GV_An_webp/46. Trà sữa chôm chôm.png"),
-  new Drink("147", ["1"], "Trà sữa dâu", "/images/thumbnails/catdrink/Drink_GV_An_webp/47. Trà sữa dâu.webp", "/images/full/catdrink/Drink_GV_An_webp/47. Trà sữa dâu.png"),
-  new Drink("148", ["1"], "Trà sữa kem trứng nướng", "/images/thumbnails/catdrink/Drink_GV_An_webp/48. Trà sữa kem trứng nướng.webp", "/images/full/catdrink/Drink_GV_An_webp/48. Trà sữa kem trứng nướng.png"),
-  new Drink("149", ["1"], "Trà sữa trân châu đen", "/images/thumbnails/catdrink/Drink_GV_An_webp/49. Trà sữa trân châu đen.webp", "/images/full/catdrink/Drink_GV_An_webp/49. Trà sữa trân châu đen.png"),
-  new Drink("150", ["1"], "Trà vải", "/images/thumbnails/catdrink/Drink_GV_An_webp/50. Trà vải.webp", "/images/full/catdrink/Drink_GV_An_webp/50. Trà vải.png"),
+// 🍹 DANH SÁCH ĐỒ UỐNG (ID: 102–119)
+new Drink(
+  "102",
+  ["1"],
+  "Cung hỷ phát tài",
+  "/images/thumbnails/catdrink/Drink_GV_An_webp/2. Cung hỷ phát tài.webp",
+  [
+    "/images/full/catdrink/Drink_GV_An_webp/2. Cung hỷ phát tài bg.png",
+    "/images/full/catdrink/Drink_GV_An_webp/2. Cung hỷ phát tài.png",
+  ],
+  `100ml Hồng trà Mộc Lam
+  30g Mứt đào Mao Mao
+  20ml Siro đường đen Mộc Lam
+  30g Đào ngâm Countree
+  Đá viên vừa đủ`,
+  ["SP000231", "SP00240", "SP000022", "4620748760088"]
+),
+
+new Drink(
+  "103",
+  ["1"],
+  "Lục ngọc thiên hương",
+  "/images/thumbnails/catdrink/Drink_GV_An_webp/3. Lục ngọc thiên hương.webp",
+  [
+    "/images/full/catdrink/Drink_GV_An_webp/3. Lục ngọc thiên hương bg.png",
+    "/images/full/catdrink/Drink_GV_An_webp/3. Lục ngọc thiên hương.png",
+  ],
+  `120ml Trà Oolong Phong Lan
+  30g Mứt nhãn Lermao
+  20ml Siro đường nâu Chanti
+  50g Nhãn ngâm Phương Linh
+  Đá viên vừa đủ`,
+  ["SP000566", "SP000542", "SP000555", "SP000339"]
+),
+
+new Drink(
+  "104",
+  ["1"],
+  "Túy lựu đào hoa",
+  "/images/thumbnails/catdrink/Drink_GV_An_webp/4. Túy lựu đào hoa.webp",
+  [
+    "/images/full/catdrink/Drink_GV_An_webp/4. Túy lựu đào hoa bg.png",
+    "/images/full/catdrink/Drink_GV_An_webp/4. Túy lựu đào hoa.png",
+  ],
+  `100ml Lục trà nhài
+  30g Mứt đào Tainong
+  20ml Siro Lựu Mao Mao
+  30g Đào ngâm Countree
+  Đá viên vừa đủ`,
+  ["SP000012", "SP000108", "SP000229", "4620748760088"]
+),
+
+new Drink(
+  "105",
+  ["1"],
+  "Kim lý hoa quế",
+  "/images/thumbnails/catdrink/Drink_GV_An_webp/5. Kim lý hoa quế.webp",
+  [
+    "/images/full/catdrink/Drink_GV_An_webp/5. Kim lý hoa quế bg.png",
+    "/images/full/catdrink/Drink_GV_An_webp/5. Kim lý hoa quế.png",
+  ],
+  `100ml Hồng trà Mộc Lam
+  20g Mứt quế hoa Lermao
+  20ml Siro Caramel Maulin
+  30ml Kem béo thực vật Ice Hot
+  Đá viên vừa đủ`,
+  ["SP000231", "SP000538", "SP000338", "SP000450"]
+),
+
+new Drink(
+  "106",
+  ["1"],
+  "Oolong nhãn thanh trà",
+  "/images/thumbnails/catdrink/Drink_GV_An_webp/6. Oolong nhãn thanh trà.webp",
+  [
+    "/images/full/catdrink/Drink_GV_An_webp/6. Oolong nhãn thanh trà bg.png",
+    "/images/full/catdrink/Drink_GV_An_webp/6. Oolong nhãn thanh trà.png",
+  ],
+  `120ml Trà Oolong Truyền Thống
+  30g Mứt nhãn Lermao
+  15ml Siro đường đen Mộc Lam
+  50g Nhãn ngâm Phương Linh
+  Đá viên vừa đủ`,
+  ["SP000230", "SP000542", "SP000022", "SP000339"]
+),
+
+new Drink(
+  "107",
+  ["1"],
+  "Hồng trà vàng son sủi bọt",
+  "/images/thumbnails/catdrink/Drink_GV_An_webp/7. Hồng trà vàng son sủi bọt.webp",
+  [
+    "/images/full/catdrink/Drink_GV_An_webp/7. Hồng trà vàng son sủi bọt bg.png",
+    "/images/full/catdrink/Drink_GV_An_webp/7. Hồng trà vàng son sủi bọt.png",
+  ],
+  `100ml Hồng trà đậm vị
+  30ml Siro đường nâu Chanti
+  50ml Kem béo thực vật Ice Hot
+  Khuấy đều tạo bọt nhẹ
+  Thêm đá vừa đủ`,
+  ["SP000425", "SP000555", "SP000450"]
+),
+
+new Drink(
+  "108",
+  ["1"],
+  "Oolong lài sữa",
+  "/images/thumbnails/catdrink/Drink_GV_An_webp/8. Oolong lài sữa.webp",
+  [
+    "/images/full/catdrink/Drink_GV_An_webp/8. Oolong lài sữa bg.png",
+    "/images/full/catdrink/Drink_GV_An_webp/8. Oolong lài sữa.png",
+  ],
+  `120ml Trà Oolong Nhài
+  40ml Sữa tươi tiệt trùng Happy Barn
+  20ml Siro đường nâu Chanti
+  Đá viên vừa đủ`,
+  ["SP000574", "SP000054", "SP000555"]
+),
+
+new Drink(
+  "109",
+  ["1"],
+  "Hồng trà sữa",
+  "/images/thumbnails/catdrink/Drink_GV_An_webp/9. Hồng trà sữa.webp",
+  [
+    "/images/full/catdrink/Drink_GV_An_webp/9. Hồng trà sữa bg.png",
+    "/images/full/catdrink/Drink_GV_An_webp/9. Hồng trà sữa.png",
+  ],
+  `100ml Hồng trà Mộc Lam
+  40ml Sữa tươi Western
+  20ml Siro đường nâu
+  Thêm kem sữa béo Mộc Lam 20g`,
+  ["SP000231", "SP000536", "SP000555", "SP000094"]
+),
+
+new Drink(
+  "110",
+  ["1"],
+  "Khoai môn kem lá dứa",
+  "/images/thumbnails/catdrink/Drink_GV_An_webp/10. Khoai môn kem lá dứa.webp",
+  [
+    "/images/full/catdrink/Drink_GV_An_webp/10. Khoai môn kem lá dứa bg.png",
+    "/images/full/catdrink/Drink_GV_An_webp/10. Khoai môn kem lá dứa.png",
+  ],
+  `100ml Sữa tươi Happy Barn
+  30g Bột khoai môn Binbaoli
+  20g Mứt lá dứa Mao Mao
+  20g Kem béo thực vật Ice Hot`,
+  ["SP000054", "SP000237", "SP000439", "SP000450"]
+),
+
+new Drink(
+  "111",
+  ["1"],
+  "Trà sữa hạt dẻ",
+  "/images/thumbnails/catdrink/Drink_GV_An_webp/11. Trà sữa hạt dẻ.webp",
+  [
+    "/images/full/catdrink/Drink_GV_An_webp/11. Trà sữa hạt dẻ bg.png",
+    "/images/full/catdrink/Drink_GV_An_webp/11. Trà sữa hạt dẻ.png",
+  ],
+  `100ml Hồng trà Mộc Lam
+  20ml Siro Davinci Hạt Dẻ
+  40ml Sữa tươi Western
+  Đá viên vừa đủ`,
+  ["SP000231", "SP000410", "SP000536"]
+),
+
+new Drink(
+  "112",
+  ["1"],
+  "Sầu riêng kem lá dứa",
+  "/images/thumbnails/catdrink/Drink_GV_An_webp/12. Sầu riêng kem lá dứa.webp",
+  [
+    "/images/full/catdrink/Drink_GV_An_webp/12. Sầu riêng kem lá dứa bg.png",
+    "/images/full/catdrink/Drink_GV_An_webp/12. Sầu riêng kem lá dứa.png",
+  ],
+  `100ml Sữa tươi Happy Barn
+  30g Mứt sầu riêng Labon
+  20g Mứt lá dứa Mao Mao
+  30ml Kem béo Ice Hot`,
+  ["SP000054", "SP000568", "SP000439", "SP000450"]
+),
+
+new Drink(
+  "113",
+  ["1"],
+  "Hồng ngọc matcha",
+  "/images/thumbnails/catdrink/Drink_GV_An_webp/13. Hồng ngọc matcha.webp",
+  [
+    "/images/full/catdrink/Drink_GV_An_webp/13. Hồng ngọc matcha bg.png",
+    "/images/full/catdrink/Drink_GV_An_webp/13. Hồng ngọc matcha.png",
+  ],
+  `80ml Hồng trà Mộc Lam
+  30g Bột matcha trà xanh Bạch Dương
+  40ml Sữa tươi Western
+  20ml Siro đường nâu`,
+  ["SP000231", "SP000506", "SP000536", "SP000555"]
+),
+
+new Drink(
+  "114",
+  ["1"],
+  "Matcha latte",
+  "/images/thumbnails/catdrink/Drink_GV_An_webp/14. Matcha latte.webp",
+  [
+    "/images/full/catdrink/Drink_GV_An_webp/14. Matcha latte bg.png",
+    "/images/full/catdrink/Drink_GV_An_webp/14. Matcha latte.png",
+  ],
+  `60ml Matcha Ceremonia
+  100ml Sữa tươi Happy Barn
+  20ml Siro đường nâu
+  Khuấy nhẹ và thêm đá`,
+  ["SP000454", "SP000054", "SP000555"]
+),
+
+new Drink(
+  "115",
+  ["1"],
+  "Matcha creamy (1)",
+  "/images/thumbnails/catdrink/Drink_GV_An_webp/15. Matcha creamy (1).webp",
+  [
+    "/images/full/catdrink/Drink_GV_An_webp/15. Matcha creamy (1) bg.png",
+    "/images/full/catdrink/Drink_GV_An_webp/15. Matcha creamy (1).png",
+  ],
+  `100ml Matcha trà xanh Bạch Dương
+  30ml Kem béo thực vật Ice Hot
+  10g Bột kem phô mai Eurodeli
+  20ml Siro đường nâu`,
+  ["SP000506", "SP000450", "SP000064", "SP000555"]
+),
+
+new Drink(
+  "116",
+  ["1"],
+  "Matcha milktea",
+  "/images/thumbnails/catdrink/Drink_GV_An_webp/16. Matcha milktea.webp",
+  [
+    "/images/full/catdrink/Drink_GV_An_webp/16. Matcha milktea bg.png",
+    "/images/full/catdrink/Drink_GV_An_webp/16. Matcha milktea.png",
+  ],
+  `100ml Trà Oolong Nhài
+  20g Bột matcha trà xanh Bạch Dương
+  40ml Sữa tươi Western
+  20ml Siro đường nâu`,
+  ["SP000574", "SP000506", "SP000536", "SP000555"]
+),
+
+new Drink(
+  "117",
+  ["1"],
+  "Đen đá",
+  "/images/thumbnails/catdrink/Drink_GV_An_webp/17. Đen đá.webp",
+  [
+    "/images/full/catdrink/Drink_GV_An_webp/17. Đen đá bg.png",
+    "/images/full/catdrink/Drink_GV_An_webp/17. Đen đá.png",
+  ],
+  `60ml Cafe hạt Robusta pha phin
+  20ml Siro đường nâu
+  Đá viên vừa đủ`,
+  ["SP000378", "SP000555"]
+),
+
+new Drink(
+  "118",
+  ["1"],
+  "Matcha Ice blended",
+  "/images/thumbnails/catdrink/Drink_GV_An_webp/18. Matcha Ice blended.webp",
+  [
+    "/images/full/catdrink/Drink_GV_An_webp/18. Matcha Ice blended bg.png",
+    "/images/full/catdrink/Drink_GV_An_webp/18. Matcha Ice blended.png",
+  ],
+  `80ml Sữa tươi Western
+  30g Bột matcha trà xanh Bạch Dương
+  20g Bột Frapper Ciel
+  Đá xay nhuyễn mịn`,
+  ["SP000536", "SP000506", "SP000412"]
+),
+
+new Drink(
+  "119",
+  ["1"],
+  "Oreo Ice Blended",
+  "/images/thumbnails/catdrink/Drink_GV_An_webp/19. Oreo Ice Blended.webp",
+  [
+    "/images/full/catdrink/Drink_GV_An_webp/19. Oreo Ice Blended bg.png",
+    "/images/full/catdrink/Drink_GV_An_webp/19. Oreo Ice Blended.png",
+  ],
+  `100ml Sữa tươi Happy Barn
+  20g Bột Fraper Luave
+  2 bánh Oreo nghiền
+  30ml Kem béo thực vật Ice Hot
+  Đá xay nhuyễn`,
+  ["SP000054", "SP000035", "SP000450"]
+),
+
+
+//  new Drink("101", ["1"], "Hồng hoa lệ chi", "/images/full/catdrink/Drink_GV_An_webp/1. Hồng hoa lệ chi bg.png", "/images/full/catdrink/Drink_GV_An_webp/1. Hồng hoa lệ chi bg.png"),
+//  new Drink("102", ["1"], "Cung hỷ phát tài", "/images/thumbnails/catdrink/Drink_GV_An_webp/2. Cung hỷ phát tài.webp", "/images/full/catdrink/Drink_GV_An_webp/2. Cung hỷ phát tài.png"),
+//  new Drink("103", ["1"], "Lục ngọc thiên hương", "/images/thumbnails/catdrink/Drink_GV_An_webp/3. Lục ngọc thiên hương.webp", "/images/full/catdrink/Drink_GV_An_webp/3. Lục ngọc thiên hương.png"),
+//  new Drink("104", ["1"], "Túy lựu đào hoa", "/images/thumbnails/catdrink/Drink_GV_An_webp/4. Túy lựu đào hoa.webp", "/images/full/catdrink/Drink_GV_An_webp/4. Túy lựu đào hoa.png"),
+//  new Drink("105", ["1"], "Kim lý hoa quế", "/images/thumbnails/catdrink/Drink_GV_An_webp/5. Kim lý hoa quế.webp", "/images/full/catdrink/Drink_GV_An_webp/5. Kim lý hoa quế.png"),
+//  new Drink("106", ["1"], "Oolong nhãn thanh trà", "/images/thumbnails/catdrink/Drink_GV_An_webp/6. Oolong nhãn thanh trà.webp", "/images/full/catdrink/Drink_GV_An_webp/6. Oolong nhãn thanh trà.png"),
+//  new Drink("107", ["1"], "Hồng trà vàng son sủi bọt", "/images/thumbnails/catdrink/Drink_GV_An_webp/7. Hồng trà vàng son sủi bọt.webp", "/images/full/catdrink/Drink_GV_An_webp/7. Hồng trà vàng son sủi bọt.png"),
+//  new Drink("108", ["1"], "Oolong lài sữa", "/images/thumbnails/catdrink/Drink_GV_An_webp/8. Oolong lài sữa.webp", "/images/full/catdrink/Drink_GV_An_webp/8. Oolong lài sữa.png"),
+//  new Drink("109", ["1"], "Hồng trà sữa", "/images/thumbnails/catdrink/Drink_GV_An_webp/9. Hồng trà sữa.webp", "/images/full/catdrink/Drink_GV_An_webp/9. Hồng trà sữa.png"),
+//  new Drink("110", ["1"], "Khoai môn kem lá dứa", "/images/thumbnails/catdrink/Drink_GV_An_webp/10. Khoai môn kem lá dứa.webp", "/images/full/catdrink/Drink_GV_An_webp/10. Khoai môn kem lá dứa.png"),
+//  new Drink("111", ["1"], "Trà sữa hạt dẻ", "/images/thumbnails/catdrink/Drink_GV_An_webp/11. Trà sữa hạt dẻ.webp", "/images/full/catdrink/Drink_GV_An_webp/11. Trà sữa hạt dẻ.png"),
+//  new Drink("112", ["1"], "Sầu riêng kem lá dứa", "/images/thumbnails/catdrink/Drink_GV_An_webp/12. Sầu riêng kem lá dứa.webp", "/images/full/catdrink/Drink_GV_An_webp/12. Sầu riêng kem lá dứa.png"),
+//  new Drink("113", ["1"], "Hồng ngọc matcha", "/images/thumbnails/catdrink/Drink_GV_An_webp/13. Hồng ngọc matcha.webp", "/images/full/catdrink/Drink_GV_An_webp/13. Hồng ngọc matcha.png"),
+//  new Drink("114", ["1"], "Matcha latte", "/images/thumbnails/catdrink/Drink_GV_An_webp/14. Matcha latte.webp", "/images/full/catdrink/Drink_GV_An_webp/14. Matcha latte.png"),
+//  new Drink("115", ["1"], "Matcha creamy (1)", "/images/thumbnails/catdrink/Drink_GV_An_webp/15. Matcha creamy (1).webp", "/images/full/catdrink/Drink_GV_An_webp/15. Matcha creamy (1).png"),
+//  new Drink("116", ["1"], "Matcha milktea", "/images/thumbnails/catdrink/Drink_GV_An_webp/16. Matcha milktea.webp", "/images/full/catdrink/Drink_GV_An_webp/16. Matcha milktea.png"),
+//  new Drink("117", ["1"], "Đen đá", "/images/thumbnails/catdrink/Drink_GV_An_webp/17. Đen đá.webp", "/images/full/catdrink/Drink_GV_An_webp/17. Đen đá.png"),
+//  new Drink("118", ["1"], "Matcha Ice blended", "/images/thumbnails/catdrink/Drink_GV_An_webp/18. Matcha Ice blended.webp", "/images/full/catdrink/Drink_GV_An_webp/18. Matcha Ice blended.png"),
+//  new Drink("119", ["1"], "Oreo Ice Blended", "/images/thumbnails/catdrink/Drink_GV_An_webp/19. Oreo Ice Blended.webp", "/images/full/catdrink/Drink_GV_An_webp/19. Oreo Ice Blended.png"),
+//  new Drink("120", ["1"], "Caramel Ice Blended", "/images/thumbnails/catdrink/Drink_GV_An_webp/20. Caramel Ice Blended.webp", "/images/full/catdrink/Drink_GV_An_webp/20. Caramel Ice Blended.png"),
+//  new Drink("121", ["1"], "Sữa đá", "/images/thumbnails/catdrink/Drink_GV_An_webp/21. Sữa đá.webp", "/images/full/catdrink/Drink_GV_An_webp/21. Sữa đá.png"),
+//  new Drink("122", ["1"], "Bạc xỉu", "/images/thumbnails/catdrink/Drink_GV_An_webp/22. Bạc xỉu.webp", "/images/full/catdrink/Drink_GV_An_webp/22. Bạc xỉu.png"),
+//  new Drink("123", ["1"], "Cà phê muối", "/images/thumbnails/catdrink/Drink_GV_An_webp/23. Cà phê muối.webp", "/images/full/catdrink/Drink_GV_An_webp/23. Cà phê muối.png"),
+//  new Drink("124", ["1"], "Americano đá", "/images/thumbnails/catdrink/Drink_GV_An_webp/24. Americano đá.webp", "/images/full/catdrink/Drink_GV_An_webp/24. Americano đá.png"),
+//  new Drink("125", ["1"], "Matcha coco ice blended", "/images/thumbnails/catdrink/Drink_GV_An_webp/25. Matcha coco ice blended.webp", "/images/full/catdrink/Drink_GV_An_webp/25. Matcha coco ice blended.png"),
+//  new Drink("126", ["1"], "Matcha taro ice blended", "/images/thumbnails/catdrink/Drink_GV_An_webp/26. Matcha taro ice blended.webp", "/images/full/catdrink/Drink_GV_An_webp/26. Matcha taro ice blended.png"),
+//  new Drink("127", ["1"], "Cà phê cốt dừa", "/images/thumbnails/catdrink/Drink_GV_An_webp/27. Cà phê cốt dừa.webp", "/images/full/catdrink/Drink_GV_An_webp/27. Cà phê cốt dừa.png"),
+//  new Drink("128", ["1"], "Latte nóng", "/images/thumbnails/catdrink/Drink_GV_An_webp/28. Latte nóng.webp", "/images/full/catdrink/Drink_GV_An_webp/28. Latte nóng.png"),
+//  new Drink("129", ["1"], "Latte nóng", "/images/thumbnails/catdrink/Drink_GV_An_webp/29. Latte nóng.webp", "/images/full/catdrink/Drink_GV_An_webp/29. Latte nóng.png"),
+//  new Drink("130", ["1"], "Cappuccino nóng", "/images/thumbnails/catdrink/Drink_GV_An_webp/30. Cappuccino nóng.webp", "/images/full/catdrink/Drink_GV_An_webp/30. Cappuccino nóng.png"),
+//  new Drink("131", ["1"], "Americano đào", "/images/thumbnails/catdrink/Drink_GV_An_webp/31. Americano đào.webp", "/images/full/catdrink/Drink_GV_An_webp/31. Americano đào.png"),
+//  new Drink("132", ["1"], "Bơ già dừa non", "/images/thumbnails/catdrink/Drink_GV_An_webp/32. Bơ già dừa non.webp", "/images/full/catdrink/Drink_GV_An_webp/32. Bơ già dừa non.png"),
+//  new Drink("133", ["1"], "Cà phê sữa", "/images/thumbnails/catdrink/Drink_GV_An_webp/33. Cà phê sữa.webp", "/images/full/catdrink/Drink_GV_An_webp/33. Cà phê sữa.png"),
+//  new Drink("134", ["1"], "Coldbrew cam", "/images/thumbnails/catdrink/Drink_GV_An_webp/34. Coldbrew cam.webp", "/images/full/catdrink/Drink_GV_An_webp/34. Coldbrew cam.png"),
+//  new Drink("135", ["1"], "Coldbrew Kombucha ổi", "/images/thumbnails/catdrink/Drink_GV_An_webp/35. Coldbrew Kombucha ổi.webp", "/images/full/catdrink/Drink_GV_An_webp/35. Coldbrew Kombucha ổi.png"),
+//  new Drink("136", ["1"], "Đào xoài macchiato", "/images/thumbnails/catdrink/Drink_GV_An_webp/36. Đào xoài macchiato.webp", "/images/full/catdrink/Drink_GV_An_webp/36. Đào xoài macchiato.png"),
+//  new Drink("137", ["1"], "Kombucha chanh dâu", "/images/thumbnails/catdrink/Drink_GV_An_webp/37. Kombucha chanh dâu.webp", "/images/full/catdrink/Drink_GV_An_webp/37. Kombucha chanh dâu.png"),
+//  new Drink("138", ["1"], "Kombucha chanh vàng", "/images/thumbnails/catdrink/Drink_GV_An_webp/38. Kombucha chanh vàng.webp", "/images/full/catdrink/Drink_GV_An_webp/38. Kombucha chanh vàng.png"),
+//  new Drink("139", ["1"], "Kombucha táo đào", "/images/thumbnails/catdrink/Drink_GV_An_webp/39. Kombucha táo đào.webp", "/images/full/catdrink/Drink_GV_An_webp/39. Kombucha táo đào.png"),
+//  new Drink("140", ["1"], "Kombucha xoài chanh leo", "/images/thumbnails/catdrink/Drink_GV_An_webp/40. Kombucha xoài chanh leo.webp", "/images/full/catdrink/Drink_GV_An_webp/40. Kombucha xoài chanh leo.png"),
+//  new Drink("141", ["1"], "Matcha Creamy (2)", "/images/thumbnails/catdrink/Drink_GV_An_webp/41. Matcha Creamy (2).webp", "/images/full/catdrink/Drink_GV_An_webp/41. Matcha Creamy (2).png"),
+//  new Drink("142", ["1"], "Matcha đậu đỏ", "/images/thumbnails/catdrink/Drink_GV_An_webp/42. Matcha đậu đỏ.webp", "/images/full/catdrink/Drink_GV_An_webp/42. Matcha đậu đỏ.png"),
+//  new Drink("143", ["1"], "Trà đào cam sả", "/images/thumbnails/catdrink/Drink_GV_An_webp/43. Trà đào cam sả.webp", "/images/full/catdrink/Drink_GV_An_webp/43. Trà đào cam sả.png"),
+//  new Drink("144", ["1"], "Trà sen vàng", "/images/thumbnails/catdrink/Drink_GV_An_webp/44. Trà sen vàng.webp", "/images/full/catdrink/Drink_GV_An_webp/44. Trà sen vàng.png"),
+//  new Drink("145", ["1"], "Trà sữa bơ", "/images/thumbnails/catdrink/Drink_GV_An_webp/45. Trà sữa bơ.webp", "/images/full/catdrink/Drink_GV_An_webp/45. Trà sữa bơ.png"),
+//  new Drink("146", ["1"], "Trà sữa chôm chôm", "/images/thumbnails/catdrink/Drink_GV_An_webp/46. Trà sữa chôm chôm.webp", "/images/full/catdrink/Drink_GV_An_webp/46. Trà sữa chôm chôm.png"),
+//  new Drink("147", ["1"], "Trà sữa dâu", "/images/thumbnails/catdrink/Drink_GV_An_webp/47. Trà sữa dâu.webp", "/images/full/catdrink/Drink_GV_An_webp/47. Trà sữa dâu.png"),
+//  new Drink("148", ["1"], "Trà sữa kem trứng nướng", "/images/thumbnails/catdrink/Drink_GV_An_webp/48. Trà sữa kem trứng nướng.webp", "/images/full/catdrink/Drink_GV_An_webp/48. Trà sữa kem trứng nướng.png"),
+//  new Drink("149", ["1"], "Trà sữa trân châu đen", "/images/thumbnails/catdrink/Drink_GV_An_webp/49. Trà sữa trân châu đen.webp", "/images/full/catdrink/Drink_GV_An_webp/49. Trà sữa trân châu đen.png"),
+//  new Drink("150", ["1"], "Trà vải", "/images/thumbnails/catdrink/Drink_GV_An_webp/50. Trà vải.webp", "/images/full/catdrink/Drink_GV_An_webp/50. Trà vải.png"),
+// ☕ DANH SÁCH ĐỒ UỐNG (ID: 120–150)
+new Drink(
+  "120",
+  ["1"],
+  "Caramel Ice Blended",
+  "/images/thumbnails/catdrink/Drink_GV_An_webp/20. Caramel Ice Blended.webp",
+  [
+    "/images/full/catdrink/Drink_GV_An_webp/20. Caramel Ice Blended bg.png",
+    "/images/full/catdrink/Drink_GV_An_webp/20. Caramel Ice Blended.png",
+  ],
+  `100ml Sữa tươi Happy Barn
+  20g Bột Frapper Ciel
+  20ml Sốt Caramel ICE HOT
+  Đá xay nhuyễn mịn, thêm kem béo nếu thích`,
+  ["SP000054", "SP000412", "SP000415"]
+),
+
+new Drink(
+  "121",
+  ["1"],
+  "Sữa đá",
+  "/images/thumbnails/catdrink/Drink_GV_An_webp/21. Sữa đá.webp",
+  [
+    "/images/full/catdrink/Drink_GV_An_webp/21. Sữa đá bg.png",
+    "/images/full/catdrink/Drink_GV_An_webp/21. Sữa đá.png",
+  ],
+  `60ml Cafe phin Robusta
+  40ml Sữa đặc Ngôi Sao Phương Nam
+  Đá viên vừa đủ`,
+  ["SP000378", "3517673314909"]
+),
+
+new Drink(
+  "122",
+  ["1"],
+  "Bạc xỉu",
+  "/images/thumbnails/catdrink/Drink_GV_An_webp/22. Bạc xỉu.webp",
+  [
+    "/images/full/catdrink/Drink_GV_An_webp/22. Bạc xỉu bg.png",
+    "/images/full/catdrink/Drink_GV_An_webp/22. Bạc xỉu.png",
+  ],
+  `40ml Cafe phin Robusta
+  60ml Sữa đặc Ngôi Sao Phương Nam
+  40ml Sữa tươi Happy Barn
+  Đá viên vừa đủ`,
+  ["SP000378", "3517673314909", "SP000054"]
+),
+
+new Drink(
+  "123",
+  ["1"],
+  "Cà phê muối",
+  "/images/thumbnails/catdrink/Drink_GV_An_webp/23. Cà phê muối.webp",
+  [
+    "/images/full/catdrink/Drink_GV_An_webp/23. Cà phê muối bg.png",
+    "/images/full/catdrink/Drink_GV_An_webp/23. Cà phê muối.png",
+  ],
+  `50ml Cafe phin Robusta
+  30ml Kem béo thực vật Ice Hot
+  2g Muối hồng
+  Đá viên vừa đủ`,
+  ["SP000378", "SP000450", "SP000423"]
+),
+
+new Drink(
+  "124",
+  ["1"],
+  "Americano đá",
+  "/images/thumbnails/catdrink/Drink_GV_An_webp/24. Americano đá.webp",
+  [
+    "/images/full/catdrink/Drink_GV_An_webp/24. Americano đá bg.png",
+    "/images/full/catdrink/Drink_GV_An_webp/24. Americano đá.png",
+  ],
+  `60ml Cafe hạt Arabica pha espresso
+  90ml Nước lọc
+  Đá viên vừa đủ`,
+  ["SP000185"]
+),
+
+new Drink(
+  "125",
+  ["1"],
+  "Matcha coco ice blended",
+  "/images/thumbnails/catdrink/Drink_GV_An_webp/25. Matcha coco ice blended.webp",
+  [
+    "/images/full/catdrink/Drink_GV_An_webp/25. Matcha coco ice blended bg.png",
+    "/images/full/catdrink/Drink_GV_An_webp/25. Matcha coco ice blended.png",
+  ],
+  `80ml Sữa tươi Happy Barn
+  30g Bột matcha trà xanh Bạch Dương
+  20ml Sữa dừa Amo Pastel
+  20g Bột Frapper Ciel
+  Đá xay nhuyễn`,
+  ["SP000054", "SP000506", "SP000326", "SP000412"]
+),
+
+new Drink(
+  "126",
+  ["1"],
+  "Matcha taro ice blended",
+  "/images/thumbnails/catdrink/Drink_GV_An_webp/26. Matcha taro ice blended.webp",
+  [
+    "/images/full/catdrink/Drink_GV_An_webp/26. Matcha taro ice blended bg.png",
+    "/images/full/catdrink/Drink_GV_An_webp/26. Matcha taro ice blended.png",
+  ],
+  `80ml Sữa tươi Western
+  20g Bột khoai môn Binbaoli
+  20g Bột matcha trà xanh Bạch Dương
+  20g Bột Frapper Ciel
+  Đá xay nhuyễn`,
+  ["SP000536", "SP000237", "SP000506", "SP000412"]
+),
+
+new Drink(
+  "127",
+  ["1"],
+  "Cà phê cốt dừa",
+  "/images/thumbnails/catdrink/Drink_GV_An_webp/27. Cà phê cốt dừa.webp",
+  [
+    "/images/full/catdrink/Drink_GV_An_webp/27. Cà phê cốt dừa bg.png",
+    "/images/full/catdrink/Drink_GV_An_webp/27. Cà phê cốt dừa.png",
+  ],
+  `50ml Cafe phin Robusta
+  40ml Sữa đặc Ngôi Sao Phương Nam
+  30ml Sữa dừa Amo Pastel
+  Đá viên vừa đủ`,
+  ["SP000378", "3517673314909", "SP000326"]
+),
+
+new Drink(
+  "128",
+  ["1"],
+  "Latte nóng",
+  "/images/thumbnails/catdrink/Drink_GV_An_webp/28. Latte nóng.webp",
+  [
+    "/images/full/catdrink/Drink_GV_An_webp/28. Latte nóng bg.png",
+    "/images/full/catdrink/Drink_GV_An_webp/28. Latte nóng.png",
+  ],
+  `40ml Espresso Arabica
+  150ml Sữa tươi Happy Barn đun nóng
+  Đánh bọt sữa và rót nhẹ lên trên`,
+  ["SP000185", "SP000054"]
+),
+
+new Drink(
+  "129",
+  ["1"],
+  "Latte nóng (2)",
+  "/images/thumbnails/catdrink/Drink_GV_An_webp/29. Latte nóng.webp",
+  [
+    "/images/full/catdrink/Drink_GV_An_webp/29. Latte nóng bg.png",
+    "/images/full/catdrink/Drink_GV_An_webp/29. Latte nóng.png",
+  ],
+  `Giống Latte nóng (1) nhưng có thêm 10ml Siro Vanila Teissiere
+  Cho hương thơm nhẹ nhàng hơn`,
+  ["SP000185", "SP000054", "SP000347"]
+),
+
+new Drink(
+  "130",
+  ["1"],
+  "Cappuccino nóng",
+  "/images/thumbnails/catdrink/Drink_GV_An_webp/30. Cappuccino nóng.webp",
+  [
+    "/images/full/catdrink/Drink_GV_An_webp/30. Cappuccino nóng bg.png",
+    "/images/full/catdrink/Drink_GV_An_webp/30. Cappuccino nóng.png",
+  ],
+  `40ml Espresso Arabica
+  100ml Sữa tươi đánh bọt
+  Rắc thêm bột cacao Rich lên mặt`,
+  ["SP000185", "SP000054", "SP000082"]
+),
+
+new Drink(
+  "131",
+  ["1"],
+  "Americano đào",
+  "/images/thumbnails/catdrink/Drink_GV_An_webp/31. Americano đào.webp",
+  [
+    "/images/full/catdrink/Drink_GV_An_webp/31. Americano đào bg.png",
+    "/images/full/catdrink/Drink_GV_An_webp/31. Americano đào.png",
+  ],
+  `60ml Cafe hạt Arabica
+  30ml Mứt đào Tainong
+  30ml Nước lọc
+  Đá viên vừa đủ`,
+  ["SP000185", "SP000108"]
+),
+
+new Drink(
+  "132",
+  ["1"],
+  "Bơ già dừa non",
+  "/images/thumbnails/catdrink/Drink_GV_An_webp/32. Bơ già dừa non.webp",
+  [
+    "/images/full/catdrink/Drink_GV_An_webp/32. Bơ già dừa non bg.png",
+    "/images/full/catdrink/Drink_GV_An_webp/32. Bơ già dừa non.png",
+  ],
+  `100ml Sữa tươi Western
+  30ml Siro đường nâu
+  20ml Sữa dừa Amo Pastel
+  20g Thạch dừa non topping`,
+  ["SP000536", "SP000555", "SP000326"]
+),
+
+new Drink(
+  "133",
+  ["1"],
+  "Cà phê sữa",
+  "/images/thumbnails/catdrink/Drink_GV_An_webp/33. Cà phê sữa.webp",
+  [
+    "/images/full/catdrink/Drink_GV_An_webp/33. Cà phê sữa bg.png",
+    "/images/full/catdrink/Drink_GV_An_webp/33. Cà phê sữa.png",
+  ],
+  `50ml Cafe phin Robusta
+  40ml Sữa đặc Ngôi Sao Phương Nam
+  Đá viên vừa đủ`,
+  ["SP000378", "3517673314909"]
+),
+
+new Drink(
+  "134",
+  ["1"],
+  "Coldbrew cam",
+  "/images/thumbnails/catdrink/Drink_GV_An_webp/34. Coldbrew cam.webp",
+  [
+    "/images/full/catdrink/Drink_GV_An_webp/34. Coldbrew cam bg.png",
+    "/images/full/catdrink/Drink_GV_An_webp/34. Coldbrew cam.png",
+  ],
+  `100ml Coldbrew Arabica
+  30ml Nước cam tươi
+  20ml Siro đường nâu
+  Đá viên vừa đủ`,
+  ["SP000185", "SP000555"]
+),
+
+new Drink(
+  "135",
+  ["1"],
+  "Coldbrew Kombucha ổi",
+  "/images/thumbnails/catdrink/Drink_GV_An_webp/35. Coldbrew Kombucha ổi.webp",
+  [
+    "/images/full/catdrink/Drink_GV_An_webp/35. Coldbrew Kombucha ổi bg.png",
+    "/images/full/catdrink/Drink_GV_An_webp/35. Coldbrew Kombucha ổi.png",
+  ],
+  `80ml Coldbrew Arabica
+  60ml Kombucha ổi hồng
+  20ml Siro đường nâu
+  Đá viên vừa đủ`,
+  ["SP000185", "SP000440", "SP000555"]
+),
+
+new Drink(
+  "136",
+  ["1"],
+  "Đào xoài macchiato",
+  "/images/thumbnails/catdrink/Drink_GV_An_webp/36. Đào xoài macchiato.webp",
+  [
+    "/images/full/catdrink/Drink_GV_An_webp/36. Đào xoài macchiato bg.png",
+    "/images/full/catdrink/Drink_GV_An_webp/36. Đào xoài macchiato.png",
+  ],
+  `100ml Trà Oolong Mộc Lam
+  20g Mứt đào Mao Mao
+  20g Mứt xoài Mao Mao
+  30ml Kem béo thực vật Ice Hot`,
+  ["SP000230", "SP00240", "SP00241", "SP000450"]
+),
+
+new Drink(
+  "137",
+  ["1"],
+  "Kombucha chanh dâu",
+  "/images/thumbnails/catdrink/Drink_GV_An_webp/37. Kombucha chanh dâu.webp",
+  [
+    "/images/full/catdrink/Drink_GV_An_webp/37. Kombucha chanh dâu bg.png",
+    "/images/full/catdrink/Drink_GV_An_webp/37. Kombucha chanh dâu.png",
+  ],
+  `100ml Kombucha
+  30g Mứt dâu Lermao
+  10g Chanh thơm
+  30ml Trà lục hoa nhài
+  50g Dâu tươi
+  30g Đường`,
+  ["SP000552", "SP000012", "SP000549"]
+),
+
+new Drink(
+  "138",
+  ["1"],
+  "Kombucha chanh vàng",
+  "/images/thumbnails/catdrink/Drink_GV_An_webp/38. Kombucha chanh vàng.webp",
+  [
+    "/images/full/catdrink/Drink_GV_An_webp/38. Kombucha chanh vàng bg.png",
+    "/images/full/catdrink/Drink_GV_An_webp/38. Kombucha chanh vàng.png",
+  ],
+  `100ml Kombucha
+  30g Mứt chanh Kum quất
+  20ml Siro đường nâu
+  Đá viên vừa đủ`,
+  ["SP000549", "SP000539", "SP000555"]
+),
+
+new Drink(
+  "139",
+  ["1"],
+  "Kombucha táo đào",
+  "/images/thumbnails/catdrink/Drink_GV_An_webp/39. Kombucha táo đào.webp",
+  [
+    "/images/full/catdrink/Drink_GV_An_webp/39. Kombucha táo đào bg.png",
+    "/images/full/catdrink/Drink_GV_An_webp/39. Kombucha táo đào.png",
+  ],
+  `100ml Kombucha
+  30g Mứt đào Mao Mao
+  30g Mứt táo (hoặc mứt lê)
+  20ml Siro đường nâu`,
+  ["SP000549", "SP00240", "SP000537", "SP000555"]
+),
+
+new Drink(
+  "140",
+  ["1"],
+  "Kombucha xoài chanh leo",
+  "/images/thumbnails/catdrink/Drink_GV_An_webp/40. Kombucha xoài chanh leo.webp",
+  [
+    "/images/full/catdrink/Drink_GV_An_webp/40. Kombucha xoài chanh leo bg.png",
+    "/images/full/catdrink/Drink_GV_An_webp/40. Kombucha xoài chanh leo.png",
+  ],
+  `100ml Kombucha
+  30g Mứt xoài Mao Mao
+  20g Mứt chanh Kum quất
+  Đá viên vừa đủ`,
+  ["SP000549", "SP00241", "SP000539"]
+),
+
+new Drink(
+  "141",
+  ["1"],
+  "Matcha Creamy (2)",
+  "/images/thumbnails/catdrink/Drink_GV_An_webp/41. Matcha Creamy (2).webp",
+  [
+    "/images/full/catdrink/Drink_GV_An_webp/41. Matcha Creamy (2) bg.png",
+    "/images/full/catdrink/Drink_GV_An_webp/41. Matcha Creamy (2).png",
+  ],
+  `80ml Matcha trà xanh Bạch Dương
+  20g Bột kem phô mai Eurodeli
+  20ml Siro đường nâu
+  Kem béo phủ mặt`,
+  ["SP000506", "SP000064", "SP000555"]
+),
+
+new Drink(
+  "142",
+  ["1"],
+  "Matcha đậu đỏ",
+  "/images/thumbnails/catdrink/Drink_GV_An_webp/42. Matcha đậu đỏ.webp",
+  [
+    "/images/full/catdrink/Drink_GV_An_webp/42. Matcha đậu đỏ bg.png",
+    "/images/full/catdrink/Drink_GV_An_webp/42. Matcha đậu đỏ.png",
+  ],
+  `100ml Matcha trà xanh Bạch Dương
+  30g Đậu đỏ ngâm Mao Mao
+  40ml Sữa tươi Happy Barn
+  20ml Siro đường nâu`,
+  ["SP000506", "SP000393", "SP000054", "SP000555"]
+),
+
+new Drink(
+  "143",
+  ["1"],
+  "Trà đào cam sả",
+  "/images/thumbnails/catdrink/Drink_GV_An_webp/43. Trà đào cam sả.webp",
+  [
+    "/images/full/catdrink/Drink_GV_An_webp/43. Trà đào cam sả bg.png",
+    "/images/full/catdrink/Drink_GV_An_webp/43. Trà đào cam sả.png",
+  ],
+  `120ml Lục trà nhài
+  30g Mứt đào Mao Mao
+  20ml Nước cam
+  2 lát sả dập nhẹ`,
+  ["SP000012", "SP00240"]
+),
+
+new Drink(
+  "144",
+  ["1"],
+  "Trà sen vàng",
+  "/images/thumbnails/catdrink/Drink_GV_An_webp/44. Trà sen vàng.webp",
+  [
+    "/images/full/catdrink/Drink_GV_An_webp/44. Trà sen vàng bg.png",
+    "/images/full/catdrink/Drink_GV_An_webp/44. Trà sen vàng.png",
+  ],
+  `120ml Trà Oolong Mộc Lam
+  30g Mứt sen
+  20ml Siro đường nâu
+  Hạt sen topping`,
+  ["SP000230", "SP000090", "SP000555"]
+),
+
+new Drink(
+  "145",
+  ["1"],
+  "Trà sữa bơ",
+  "/images/thumbnails/catdrink/Drink_GV_An_webp/45. Trà sữa bơ.webp",
+  [
+    "/images/full/catdrink/Drink_GV_An_webp/45. Trà sữa bơ bg.png",
+    "/images/full/catdrink/Drink_GV_An_webp/45. Trà sữa bơ.png",
+  ],
+  `100ml Hồng trà Mộc Lam
+  30ml Siro đường nâu
+  40ml Sữa tươi Happy Barn
+  20g Bột sữa Bắp Day to Day
+  Đá viên vừa đủ`,
+  ["SP000231", "SP000555", "SP000054", "SP000413"]
+),
+
+new Drink(
+  "146",
+  ["1"],
+  "Trà sữa chôm chôm",
+  "/images/thumbnails/catdrink/Drink_GV_An_webp/46. Trà sữa chôm chôm.webp",
+  [
+    "/images/full/catdrink/Drink_GV_An_webp/46. Trà sữa chôm chôm bg.png",
+    "/images/full/catdrink/Drink_GV_An_webp/46. Trà sữa chôm chôm.png",
+  ],
+  `100ml Hồng trà Mộc Lam
+  40ml Sữa tươi Happy Barn
+  20ml Siro đường nâu
+  30g Chôm chôm ngâm AA topping`,
+  ["SP000231", "SP000054", "SP000555", "8858878300010"]
+),
+
+new Drink(
+  "147",
+  ["1"],
+  "Trà sữa dâu",
+  "/images/thumbnails/catdrink/Drink_GV_An_webp/47. Trà sữa dâu.webp",
+  [
+    "/images/full/catdrink/Drink_GV_An_webp/47. Trà sữa dâu bg.png",
+    "/images/full/catdrink/Drink_GV_An_webp/47. Trà sữa dâu.png",
+  ],
+  `100ml Hồng trà Mộc Lam
+  30g Mứt dâu Mao Mao
+  40ml Sữa tươi Happy Barn
+  20ml Siro đường nâu`,
+  ["SP000231", "SP00239", "SP000054", "SP000555"]
+),
+
+new Drink(
+  "148",
+  ["1"],
+  "Trà sữa kem trứng nướng",
+  "/images/thumbnails/catdrink/Drink_GV_An_webp/48. Trà sữa kem trứng nướng.webp",
+  [
+    "/images/full/catdrink/Drink_GV_An_webp/48. Trà sữa kem trứng nướng bg.png",
+    "/images/full/catdrink/Drink_GV_An_webp/48. Trà sữa kem trứng nướng.png",
+  ],
+  `100ml Hồng trà Mộc Lam
+  30ml Sữa tươi Happy Barn
+  20g Bột kem trứng
+  20ml Siro đường nâu
+  Đánh lớp kem trứng phủ mặt, rắc bột cacao nhẹ`,
+  ["SP000231", "SP000054", "SP000125", "SP000555", "SP000082"]
+),
+
+new Drink(
+  "149",
+  ["1"],
+  "Trà sữa trân châu đen",
+  "/images/thumbnails/catdrink/Drink_GV_An_webp/49. Trà sữa trân châu đen.webp",
+  [
+    "/images/full/catdrink/Drink_GV_An_webp/49. Trà sữa trân châu đen bg.png",
+    "/images/full/catdrink/Drink_GV_An_webp/49. Trà sữa trân châu đen.png",
+  ],
+  `100ml Hồng trà Mộc Lam
+  40ml Sữa tươi Happy Barn
+  20ml Siro đường nâu
+  50g Trân châu đen 3A Wonderfull`,
+  ["SP000231", "SP000054", "SP000555", "SP000251"]
+),
+
+new Drink(
+  "150",
+  ["1"],
+  "Trà vải",
+  "/images/thumbnails/catdrink/Drink_GV_An_webp/50. Trà vải.webp",
+  [
+    "/images/full/catdrink/Drink_GV_An_webp/50. Trà vải bg.png",
+    "/images/full/catdrink/Drink_GV_An_webp/50. Trà vải.png",
+  ],
+  `120ml Lục trà nhài
+  30g Mứt vải Hoa hồng ColoMix
+  20ml Siro Lựu Mao Mao
+  30g Vải ngâm Pogi topping`,
+  ["SP000012", "SP000572", "SP000229", "SP000532"]
+),
+
 ];
 
 
@@ -335,21 +1142,15 @@ export const SERVICES = [
 ];
 
 export const CATMACHINES = [
-//    new Machine(
-//                "maycaphe",
-//                ["s3"],
-//                "Máy pha cà phê",
-//                "https://hocviencaphe.vn/wp-content/uploads/2022/11/6.jpg",
-//                "Tổng hợp máy pha cà phê",
-//
-//            ),
     new CatMachine("may_ep_hoa_qua","Máy ép hoa quả"),
     new CatMachine("may_pha_ca_phe","Máy pha cà phê"),
+    new CatMachine("may_xay_ca_phe_hat","Máy xay cà phê hạt"),
+
 ];
 
 export const MACHINES = [
     new Machine(
-                "101",
+                "SP000252",
                 ["may_ep_hoa_qua"],
                 "Máy ép nhanh Uniblend SS-01",
                 "https://cdn2-retail-images.kiotviet.vn/khohvcpsg/3ef5ed36254f4cdb930d6a857f3cfad0.jpg",
@@ -357,20 +1158,42 @@ export const MACHINES = [
 
             ),
     new Machine(
-                    "102",
-                    ["may_ep_hoa_qua"],
-                    "Máy ép hoa quả chậm Promix PM-800",
-                    "https://cdn-images.kiotviet.vn/mayphache/0605ff1f18c2463487135a2b00cf60a9.jpg",
-                    "3,000,000",
+                 "XP000233",
+                 ["may_ep_hoa_qua"],
+                 "Máy ép hoa quả chậm Promix PM-800",
+                 "https://cdn-images.kiotviet.vn/mayphache/0605ff1f18c2463487135a2b00cf60a9.jpg",
+                 "3,000,000",
 
                 ),
     new Machine(
-                    "103",
+                    "XP000296",
                     ["may_ep_hoa_qua"],
                     "Máy ép nhanh Promix FJ-04",
                     "https://cdn2-retail-images.kiotviet.vn/mayphache/e0b425463dd74bab870d69e274fa1797.jpg",
                     "2,800,000",
                 ),
+
+        new Machine(
+                        "SP000253",
+                        ["may_pha_ca_phe"],
+                        "Máy vắt cam chuyên dụng Uniblend",
+                        "https://dptmgixyejobj-domestic307-sg.vcdn.cloud/khohvcpsg/2e6e203fa9f24601ac3bbe4f9cbe9b4b.jpeg",
+                        "950,000",
+                    ),
+        new Machine(
+                                "SP000242",
+                                ["may_pha_ca_phe"],
+                                "Máy pha trà cà phê 2 in 1",
+                                "https://cdn2-retail-images.kiotviet.vn/khohvcpsg/7dc5e0bfb3fd4a558cece13588cee6ad.jpeg",
+                                "29,000,000",
+                            ),
+        new Machine(
+                                "XP000280",
+                                ["may_pha_ca_phe"],
+                                "Máy pha cà phê Wega Lunna 1 Group",
+                                "https://cdn-images.kiotviet.vn/mayphache/dc95166fa6824032b59ff7ed7ff42a9b.png",
+                                "55,660,000",
+                            ),
 ];
 
 export const EQUIPMENTS = [
@@ -398,8 +1221,6 @@ export const EQUIPMENTS = [
                     "2,800,000",
                 ),
 ];
-
-
 
 export const TOPICS = [
     new Topic(
