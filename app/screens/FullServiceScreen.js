@@ -1,57 +1,56 @@
+import React, { useState, useEffect, useRef } from "react";
 import {
   View,
   Text,
-  StyleSheet,
   FlatList,
   TouchableOpacity,
-  Modal,
   Image,
+  Modal,
   ScrollView,
   Animated,
-} from 'react-native';
-import React, { useState, useEffect } from 'react';
-import { SERVICES,FULLSERVICES,CATFULLSERVICES } from '../data/dummy-data';
+  Easing,
+  StyleSheet,
+  useWindowDimensions,
+} from "react-native";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import { SERVICES, FULLSERVICES, CATFULLSERVICES } from "../data/dummy-data";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+} from "react-native-responsive-screen";
+import { commonHeaderOptions } from "../components/headerOptions";
 
 const FullServiceScreen = ({ route, navigation }) => {
   const mccID = route.params.serviceId;
+  const { width } = useWindowDimensions();
+  const isTablet = width >= 768 && width < 1024;
+  const isDesktop = width >= 1024;
+
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [selectedImageUrl, setSelectedImageUrl] = useState(null);
+  const [selectedTitle, setSelectedTitle] = useState("");
+  const [sidebarVisible, setSidebarVisible] = useState(true);
+  const sidebarAnim = useRef(new Animated.Value(0)).current;
+  const fadeListAnim = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
     const service = SERVICES.find((service) => service.id === mccID);
     if (service) {
       navigation.setOptions({
-        title: service.title.toUpperCase(),
-        headerTintColor: 'white',
-        headerStyle: {
-          backgroundColor: 'rgba(74, 35, 6, 0.67)',
-        },
+        ...commonHeaderOptions,
+        title: service.title,
       });
     }
   }, [mccID, navigation]);
 
-  const [selectedCategory, setSelectedCategory] = useState(null);
-  const [modalVisible, setModalVisible] = useState(false);
-  const [selectedImageUrl, setSelectedImageUrl] = useState(null);
-  const [selectedTitle, setSelectedTitle] = useState('');
-  const [imageVisible, setImageVisible] = useState(true);
-  const [isSidebarVisible, setSidebarVisible] = useState(false);
-  const sidebarAnim = useState(new Animated.Value(-wp('60%')))[0];
-
-  const displayedFullServices = FULLSERVICES.filter((fullservice) =>
-        fullservice.catfullserviceIds.includes(selectedCategory)
-      );
-
   const toggleSidebar = () => {
+    const toValue = sidebarVisible ? -wp("70%") : 0;
     Animated.timing(sidebarAnim, {
-      toValue: isSidebarVisible ? -wp('60%') : 0,
+      toValue,
       duration: 300,
       useNativeDriver: false,
-    }).start();
-    setSidebarVisible(!isSidebarVisible);
+    }).start(() => setSidebarVisible(!sidebarVisible));
   };
 
   const handlePress = (item) => {
@@ -60,68 +59,108 @@ const FullServiceScreen = ({ route, navigation }) => {
     setModalVisible(true);
   };
 
+  useEffect(() => {
+    if (selectedCategory) {
+      fadeListAnim.setValue(0);
+      Animated.timing(fadeListAnim, {
+        toValue: 1,
+        duration: 800,
+        easing: Easing.out(Easing.ease),
+        useNativeDriver: true,
+      }).start();
+    }
+  }, [selectedCategory]);
+
+  const displayedFullServices = FULLSERVICES.filter((fs) =>
+    fs.catfullserviceIds.includes(selectedCategory)
+  );
+
   return (
-    <View style={{ flex: 1 }}>
-      {/* Toggle Button */}
-      <TouchableOpacity onPress={toggleSidebar} style={styles.toggleButton}>
-        <Icon name="menu" size={28} color="#fff" />
-      </TouchableOpacity>
+    <View style={{ flex: 1, flexDirection: isDesktop ? "row" : "column" }}>
+      {/* Nút toggle sidebar */}
+      {!isDesktop && (
+        <TouchableOpacity onPress={toggleSidebar} style={styles.toggleButton}>
+          <Icon name="menu" size={26} color="#fff" />
+        </TouchableOpacity>
+      )}
 
       {/* Sidebar */}
-      <Animated.View style={[styles.sidebar, { left: sidebarAnim }]}>
-        <FlatList
-          data={CATFULLSERVICES}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => (
-            <TouchableOpacity onPress={() => {
-              setSelectedCategory(item.id);
-              setImageVisible(false);
-              toggleSidebar();
-            }}>
-              <Text style={styles.coursetitle}>{item.title}</Text>
-            </TouchableOpacity>
-          )}
-        />
-      </Animated.View>
+      {(!isDesktop || sidebarVisible) && (
+        <Animated.View
+          style={[
+            styles.sidebar,
+            {
+              width: isDesktop ? "25%" : wp("70%"),
+              left: sidebarAnim,
+              position: isDesktop ? "relative" : "absolute",
+            },
+          ]}
+        >
+          <FlatList
+            data={CATFULLSERVICES}
+            keyExtractor={(item) => item.id}
+            renderItem={({ item }) => (
+              <TouchableOpacity
+                onPress={() => {
+                  setSelectedCategory(item.id);
+                  if (!isDesktop) toggleSidebar();
+                }}
+              >
+                <Text style={styles.coursetitle}>{item.title}</Text>
+              </TouchableOpacity>
+            )}
+          />
+        </Animated.View>
+      )}
 
       {/* Main Content */}
-      <View style={styles.mainContent}>
-        {imageVisible && (
-          <Image
-            source={require('../images/dichvutronbo.png')}
-            style={styles.headerImage}
-            resizeMode="contain"
-          />
+      <View
+        style={{
+          flex: 1,
+          marginLeft: !isDesktop && sidebarVisible ? wp("70%") : 0,
+          padding: isDesktop ? 30 : 15,
+        }}
+      >
+        {!selectedCategory && (
+          <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+            <Image
+              source={require("../images/dichvutronbo.png")}
+              style={{ width: "90%", height: hp("40%") }}
+              resizeMode="contain"
+            />
+            <Text style={{ color: "#A47148", fontSize: 18, marginTop: 10 }}>
+              👉 Chọn danh mục để xem dịch vụ
+            </Text>
+          </View>
         )}
 
         {selectedCategory && (
-          <FlatList
-            data={displayedFullServices}
-            keyExtractor={(item) => item.id}
-            renderItem={({ item }) => (
-              <TouchableOpacity style={styles.gridItem} onPress={() => handlePress(item)}>
-                <Image source={item.imageUrl} style={styles.image} />
-                <Text style={{ padding: 10 }}>{item.title}</Text>
-              </TouchableOpacity>
-            )}
-            numColumns={2}
-          />
+          <Animated.View style={{ flex: 1, opacity: fadeListAnim }}>
+            <FlatList
+              data={displayedFullServices}
+              keyExtractor={(item) => item.id}
+              numColumns={isDesktop ? 2 : isTablet ? 2 : 2}
+              renderItem={({ item }) => (
+                <TouchableOpacity
+                  style={styles.card}
+                  onPress={() => handlePress(item)}
+                >
+                  <Image source={item.imageUrl} style={styles.image} resizeMode="contain" />
+                  <Text style={styles.cardTitle}>{item.title}</Text>
+                </TouchableOpacity>
+              )}
+            />
+          </Animated.View>
         )}
       </View>
 
-      {/* Modal */}
-      <Modal visible={modalVisible} animationType="slide" onRequestClose={() => setModalVisible(false)}>
-        <View style={styles.modalContent}>
+      {/* Modal chi tiết */}
+      <Modal visible={modalVisible} animationType="fade" onRequestClose={() => setModalVisible(false)}>
+        <View style={styles.modalContainer}>
           <ScrollView contentContainerStyle={styles.scrollViewContent}>
-            <Image source={selectedImageUrl} style={styles.modalImage} />
+            <Image source={selectedImageUrl} style={styles.modalImage} resizeMode="contain" />
             <Text style={styles.modalTitle}>{selectedTitle}</Text>
-            <TouchableOpacity
-              onPress={() => {
-                setModalVisible(false);
-                setImageVisible(false);
-              }}
-              style={styles.closeButton}
-            >
+            <TouchableOpacity onPress={() => setModalVisible(false)} style={styles.closeButton}>
               <Text style={styles.closeButtonText}>Đóng</Text>
             </TouchableOpacity>
           </ScrollView>
@@ -131,89 +170,92 @@ const FullServiceScreen = ({ route, navigation }) => {
   );
 };
 
+export default FullServiceScreen;
+
 const styles = StyleSheet.create({
   toggleButton: {
-    position: 'absolute',
-    top: 40,
+    position: "absolute",
+    top: 10,
     left: 10,
     zIndex: 20,
-    backgroundColor: '#4A2306',
+    backgroundColor: "#4A2306",
     padding: 10,
     borderRadius: 5,
   },
   sidebar: {
-    position: 'absolute',
-    top: 0,
-    bottom: 0,
-    width: wp('60%'),
-    backgroundColor: '#f0f0f0',
-    zIndex: 10,
-    paddingTop: 50,
-  },
-  mainContent: {
-    flex: 1,
-    paddingTop: 100,
-    paddingHorizontal: 20,
+    backgroundColor: "#4A2306",
+    padding: 15,
+    height: "100%",
+    borderRightWidth: 1,
+    borderColor: "rgba(255,255,255,0.1)",
   },
   coursetitle: {
-    lineHeight: 28,
-    color: '#ffffff',
-    backgroundColor: 'rgba(74, 35, 6, 0.67)',
-    textAlign: 'center',
-    fontSize: 20,
-    padding: 10,
-    textTransform: 'uppercase',
-    borderWidth: 2,
-    borderColor: '#ffffff',
-    borderRadius: 5,
-    margin: 5,
+    backgroundColor: "#A47148",
+    color: "#fff",
+    fontSize: 18,
+    textAlign: "center",
+    paddingVertical: 12,
+    borderRadius: 10,
+    marginBottom: 12,
+    fontWeight: "600",
+    letterSpacing: 0.5,
   },
-  headerImage: {
-    width: '100%',
-    height: hp('30%'),
-    marginBottom: 20,
-  },
-  gridItem: {
-    flex: 1,
+  card: {
+    backgroundColor: "rgba(74, 35, 6, 0.82)",
+    borderRadius: 18,
     margin: 10,
-    borderRadius: 8,
-    backgroundColor: 'white',
-    height: 250,
-    alignItems: 'center',
-    justifyContent: 'center',
+    flex: 1,
+    alignItems: "center",
+    paddingVertical: 15,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.25,
+    shadowRadius: 6,
+    elevation: 5,
   },
   image: {
-    width: wp('30%'),
-    height: hp('30%'),
-    borderRadius: 8,
+    width: wp("35%"),
+    height: hp("25%"),
+    borderRadius: 12,
   },
-  modalContent: {
+  cardTitle: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "#fff",
+    textAlign: "center",
+    marginTop: 10,
+  },
+  modalContainer: {
     flex: 1,
-    width: wp('100%'),
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(74, 35, 6, 0.67)',
+    backgroundColor: "rgba(58, 28, 8, 0.95)",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 20,
+  },
+  scrollViewContent: {
+    alignItems: "center",
     padding: 20,
   },
   modalImage: {
-    width: wp('80%'),
-    height: hp('80%'),
-    marginBottom: 20,
+    width: wp("88%"),
+    height: hp("55%"),
+    borderRadius: 14,
   },
   modalTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: 'white',
+    fontSize: 22,
+    fontWeight: "bold",
+    color: "#fff",
+    marginVertical: 10,
   },
   closeButton: {
-    marginTop: 20,
-    padding: 10,
-    backgroundColor: '#007BFF',
-    borderRadius: 5,
+    backgroundColor: "#A47148",
+    paddingVertical: 10,
+    paddingHorizontal: 25,
+    borderRadius: 25,
   },
   closeButtonText: {
-    color: 'white',
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "600",
   },
 });
-
-export default FullServiceScreen;

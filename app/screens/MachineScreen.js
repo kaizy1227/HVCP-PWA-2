@@ -12,6 +12,7 @@ import {
   ScrollView,
   TextInput,
   Alert,
+  Easing,
 } from "react-native";
 import {
   widthPercentageToDP as wp,
@@ -21,6 +22,7 @@ import { SERVICES, MACHINES, CATMACHINES } from "../data/dummy-data";
 import { useNavigation } from "@react-navigation/native";
 import { CartContext } from "../context/CartContext";
 import HeaderRight from "../components/HeaderRight";
+import { commonHeaderOptions } from "../components/headerOptions";
 
 const MachineScreen = ({ route, navigation }) => {
   const mccID = route.params.serviceId;
@@ -38,6 +40,7 @@ const MachineScreen = ({ route, navigation }) => {
   const [filteredMachines, setFilteredMachines] = useState([]);
 
   const sidebarAnim = useRef(new Animated.Value(0)).current;
+  const fadeListAnim = useRef(new Animated.Value(0)).current;
   const [sidebarVisible, setSidebarVisible] = useState(true);
 
   const displayedMachines = MACHINES.filter((machine) =>
@@ -61,11 +64,9 @@ const MachineScreen = ({ route, navigation }) => {
   useEffect(() => {
     const service = SERVICES.find((service) => service.id === mccID);
     if (service) {
-      const serviceTitle = service.title;
       navigation.setOptions({
-        title: serviceTitle,
-        headerTintColor: "white",
-        headerStyle: { backgroundColor: "rgba(74, 35, 6, 0.67)" },
+        ...commonHeaderOptions,
+        title: service.title,
       });
     }
   }, [mccID, navigation]);
@@ -75,6 +76,18 @@ const MachineScreen = ({ route, navigation }) => {
       headerRight: () => <HeaderRight />,
     });
   }, [navigation]);
+
+  useEffect(() => {
+    if (selectedCategory) {
+      fadeListAnim.setValue(0);
+      Animated.timing(fadeListAnim, {
+        toValue: 1,
+        duration: 800,
+        easing: Easing.out(Easing.ease),
+        useNativeDriver: true,
+      }).start();
+    }
+  }, [selectedCategory]);
 
   const toggleSidebar = () => {
     const toValue = sidebarVisible ? -wp("70%") : 0;
@@ -180,11 +193,11 @@ const MachineScreen = ({ route, navigation }) => {
           padding: isDesktop ? 30 : 15,
         }}
       >
-        {/* Thanh tìm kiếm */}
         <View style={styles.searchContainer}>
           <TextInput
             style={styles.searchInput}
-            placeholder="Tìm thiết bị, máy móc..."
+            placeholder="🔍 Tìm thiết bị, máy móc..."
+            placeholderTextColor="#999"
             value={searchText}
             onChangeText={setSearchText}
           />
@@ -193,49 +206,55 @@ const MachineScreen = ({ route, navigation }) => {
           </TouchableOpacity>
         </View>
 
-        {/* Hiển thị sản phẩm */}
-        {(filteredMachines.length > 0 || selectedCategory) && (
-          <FlatList
-            data={
-              filteredMachines.length > 0 ? filteredMachines : displayedMachines
-            }
-            keyExtractor={(item) => item.id}
-            numColumns={isDesktop ? 3 : isTablet ? 2 : 1}
-            renderItem={({ item }) => (
-              <TouchableOpacity
-                style={styles.card}
-                onPress={() => handlePress(item)}
-              >
-                <Image
-                  source={
-                    typeof item.imageUrl === "string"
-                      ? { uri: item.imageUrl }
-                      : item.imageUrl
-                  }
-                  style={styles.image}
-                  resizeMode="cover"
-                />
-                <View style={{ padding: 10, alignItems: "center" }}>
-                  <Text style={styles.cardTitle}>{item.title}</Text>
-                  <Text style={styles.cardText}>Giá: {item.price}₫</Text>
-
-                  <TouchableOpacity
-                    style={styles.addQuickButton}
-                    onPress={() => handleQuickAdd(item)}
-                  >
-                    <Text style={styles.addQuickButtonText}>＋</Text>
-                  </TouchableOpacity>
-                </View>
-              </TouchableOpacity>
-            )}
-          />
+        {selectedCategory ? (
+          <Animated.View style={{ opacity: fadeListAnim }}>
+            <FlatList
+              data={
+                filteredMachines.length > 0 ? filteredMachines : displayedMachines
+              }
+              keyExtractor={(item) => item.id}
+              numColumns={isDesktop ? 3 : isTablet ? 2 : 1}
+              renderItem={({ item }) => (
+                <TouchableOpacity
+                  style={styles.card}
+                  onPress={() => handlePress(item)}
+                >
+                  <Image
+                    source={
+                      typeof item.imageUrl === "string"
+                        ? { uri: item.imageUrl }
+                        : item.imageUrl
+                    }
+                    style={styles.image}
+                    resizeMode="contain"
+                  />
+                  <View style={{ padding: 10, alignItems: "center" }}>
+                    <Text style={styles.cardTitle}>{item.title}</Text>
+                    <Text style={styles.cardText}>Giá: {item.price}₫</Text>
+                    <TouchableOpacity
+                      style={styles.addQuickButton}
+                      onPress={() => handleQuickAdd(item)}
+                    >
+                      <Text style={styles.addQuickButtonText}>＋</Text>
+                    </TouchableOpacity>
+                  </View>
+                </TouchableOpacity>
+              )}
+            />
+          </Animated.View>
+        ) : (
+          <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+            <Text style={{ color: "#A47148", fontSize: 18 }}>
+              👉 Chọn danh mục để xem danh sách máy
+            </Text>
+          </View>
         )}
       </View>
 
-      {/* Modal chi tiết sản phẩm */}
+      {/* Modal chi tiết */}
       <Modal
         visible={modalVisible}
-        animationType="slide"
+        animationType="fade"
         onRequestClose={() => setModalVisible(false)}
       >
         <View style={styles.modalContainer}>
@@ -321,7 +340,6 @@ const MachineScreen = ({ route, navigation }) => {
 
 export default MachineScreen;
 
-
 const styles = StyleSheet.create({
   toggleButton: {
     position: "absolute",
@@ -331,25 +349,21 @@ const styles = StyleSheet.create({
     backgroundColor: "#4A2306",
     padding: 10,
     borderRadius: 5,
-    alignSelf: "flex-start",
-    margin: 10,
   },
   sidebar: {
-    backgroundColor: "#f0f0f0",
-    padding: 10,
+    backgroundColor: "#4A2306",
+    padding: 15,
     height: "100%",
   },
   coursetitle: {
-    lineHeight: 28,
-    color: "#ffffff",
-    backgroundColor: "rgba(74, 35, 6, 0.67)",
+    backgroundColor: "#A47148",
+    color: "#fff",
+    fontSize: 18,
     textAlign: "center",
-    fontSize: 20,
-    padding: 10,
-    borderWidth: 2,
-    borderColor: "#ffffff",
-    borderRadius: 5,
-    marginBottom: 10,
+    paddingVertical: 12,
+    borderRadius: 10,
+    marginBottom: 12,
+    fontWeight: "600",
   },
   searchContainer: {
     flexDirection: "row",
@@ -359,7 +373,7 @@ const styles = StyleSheet.create({
   searchInput: {
     flex: 1,
     borderWidth: 1,
-    borderColor: "#ccc",
+    borderColor: "#A47148",
     borderRadius: 8,
     padding: 10,
     backgroundColor: "#fff",
@@ -377,22 +391,24 @@ const styles = StyleSheet.create({
     fontWeight: "600",
   },
   card: {
-    backgroundColor: "rgba(74, 35, 6, 0.67)",
-    borderRadius: 10,
+    backgroundColor: "rgba(74, 35, 6, 0.85)",
+    borderRadius: 18,
     margin: 10,
     flex: 1,
-    overflow: "hidden",
-    position: "relative",
+    alignItems: "center",
+    paddingVertical: 10,
   },
   image: {
     width: "100%",
     height: hp("25%"),
+    borderRadius: 10,
   },
   cardTitle: {
     fontSize: 16,
     fontWeight: "bold",
     color: "#fff",
     textAlign: "center",
+    marginTop: 8,
   },
   cardText: {
     fontSize: 14,
@@ -400,24 +416,22 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   addQuickButton: {
-    position: "absolute",
-    top: 10,
-    right: 10,
+    marginTop: 8,
     backgroundColor: "#A47148",
+    borderRadius: 20,
     width: 35,
     height: 35,
-    borderRadius: 18,
     alignItems: "center",
     justifyContent: "center",
   },
   addQuickButtonText: {
     color: "#fff",
-    fontSize: 24,
+    fontSize: 22,
     fontWeight: "bold",
   },
   modalContainer: {
     flex: 1,
-    backgroundColor: "rgba(74, 35, 6, 0.95)",
+    backgroundColor: "rgba(58, 28, 8, 0.95)",
     paddingTop: 40,
   },
   scrollViewContent: {
@@ -436,7 +450,6 @@ const styles = StyleSheet.create({
     color: "#fff",
     marginBottom: 10,
     textAlign: "center",
-    textTransform: "uppercase",
   },
   modalInfo: {
     fontSize: 18,
@@ -532,18 +545,4 @@ const styles = StyleSheet.create({
     marginTop: 4,
     textAlign: "left",
   },
-    addQuickButton: {
-      marginTop: 8,
-      backgroundColor: "#A47148",
-      borderRadius: 20,
-      width: 35,
-      height: 35,
-      alignItems: "center",
-      justifyContent: "center",
-    },
-    addQuickButtonText: {
-      color: "#fff",
-      fontSize: 22,
-      fontWeight: "bold",
-    },
 });

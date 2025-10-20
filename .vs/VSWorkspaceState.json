@@ -2,10 +2,14 @@
   "ExpandedNodes": [
     "",
     "\\app",
+    "\\app\\components",
+    "\\app\\context",
     "\\app\\data",
+    "\\app\\models",
     "\\app\\screens",
-    "\\assets"
+    "\\assets",
+    "\\public"
   ],
-  "SelectedNode": "\\app\\index.js",
+  "SelectedNode": "\\public\\offline.html",
   "PreviewInSolutionExplorer": false
 }
