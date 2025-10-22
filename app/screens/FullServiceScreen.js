@@ -123,11 +123,6 @@ const FullServiceScreen = ({ route, navigation }) => {
       >
         {!selectedCategory && (
           <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-            <Image
-              source={require("../images/dichvutronbo.png")}
-              style={{ width: "90%", height: hp("40%") }}
-              resizeMode="contain"
-            />
             <Text style={{ color: "#A47148", fontSize: 18, marginTop: 10 }}>
               👉 Chọn danh mục để xem dịch vụ
             </Text>
