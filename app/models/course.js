@@ -1,33 +1,12 @@
-import { image } from "react-native";
 class Course {
-  constructor(
-    id,
-    serviceIds,
-    title,
-    affordability, //giá tiền
-    complexity, //độ kh
-    imageUrl,
-    duration, //thời gian
-    ingredients, //thành phần
-    steps, //các bước
-    isGlutenFree,
-    isVegan,
-    isVegetarian,
-    isLactoseFree
-  ) {
+  constructor(id, catcourseIds, title, duration, price, imageUrl, imageUrls = []) {
     this.id = id;
-    this.serviceIds = serviceIds;
+    this.catcourseIds=catcourseIds;
     this.title = title;
-    this.imageUrl = imageUrl;
-    this.ingredients = ingredients;
-    this.steps = steps;
     this.duration = duration;
-    this.complexity = complexity;
-    this.affordability = affordability;
-    this.isGlutenFree = isGlutenFree;
-    this.isVegan = isVegan;
-    this.isVegetarian = isVegetarian;
-    this.isLactoseFree = isLactoseFree;
+    this.price = price;
+    this.imageUrl = imageUrl;
+    this.imageUrls = imageUrls;
   }
 }
 

@@ -1,6 +1,6 @@
 import Service from "../models/service";
 import Course from "../models/course";
-import Topic from "../models/topic"
+import CatCourse from "../models/catcourse";
 import Machine from "../models/machine";
 import CatMachine from "../models/catmachine";
 import Equipment from "../models/equipment"
@@ -85,6 +85,11 @@ export const CATDRINKS = [
     new CatDrink("6", "Kombucha"),
     new CatDrink("7", "Sinh tố đá xay"),
     new CatDrink("8", "Matcha"),
+];
+export const CATCOURSES = [
+    new CatCourse("1", "Danh Sách Khóa Học"),
+    new CatCourse("2", "Khóa Pha Chế Tổng Hợp"),
+    new CatCourse("3", "Khóa Lẻ Tự Chọn"),
 ];
 export const CATINGREDIENTS = [
     new CatIngredient("bot", "Bột"),
@@ -1235,349 +1240,145 @@ export const EQUIPMENTS = [
     ),
 ];
 
-export const TOPICS = [
-  new Topic("t0", "Danh sách các khóa học pha chế", "Xem chi tiết trong hình", require("../images/khoahocphache.png")),
-  new Topic("t1", "Trà sữa - topping", "2.200.000 vnđ", require("../images/daotaophache/trasua-topping.jpg")),
-  new Topic("t2", "Trà trái cây", "2.200.000 vnđ", require("../images/daotaophache/tratraicay.jpg")),
-  new Topic("t3", "Cà phê pha máy - cacao - đá xay - nước ép (tổng hợp)", "2.200.000 vnđ", require("../images/daotaophache/caphefin-cacao-daxay-nuocep.jpg")),
-  new Topic("t4", "Cà phê pha máy cơ bản", "2.500.000 vnđ", require("../images/daotaophache/caphephamaycoban.jpg")),
-  new Topic("t5", "Trà pha máy", "2.500.000 vnđ", require("../images/daotaophache/tra-pha-may.jpg")),
-  new Topic("t6", "Đá xay sinh tố", "2.000.000 vnđ", require("../images/daotaophache/daxaysinhto.jpg")),
-  new Topic("t7", "Trà truyền thống", "2.000.000 vnđ", require("../images/daotaophache/tratruyenthong.jpg")),
-  new Topic("t8", "Chuyên đề cà phê pha máy cơ bản", "2.500.000 vnđ", require("../images/daotaophache/caphemaycoban.jpg")),
-  new Topic("t9", "Chuyên đề cà phê pha máy chuyên sâu", "8.300.000 vnđ", require("../images/daotaophache/caphemaychuyensau.jpg")),
-  new Topic("t10", "Chuyên đề trà pha máy", "2.500.000 vnđ", require("../images/daotaophache/tra-pha-may-01.jpg")),
-  new Topic("t11", "Chuyên đề kem tươi", "2.500.000 vnđ", require("../images/daotaophache/kemtuoi.png")),
-  new Topic("t12", "Trà sữa truyền thống - topping cơ bản", "2.200.000 vnđ", require("../images/daotaophache/trasua-topping.jpg")),
-  new Topic("t13", "Trà chanh -  trà trái cây truyền thống", "2.200.000 vnđ", require("../images/daotaophache/tratraicay.jpg")),
-  new Topic("t14", "Cà phê truyền thống - cacao - đá xay - nước ép", "2.200.000 vnđ", require("../images/daotaophache/caphefin-cacao-daxay-nuocep.jpg")),
-];
-
-
 export const COURSES = [
-    new Course(
-        "c0",
-        ["s1"],
-        "Danh sách các khóa học pha chế",
-        "",
-        "",
-        "https://scontent.fsgn5-14.fna.fbcdn.net/v/t39.30808-6/476927375_610506041727295_3854702581150630927_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=127cfc&_nc_ohc=rcwUARo1qZYQ7kNvgHYz7_B&_nc_oc=Adnx9VcXZEfBsBsHW_0zzYZ8VuCvcA0XPTCFokVvrg1LrBG4CctYiKSdAf7T0iBNuHY&_nc_zt=23&_nc_ht=scontent.fsgn5-14.fna&_nc_gid=Nl5KZCWwWtMzQQ0x3CEZ4g&oh=00_AYG2i_C80paVuc2g0Dp4rPiDPHToqA1FRv86YWHMzg5EVw&oe=67EC1A35",
-
-        "",
-        [
-            "4 Tomatoes",
-            "1 Tablespoon of Olive Oil",
-            "1 Onion",
-            "250g Spaghetti",
-            "Spices",
-            "Cheese (optional)",
-        ],
-        [
-            "Cut the tomatoes and the onion into small pieces.",
-            "Boil some water - add salt to it once it boils.",
-            "Put the spaghetti into the boiling water - they should be done in about 10 to 12 minutes.",
-            "In the meantime, heaten up some olive oil and add the cut onion.",
-            "After 2 minutes, add the tomato pieces, salt, pepper and your other spices.",
-            "The sauce will be done once the spaghetti are.",
-            "Feel free to add some cheese on top of the finished dish.",
-        ],
-        false,
-        true,
-        true,
-        true
-
+  new Course(
+      "t0",
+      ["1"],
+      "Danh Sách Các Khóa Học Pha Chế",
+      "Mỗi khóa học sẽ có thời gian học khác nhau",
+      "Xem thêm chi tiết trong ảnh",
+      "/images/Course/Danh_Sach_Khoa_Hoc/danh_sach.png",
+      [
+        "/images/Course/Danh_Sach_Khoa_Hoc/danh_sach.png",
+        "/images/Course/Danh_Sach_Khoa_Hoc/danh_sach.png",
+        "/images/Course/Danh_Sach_Khoa_Hoc/danh_sach.png",
+      ]
     ),
-    new Course(
-        "c1",
-        ["s1"],
-        "Khóa học tổng hợp truyền thống",
-        "5.200.000 vnđ",
-        "dễ",
-        "https://scontent.fsgn5-14.fna.fbcdn.net/v/t39.30808-6/476927375_610506041727295_3854702581150630927_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=127cfc&_nc_ohc=rcwUARo1qZYQ7kNvgHYz7_B&_nc_oc=Adnx9VcXZEfBsBsHW_0zzYZ8VuCvcA0XPTCFokVvrg1LrBG4CctYiKSdAf7T0iBNuHY&_nc_zt=23&_nc_ht=scontent.fsgn5-14.fna&_nc_gid=Nl5KZCWwWtMzQQ0x3CEZ4g&oh=00_AYG2i_C80paVuc2g0Dp4rPiDPHToqA1FRv86YWHMzg5EVw&oe=67EC1A35",
-
-        "6 buổi (3 ngày)",
-        [
-            "4 Tomatoes",
-            "1 Tablespoon of Olive Oil",
-            "1 Onion",
-            "250g Spaghetti",
-            "Spices",
-            "Cheese (optional)",
-        ],
-        [
-            "Cut the tomatoes and the onion into small pieces.",
-            "Boil some water - add salt to it once it boils.",
-            "Put the spaghetti into the boiling water - they should be done in about 10 to 12 minutes.",
-            "In the meantime, heaten up some olive oil and add the cut onion.",
-            "After 2 minutes, add the tomato pieces, salt, pepper and your other spices.",
-            "The sauce will be done once the spaghetti are.",
-            "Feel free to add some cheese on top of the finished dish.",
-        ],
-        false,
-        true,
-        true,
-        true
-
+  new Course(
+    "t1",
+    ["2"],
+    "Tổng Hợp Truyền Thống",
+    "3 Ngày (6 Buổi)",
+    "5,200,000",
+    "/images/Course/Truyen_Thong/truyen_thong_1.png",
+    [
+      "/images/Course/Truyen_Thong/truyen_thong_1.png",
+      "/images/Course/Truyen_Thong/truyen_thong_2.png",
+      "/images/Course/Truyen_Thong/truyen_thong_3.png",
+    ]
+  ),
+  new Course(
+    "t2",
+    ["2"],
+    "Tổng Hợp Hiện Đại",
+    "4 Ngày (8 Buổi)",
+    "7,500,000",
+    "/images/Course/Hien_Dai/hien_dai_1.png",
+    [
+      "/images/Course/Hien_Dai/hien_dai_1.png",
+      "/images/Course/Hien_Dai/hien_dai_2.png",
+      "/images/Course/Hien_Dai/hien_dai_3.png",
+      "/images/Course/Hien_Dai/hien_dai_4.png",
+    ]
+  ),
+  new Course(
+      "t3",
+      ["3"],
+      "Cà Phê Máy Cơ Bản",
+      "1 Ngày (2 Buổi)",
+      "2,500,000",
+      "/images/Course/Hien_Dai/hien_dai_1.png",
+    [
+      "/images/Course/Hien_Dai/hien_dai_1.png",
+    ]
     ),
-
-    new Course(
-        "c2",
-        ["s1"],
-        "Khóa học tổng hợp hiện đại",
-        "7.500.000 vnđ",
-        "dễ",
-        "https://hocviencaphe.vn/wp-content/uploads/2023/09/h%E1%BB%8Dc-pha-ch%E1%BA%BF-6-750x1060.jpg",
-        "8 buổi (4 ngày)",
-        [
-            "1 Slice White Bread",
-            "1 Slice Ham",
-            "1 Slice Pineapple",
-            "1-2 Slices of Cheese",
-            "Butter",
-        ],
-        [
-            "Butter one side of the white bread",
-            "Layer ham, the pineapple and cheese on the white bread",
-            "Bake the toast for round about 10 minutes in the oven at 200°C",
-        ],
-        false,
-        false,
-        false,
-        false
+  new Course(
+      "t4",
+      ["3"],
+      "Trà Sữa - Topping",
+      "1 Ngày (2 Buổi)",
+      "2,500,000",
+      "/images/Course/Truyen_Thong/truyen_thong_2.png",
+    [
+      "/images/Course/Truyen_Thong/truyen_thong_2.png",
+    ]
     ),
-    new Course(
-        "c3",
-        ["s1"],
-        "Chuyên đề cà phê pha máy cơ bản",
-        "2.500.000 vnđ",
-        "dễ",
-        "https://scontent.fsgn5-15.fna.fbcdn.net/v/t39.30808-6/485377769_639140178863881_6638349368242105399_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=127cfc&_nc_ohc=b-gsik5ODScQ7kNvgGyfcNa&_nc_oc=AdnTjuvgGIHdxYKdr9qHfkH1u7oqK9nXvOCzGsq7htmDmwEAso0maaGMwN4gkEbY31Q&_nc_zt=23&_nc_ht=scontent.fsgn5-15.fna&_nc_gid=FZNI5VvKq-dKwMl9hU7tAQ&oh=00_AYHBLxjQ2BkofGa4mpAYNXlcE6elyNvPTcQX6qc3LritKA&oe=67EC39E7",
-        "2 buổi (1 ngày)",
-        [
-            "300g Cattle Hack",
-            "1 Tomato",
-            "1 Cucumber",
-            "1 Onion",
-            "Ketchup",
-            "2 Burger Buns",
-        ],
-        [
-            "Form 2 patties",
-            "Fry the patties for c. 4 minutes on each side",
-            "Quickly fry the buns for c. 1 minute on each side",
-            "Bruch buns with ketchup",
-            "Serve burger with tomato, cucumber and onion",
-        ],
-        false,
-        false,
-        false,
-        true
+  new Course(
+      "t5",
+      ["3"],
+      "Cà Phê Phin - Cacao & Socola - Đá Xay & Sinh Tố - Sữa Chua",
+      "1 Ngày (2 Buổi)",
+      "2,200,000",
+      "/images/Course/Truyen_Thong/truyen_thong_3.png",
+    [
+      "/images/Course/Truyen_Thong/truyen_thong_3.png",
+    ]
     ),
-
-    new Course(
-        "c4",
-        ["s1"],
-        "Chuyên đề cà phê pha máy chuyên sâu",
-        "8.300.000 vnđ",
-        "Khó",
-        "https://scontent.fsgn5-15.fna.fbcdn.net/v/t39.30808-6/484851904_635302719247627_6614200378457498777_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=127cfc&_nc_ohc=wR24FkLPQKgQ7kNvgFBZEix&_nc_oc=AdmG4PbCdsuhpzfXFUITuQO8NA6P7Xtav-SRfGErBzSH3YDVAtCncNNjoYmOnlUgx7E&_nc_zt=23&_nc_ht=scontent.fsgn5-15.fna&_nc_gid=QMkA6B4BSPMIw4F4MRQcGA&oh=00_AYHcX8elXd0RZvDNQiIjvnagw6QobOVOFMrXCh55S_FNRA&oe=67EC321B",
-        "6 buổi (3 ngày)",
-        [
-            "8 Veal Cutlets",
-            "4 Eggs",
-            "200g Bread Crumbs",
-            "100g Flour",
-            "300ml Butter",
-            "100g Vegetable Oil",
-            "Salt",
-            "Lemon Slices",
-        ],
-        [
-            "Tenderize the veal to about 2–4mm, and salt on both sides.",
-            "On a flat plate, stir the eggs briefly with a fork.",
-            "Lightly coat the cutlets in flour then dip into the egg, and finally, coat in breadcrumbs.",
-            "Heat the butter and oil in a large pan (allow the fat to get very hot) and fry the schnitzels until golden brown on both sides.",
-            "Make sure to toss the pan regularly so that the schnitzels are surrounded by oil and the crumbing becomes ‘fluffy’.",
-            "Remove, and drain on kitchen paper. Fry the parsley in the remaining oil and drain.",
-            "Place the schnitzels on awarmed plate and serve garnishedwith parsley and slices of lemon.",
-        ],
-        false,
-        false,
-        false,
-        false
+  new Course(
+      "t6",
+      ["3"],
+      "Cà Phê Máy - Cacao & Socola",
+      "3 Ngày (6 Buổi)",
+      "8,300,000",
+      "/images/Course/Danh_Sach_Khoa_Hoc/caphemaychuyensau.png",
+    [
+      "/images/Course/Danh_Sach_Khoa_Hoc/caphemaychuyensau.png",
+    ]
     ),
-
-    new Course(
-        "c5",
-        ["s1"],
-        "Chuyên đề trà pha máy",
-        "2.500.000 vnđ",
-        "dễ",
-        "https://scontent.fsgn5-12.fna.fbcdn.net/v/t39.30808-6/480063876_589826657304182_3252817780784402429_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=127cfc&_nc_ohc=sAnD_jnXrncQ7kNvgFudOU7&_nc_oc=AdnRqUStyHsPZCWFzpVDJeGBJjLEpMnNJdbiJdmxTd7M6YIW38FkAMOUNH1Yoq019MY&_nc_zt=23&_nc_ht=scontent.fsgn5-12.fna&_nc_gid=JEINIU5rnsIVBdaHJVwJ_A&oh=00_AYE7H-xPKI_RxAmIe8-ZC1rdPtngQnNm10uIkMv_gi5-cg&oe=67EC2F4B",
-        "2 buổi (1 ngày)",
-        [
-            "Arugula",
-            "Lamb's Lettuce",
-            "Parsley",
-            "Fennel",
-            "200g Smoked Salmon",
-            "Mustard",
-            "Balsamic Vinegar",
-            "Olive Oil",
-            "Salt and Pepper",
-        ],
-        [
-            "Wash and cut salad and herbs",
-            "Dice the salmon",
-            "Process mustard, vinegar and olive oil into a dessing",
-            "Prepare the salad",
-            "Add salmon cubes and dressing",
-        ],
-        true,
-        false,
-        true,
-        true
+  new Course(
+      "t7",
+      ["3"],
+      "Trà Pha Máy - Topping",
+      "1 Ngày (2 Buổi)",
+      "2,500,000",
+      "/images/Course/Hien_Dai/hien_dai_2.png",
+    [
+      "/images/Course/Hien_Dai/hien_dai_2.png",
+    ]
     ),
-
-    new Course(
-        "c6",
-        ["s1"],
-        "Chuyên đề kem tươi",
-        "2.500.000 vnđ",
-        "khó",
-        "https://scontent.fsgn5-14.fna.fbcdn.net/v/t39.30808-6/475577838_578710038415844_4095466479074866361_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=127cfc&_nc_ohc=T8kJOrRq4XMQ7kNvgGUCsl9&_nc_oc=Adk5hNfBs5TFRLDN2IWZmI_uSamD2wAjuO5XBdIyUGndF0eayI6ItNZztd9hZfPysNc&_nc_zt=23&_nc_ht=scontent.fsgn5-14.fna&_nc_gid=eh1MuFO3J1rShg1_hTQG_Q&oh=00_AYEpB1PRsjc2VwMfo0N6pqAzsuj-U_kOCC1iOD0fNwTV3A&oe=67EC128E",
-        "2 buổi (1 ngày)",
-        [
-            "4 Sheets of Gelatine",
-            "150ml Orange Juice",
-            "80g Sugar",
-            "300g Yoghurt",
-            "200g Cream",
-            "Orange Peel",
-        ],
-        [
-            "Dissolve gelatine in pot",
-            "Add orange juice and sugar",
-            "Take pot off the stove",
-            "Add 2 tablespoons of yoghurt",
-            "Stir gelatin under remaining yoghurt",
-            "Cool everything down in the refrigerator",
-            "Whip the cream and lift it under die orange mass",
-            "Cool down again for at least 4 hours",
-            "Serve with orange peel",
-        ],
-        true,
-        false,
-        true,
-        false
+  new Course(
+      "t8",
+      ["3"],
+      "Cocomilk - Đá Xay Hiện Đại - Sinh Tố",
+      "1 Ngày (2 Buổi)",
+      "2,500,000",
+      "/images/Course/Hien_Dai/hien_dai_3.png",
+    [
+      "/images/Course/Hien_Dai/hien_dai_3.png",
+    ]
     ),
-
-    new Course(
-        "c7",
-        ["s1"],
-        "Trà sữa truyền thống - topping cơ bản",
-        "2.200.000 vnđ",
-        "dễ",
-        "https://scontent.fsgn5-9.fna.fbcdn.net/v/t39.30808-6/480233042_589826863970828_4474177929811023263_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=127cfc&_nc_ohc=TnLB5jV8tQoQ7kNvgHSw9gu&_nc_oc=AdmcMCycjyDZzMFU7jPNTQ0NxUIMgqRlyo5TxhPjDvTCRwr5zxVMAV6EK3MXiqDuwQY&_nc_zt=23&_nc_ht=scontent.fsgn5-9.fna&_nc_gid=MWRaCiQ-AXdJeWZuh5tnUA&oh=00_AYGzGCNOLa_2LPO3TBprqZq04omZiNZwUm2uoHNG20s60A&oe=67EC2697",
-        "2 buổi (1 ngày)",
-        [
-            "1 1/2 Cups all-purpose Flour",
-            "3 1/2 Teaspoons Baking Powder",
-            "1 Teaspoon Salt",
-            "1 Tablespoon White Sugar",
-            "1 1/4 cups Milk",
-            "1 Egg",
-            "3 Tablespoons Butter, melted",
-        ],
-        [
-            "In a large bowl, sift together the flour, baking powder, salt and sugar.",
-            "Make a well in the center and pour in the milk, egg and melted butter; mix until smooth.",
-            "Heat a lightly oiled griddle or frying pan over medium high heat.",
-            "Pour or scoop the batter onto the griddle, using approximately 1/4 cup for each pancake. Brown on both sides and serve hot.",
-        ],
-        true,
-        false,
-        true,
-        false
+  new Course(
+      "t9",
+      ["3"],
+      "Trà Kombucha - Matcha - Topping",
+      "1 Ngày (2 Buổi)",
+      "2,500,000",
+      "/images/Course/Hien_Dai/hien_dai_4.png",
+    [
+      "/images/Course/Hien_Dai/hien_dai_4.png",
+    ]
     ),
-
-    new Course(
-        "c8",
-        ["s1"],
-        "Trà chanh -  trà trái cây truyền thống",
-        "2.200.000 vnđ",
-        "trung bình",
-        "https://scontent.fsgn5-14.fna.fbcdn.net/v/t39.30808-6/481424158_601514996135348_5372198686599435279_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=127cfc&_nc_ohc=SFZjC3HOjNUQ7kNvgH6LQnM&_nc_oc=AdlsU_wjnGnb26WP26lTe12YLiYOvQGK7_9kn7Er7FJYcE-Z5KX5qFhncSrfnp2MMiM&_nc_zt=23&_nc_ht=scontent.fsgn5-14.fna&_nc_gid=Kp3M-C5-3bvsfBNVCO0Jog&oh=00_AYGKSSJ-Hg2IJkzfdiZLwb38juYzT32U-A9VbAATqtIr8g&oe=67EC1F6A",
-        "2 buổi (1 ngày)",
-        [
-            "4 Chicken Breasts",
-            "1 Onion",
-            "2 Cloves of Garlic",
-            "1 Piece of Ginger",
-            "4 Tablespoons Almonds",
-            "1 Teaspoon Cayenne Pepper",
-            "500ml Coconut Milk",
-        ],
-        [
-            "Slice and fry the chicken breast",
-            "Process onion, garlic and ginger into paste and sauté everything",
-            "Add spices and stir fry",
-            "Add chicken breast + 250ml of water and cook everything for 10 minutes",
-            "Add coconut milk",
-            "Serve with rice",
-        ],
-        true,
-        false,
-        false,
-        true
-    ),
-
-    new Course(
-        "c9",
-        ["c9"],
-        "Cà phê truyền thống - cacao - đá xay - nước ép",
-        "2.200.000 vnđ",
-        "khó",
-        "https://hocviencaphe.vn/wp-content/uploads/2023/09/h%E1%BB%8Dc-pha-ch%E1%BA%BF-2-750x1060.jpg",
-        "2 buổi (1 ngày)",
-        [
-            "1 Teaspoon melted Butter",
-            "2 Tablespoons white Sugar",
-            "2 Ounces 70% dark Chocolate, broken into pieces",
-            "1 Tablespoon Butter",
-            "1 Tablespoon all-purpose Flour",
-            "4 1/3 tablespoons cold Milk",
-            "1 Pinch Salt",
-            "1 Pinch Cayenne Pepper",
-            "1 Large Egg Yolk",
-            "2 Large Egg Whites",
-            "1 Pinch Cream of Tartar",
-            "1 Tablespoon white Sugar",
-        ],
-        [
-            "Preheat oven to 190°C. Line a rimmed baking sheet with parchment paper.",
-            "Brush bottom and sides of 2 ramekins lightly with 1 teaspoon melted butter; cover bottom and sides right up to the rim.",
-            "Add 1 tablespoon white sugar to ramekins. Rotate ramekins until sugar coats all surfaces.",
-            "Place chocolate pieces in a metal mixing bowl.",
-            "Place bowl over a pan of about 3 cups hot water over low heat.",
-            "Melt 1 tablespoon butter in a skillet over medium heat. Sprinkle in flour. Whisk until flour is incorporated into butter and mixture thickens.",
-            "Whisk in cold milk until mixture becomes smooth and thickens. Transfer mixture to bowl with melted chocolate.",
-            "Add salt and cayenne pepper. Mix together thoroughly. Add egg yolk and mix to combine.",
-            "Leave bowl above the hot (not simmering) water to keep chocolate warm while you whip the egg whites.",
-            "Place 2 egg whites in a mixing bowl; add cream of tartar. Whisk until mixture begins to thicken and a drizzle from the whisk stays on the surface about 1 second before disappearing into the mix.",
-            "Add 1/3 of sugar and whisk in. Whisk in a bit more sugar about 15 seconds.",
-            "whisk in the rest of the sugar. Continue whisking until mixture is about as thick as shaving cream and holds soft peaks, 3 to 5 minutes.",
-            "Transfer a little less than half of egg whites to chocolate.",
-            "Mix until egg whites are thoroughly incorporated into the chocolate.",
-            "Add the rest of the egg whites; gently fold into the chocolate with a spatula, lifting from the bottom and folding over.",
-            "Stop mixing after the egg white disappears. Divide mixture between 2 prepared ramekins. Place ramekins on prepared baking sheet.",
-            "Bake in preheated oven until scuffles are puffed and have risen above the top of the rims, 12 to 15 minutes.",
-        ],
-        true,
-        false,
-        true,
-        false
-    ),
-
-
 ];
+
+//  new Course("t0", "Danh sách các khóa học pha chế", "Xem chi tiết trong hình", require("../images/khoahocphache.png")),
+//  new Course("1", "Khóa học pha chế truyền thống", "Xem chi tiết trong hình", require("../images/khoahocphache.png")),
+
+
+//  new Course("t1", "Trà sữa - topping", "2.200.000 vnđ", require("../images/daotaophache/trasua-topping.jpg")),
+//  new Course("t2", "Trà trái cây", "2.200.000 vnđ", require("../images/daotaophache/tratraicay.jpg")),
+//  new Course("t3", "Cà phê pha máy - cacao - đá xay - nước ép (tổng hợp)", "2.200.000 vnđ", require("../images/daotaophache/caphefin-cacao-daxay-nuocep.jpg")),
+//  new Course("t4", "Cà phê pha máy cơ bản", "2.500.000 vnđ", require("../images/daotaophache/caphephamaycoban.jpg")),
+//  new Course("t5", "Trà pha máy", "2.500.000 vnđ", require("../images/daotaophache/tra-pha-may.jpg")),
+//  new Course("t6", "Đá xay sinh tố", "2.000.000 vnđ", require("../images/daotaophache/daxaysinhto.jpg")),
+//  new Course("t7", "Trà truyền thống", "2.000.000 vnđ", require("../images/daotaophache/tratruyenthong.jpg")),
+//  new Course("t8", "Chuyên đề cà phê pha máy cơ bản", "2.500.000 vnđ", require("../images/daotaophache/caphemaycoban.jpg")),
+//  new Course("t9", "Chuyên đề cà phê pha máy chuyên sâu", "8.300.000 vnđ", require("../images/daotaophache/caphemaychuyensau.jpg")),
+//  new Course("t10", "Chuyên đề trà pha máy", "2.500.000 vnđ", require("../images/daotaophache/tra-pha-may-01.jpg")),
+//  new Course("t11", "Chuyên đề kem tươi", "2.500.000 vnđ", require("../images/daotaophache/kemtuoi.png")),
+//  new Course("t12", "Trà sữa truyền thống - topping cơ bản", "2.200.000 vnđ", require("../images/daotaophache/trasua-topping.jpg")),
+//  new Course("t13", "Trà chanh -  trà trái cây truyền thống", "2.200.000 vnđ", require("../images/daotaophache/tratraicay.jpg")),
+//  new Course("t14", "Cà phê truyền thống - cacao - đá xay - nước ép", "2.200.000 vnđ", require("../images/daotaophache/caphefin-cacao-daxay-nuocep.jpg")),
+
+
+
+

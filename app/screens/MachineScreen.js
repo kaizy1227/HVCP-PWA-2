@@ -245,7 +245,7 @@ const MachineScreen = ({ route, navigation }) => {
         ) : (
           <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
             <Text style={{ color: "#A47148", fontSize: 18 }}>
-              👉 Chọn danh mục để xem danh sách máy
+              👉 Hãy chọn danh mục bên trái để xem danh sách máy
             </Text>
           </View>
         )}

@@ -4,7 +4,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { View, Image } from "react-native";
 
 import ServicesScreen from "./screens/ServicesScreen";
-import CoursesOverviewScreen from "./screens/CoursesOverviewScreen";
+import CourseScreen from "./screens/CourseScreen";
 import MachineScreen from "./screens/MachineScreen";
 import CatDrinkScreen from "./screens/CatDrinkScreen";
 import IngredientScreen from "./screens/IngredientScreen";
@@ -78,7 +78,7 @@ export default function Index() {
                                 ),
                             }}
                         />
-                        <Stack.Screen name="Khóa Học Pha Chế" component={CoursesOverviewScreen} />
+                        <Stack.Screen name="Khóa Học Pha Chế" component={CourseScreen} />
                         <Stack.Screen name="Máy Pha Chế" component={MachineScreen} />
                         <Stack.Screen name="Danh Mục Đồ Uống" component={CatDrinkScreen} />
                         <Stack.Screen name="Nguyên Liệu Pha Chế" component={IngredientScreen} />
