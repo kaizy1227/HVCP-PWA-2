@@ -20,6 +20,7 @@ import {
 import { CartContext } from "../context/CartContext";
 import HeaderRight from "../components/HeaderRight";
 import { commonHeaderOptions } from "../components/headerOptions";
+import ImageViewer from "react-native-image-zoom-viewer";
 
 const CatDrinkScreen = ({ route, navigation }) => {
     const seID = route.params.serviceId;
@@ -33,6 +34,10 @@ const CatDrinkScreen = ({ route, navigation }) => {
 
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [modalVisible, setModalVisible] = useState(false);
+
+      const [zoomVisible, setZoomVisible] = useState(false);
+      const [zoomIndex, setZoomIndex] = useState(0);
+
     const [selectedDrink, setSelectedDrink] = useState(null);
     const [sidebarVisible, setSidebarVisible] = useState(true);
     const sidebarAnim = useRef(new Animated.Value(0)).current;
@@ -254,15 +259,56 @@ const CatDrinkScreen = ({ route, navigation }) => {
                         {/* ✅ Ảnh có hiệu ứng chuyển mượt */}
                         {selectedDrink?.fullImageUrl && (
                             <View style={{ alignItems: "center" }}>
-                                <Animated.Image
-                                    source={{
-                                        uri: Array.isArray(selectedDrink.fullImageUrl)
-                                            ? getImageUri(selectedDrink.fullImageUrl[currentImageIndex])
-                                            : getImageUri(selectedDrink.fullImageUrl),
-                                    }}
-                                    style={[styles.modalImage, { opacity: fadeAnim }]}
-                                    resizeMode="contain"
-                                />
+<TouchableOpacity
+  activeOpacity={0.9}
+  onPress={() => {
+    setZoomIndex(currentImageIndex);
+    setZoomVisible(true);
+  }}
+>
+  <Animated.Image
+    source={{
+      uri: Array.isArray(selectedDrink.fullImageUrl)
+          ? getImageUri(selectedDrink.fullImageUrl[currentImageIndex])
+          : getImageUri(selectedDrink.fullImageUrl),
+    }}
+    style={[styles.modalImage, { opacity: fadeAnim }]}
+    resizeMode="contain"
+  />
+</TouchableOpacity>
+
+{/* Modal zoom ảnh toàn màn hình */}
+<Modal visible={zoomVisible} transparent={true}>
+  <View style={styles.zoomContainer}>
+    {/* Nút đóng tròn màu nâu cà phê */}
+    <TouchableOpacity
+      style={styles.closeCircle}
+      onPress={() => setZoomVisible(false)}
+      activeOpacity={0.8}
+    >
+      <Text style={styles.closeText}>✕</Text>
+    </TouchableOpacity>
+
+    <ImageViewer
+      imageUrls={selectedDrink?.fullImageUrl?.map((url) => ({
+        url: getImageUri(url),
+      })) || []}
+      index={zoomIndex}
+      enableSwipeDown={true}
+      onSwipeDown={() => setZoomVisible(false)}
+      onClick={() => setZoomVisible(false)}
+      saveToLocalByLongPress={false}
+      renderIndicator={(currentIndex, allSize) => (
+        <View style={styles.indicatorBox}>
+          <Text style={styles.indicatorText}>
+            {currentIndex}/{allSize}
+          </Text>
+        </View>
+      )}
+    />
+  </View>
+</Modal>
+
 
                                 {/* ✅ Nút điều hướng trái/phải */}
                                 {Array.isArray(selectedDrink.fullImageUrl) &&
@@ -825,6 +871,45 @@ const styles = StyleSheet.create({
         textAlign: "center",       // ✅ Giúp từng dòng căn giữa đẹp mắt
         marginVertical: 2,
     },
+zoomContainer: {
+  flex: 1,
+  backgroundColor: "rgba(0,0,0,0.95)",
+},
+indicatorBox: {
+  position: "absolute",
+  top: 50,
+  alignSelf: "center",
+  backgroundColor: "rgba(0,0,0,0.5)",
+  borderRadius: 10,
+  paddingHorizontal: 12,
+  paddingVertical: 4,
+},
+indicatorText: {
+  color: "#fff",
+  fontSize: 14,
+},
+closeCircle: {
+  position: "absolute",
+  top: 40,
+  right: 20,
+  zIndex: 10,
+  backgroundColor: "#4A2306", // nâu cà phê
+  width: 40,
+  height: 40,
+  borderRadius: 20,
+  justifyContent: "center",
+  alignItems: "center",
+  shadowColor: "#000",
+  shadowOpacity: 0.3,
+  shadowOffset: { width: 0, height: 2 },
+  shadowRadius: 3,
+  elevation: 5,
+},
+closeText: {
+  color: "#fff",
+  fontSize: 20,
+  fontWeight: "bold",
+},
 
 
 

@@ -1,5 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import { NavigationContainer } from "@react-navigation/native";
+import useDisableZoom from "./hooks/useDisableZoom";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { View, Image } from "react-native";
 
@@ -42,6 +43,7 @@ if (typeof window !== "undefined") {
 
 }
 export default function Index() {
+    useDisableZoom();
     return (
         <>
             <StatusBar style="dark" />

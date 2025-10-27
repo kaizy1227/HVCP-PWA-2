@@ -19,10 +19,10 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { SERVICES, MACHINES, CATMACHINES } from "../data/dummy-data";
-import { useNavigation } from "@react-navigation/native";
 import { CartContext } from "../context/CartContext";
 import HeaderRight from "../components/HeaderRight";
 import { commonHeaderOptions } from "../components/headerOptions";
+import ImageViewer from "react-native-image-zoom-viewer";
 
 const MachineScreen = ({ route, navigation }) => {
   const mccID = route.params.serviceId;
@@ -39,6 +39,7 @@ const MachineScreen = ({ route, navigation }) => {
   const [searchText, setSearchText] = useState("");
   const [filteredMachines, setFilteredMachines] = useState([]);
 
+  const [zoomVisible, setZoomVisible] = useState(false); // ✅ Zoom modal
   const sidebarAnim = useRef(new Animated.Value(0)).current;
   const fadeListAnim = useRef(new Animated.Value(0)).current;
   const [sidebarVisible, setSidebarVisible] = useState(true);
@@ -261,15 +262,21 @@ const MachineScreen = ({ route, navigation }) => {
           <ScrollView contentContainerStyle={styles.scrollViewContent}>
             {selectedMachine && (
               <>
-                <Image
-                  source={
-                    typeof selectedMachine.imageUrl === "string"
-                      ? { uri: selectedMachine.imageUrl }
-                      : selectedMachine.imageUrl
-                  }
-                  style={styles.modalImage}
-                  resizeMode="contain"
-                />
+                <TouchableOpacity
+                  activeOpacity={0.9}
+                  onPress={() => setZoomVisible(true)}
+                >
+                  <Image
+                    source={
+                      typeof selectedMachine.imageUrl === "string"
+                        ? { uri: selectedMachine.imageUrl }
+                        : selectedMachine.imageUrl
+                    }
+                    style={styles.modalImage}
+                    resizeMode="contain"
+                  />
+                </TouchableOpacity>
+
                 <Text style={styles.modalTitle}>{selectedMachine.title}</Text>
                 <Text style={styles.modalInfo}>
                   Giá: {selectedMachine.price}₫
@@ -315,6 +322,36 @@ const MachineScreen = ({ route, navigation }) => {
               </>
             )}
           </ScrollView>
+        </View>
+      </Modal>
+
+      {/* Modal zoom ảnh toàn màn hình */}
+      <Modal visible={zoomVisible} transparent={true}>
+        <View style={styles.zoomContainer}>
+          <TouchableOpacity
+            style={styles.closeCircle}
+            onPress={() => setZoomVisible(false)}
+            activeOpacity={0.8}
+          >
+            <Text style={styles.closeText}>✕</Text>
+          </TouchableOpacity>
+
+          {selectedMachine && (
+            <ImageViewer
+              imageUrls={[
+                {
+                  url:
+                    typeof selectedMachine.imageUrl === "string"
+                      ? selectedMachine.imageUrl
+                      : "",
+                },
+              ]}
+              enableSwipeDown={true}
+              onSwipeDown={() => setZoomVisible(false)}
+              onClick={() => setZoomVisible(false)}
+              saveToLocalByLongPress={false}
+            />
+          )}
         </View>
       </Modal>
 
@@ -514,6 +551,32 @@ const styles = StyleSheet.create({
   closeButtonText: {
     color: "#4A2306",
     fontSize: 16,
+    fontWeight: "bold",
+  },
+  zoomContainer: {
+    flex: 1,
+    backgroundColor: "rgba(0,0,0,0.95)",
+  },
+  closeCircle: {
+    position: "absolute",
+    top: 40,
+    right: 20,
+    zIndex: 10,
+    backgroundColor: "#4A2306",
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    justifyContent: "center",
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOpacity: 0.3,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 3,
+    elevation: 5,
+  },
+  closeText: {
+    color: "#fff",
+    fontSize: 20,
     fontWeight: "bold",
   },
   cartSummaryContainer: {

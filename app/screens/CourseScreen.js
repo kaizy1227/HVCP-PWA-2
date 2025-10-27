@@ -18,6 +18,8 @@ import {
 } from "react-native-responsive-screen";
 import { SERVICES, COURSES, CATCOURSES } from "../data/dummy-data";
 import { commonHeaderOptions } from "../components/headerOptions";
+import ImageViewer from "react-native-image-zoom-viewer";
+
 
 // 👉 Hàm xử lý đường dẫn ảnh linh hoạt
 const getImageUri = (path) => {
@@ -38,6 +40,9 @@ const CourseScreen = ({ route, navigation }) => {
 
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
+  const [zoomVisible, setZoomVisible] = useState(false);
+  const [zoomIndex, setZoomIndex] = useState(0);
+
   const [selectedCourse, setSelectedCourse] = useState(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const fadeAnim = useRef(new Animated.Value(1)).current;
@@ -220,15 +225,54 @@ const CourseScreen = ({ route, navigation }) => {
                 {Array.isArray(selectedCourse.imageUrls) &&
                 selectedCourse.imageUrls.length > 0 ? (
                   <View style={{ alignItems: "center" }}>
-                    <Animated.Image
-                      source={{
-                        uri: getImageUri(
-                          selectedCourse.imageUrls[currentImageIndex]
-                        ),
+                    <TouchableOpacity
+                      activeOpacity={0.9}
+                      onPress={() => {
+                        setZoomIndex(currentImageIndex);
+                        setZoomVisible(true);
                       }}
-                      style={[styles.modalImage, { opacity: fadeAnim }]}
-                      resizeMode="contain"
-                    />
+                    >
+                      <Animated.Image
+                        source={{
+                          uri: getImageUri(selectedCourse.imageUrls[currentImageIndex]),
+                        }}
+                        style={[styles.modalImage, { opacity: fadeAnim }]}
+                        resizeMode="contain"
+                      />
+                    </TouchableOpacity>
+
+<Modal visible={zoomVisible} transparent={true}>
+  <View style={styles.zoomContainer}>
+<TouchableOpacity
+  style={styles.closeCircle}
+  onPress={() => setZoomVisible(false)}
+  activeOpacity={0.8}
+>
+  <Text style={styles.closeText}>✕</Text>
+</TouchableOpacity>
+
+
+    <ImageViewer
+      imageUrls={selectedCourse.imageUrls.map((url) => ({
+        url: getImageUri(url),
+      }))}
+      index={zoomIndex}
+      enableSwipeDown={true}
+      onSwipeDown={() => setZoomVisible(false)}
+      onClick={() => setZoomVisible(false)}
+      saveToLocalByLongPress={false}
+      renderIndicator={(currentIndex, allSize) => (
+        <View style={styles.indicatorBox}>
+          <Text style={styles.indicatorText}>
+            {currentIndex}/{allSize}
+          </Text>
+        </View>
+      )}
+    />
+  </View>
+</Modal>
+
+
                     {/* Nút chuyển ảnh */}
                     <TouchableOpacity
                       style={[styles.navButton, { left: 10 }]}
@@ -422,4 +466,44 @@ const styles = StyleSheet.create({
     width: 10,
     height: 10,
   },
+  zoomContainer: {
+    flex: 1,
+    backgroundColor: "rgba(0,0,0,0.95)",
+  },
+  indicatorBox: {
+    position: "absolute",
+    top: 50,
+    alignSelf: "center",
+    backgroundColor: "rgba(0,0,0,0.5)",
+    borderRadius: 10,
+    paddingHorizontal: 12,
+    paddingVertical: 4,
+  },
+  indicatorText: {
+    color: "#fff",
+    fontSize: 14,
+  },
+closeCircle: {
+  position: "absolute",
+  top: 40,
+  right: 20,
+  zIndex: 10,
+  backgroundColor: "#4A2306", // nâu cà phê
+  width: 40,
+  height: 40,
+  borderRadius: 20, // tạo hình tròn
+  justifyContent: "center",
+  alignItems: "center",
+  shadowColor: "#000",
+  shadowOpacity: 0.3,
+  shadowOffset: { width: 0, height: 2 },
+  shadowRadius: 3,
+  elevation: 5, // hiệu ứng nổi trên Android
+},
+closeText: {
+  color: "#fff",
+  fontSize: 20,
+  fontWeight: "bold",
+},
+
 });
