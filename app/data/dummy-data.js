@@ -90,6 +90,7 @@ export const CATCOURSES = [
     new CatCourse("1", "Danh Sách Khóa Học"),
     new CatCourse("2", "Khóa Pha Chế Tổng Hợp"),
     new CatCourse("3", "Khóa Lẻ Tự Chọn"),
+    new CatCourse("4", "Khóa Nâng Cấp Menu"),
 ];
 export const CATINGREDIENTS = [
     new CatIngredient("bot", "Bột"),
@@ -1356,6 +1357,17 @@ export const COURSES = [
       "/images/Course/Hien_Dai/hien_dai_4.png",
     [
       "/images/Course/Hien_Dai/hien_dai_4.png",
+    ]
+    ),
+  new Course(
+      "t10",
+      ["4"],
+      "Nâng Cấp Menu",
+      "1 Ngày (2 Buổi)",
+      "2,500,000",
+      "/images/Course/Nang_Cap_Menu/nang_cap_menu.jpg",
+    [
+      "/images/Course/Nang_Cap_Menu/nang_cap_menu.jpg",
     ]
     ),
 ];
