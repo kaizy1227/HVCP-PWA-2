@@ -90,7 +90,7 @@ export const CATCOURSES = [
     new CatCourse("1", "Danh Sách Khóa Học"),
     new CatCourse("2", "Khóa Pha Chế Tổng Hợp"),
     new CatCourse("3", "Khóa Lẻ Tự Chọn"),
-    new CatCourse("4", "Khóa Nâng Cấp Menu"),
+    new CatCourse("4", "Khóa Nâng Cấp Menu (Mới)"),
 ];
 export const CATINGREDIENTS = [
     new CatIngredient("bot", "Bột"),
@@ -1248,11 +1248,9 @@ export const COURSES = [
       "Danh Sách Các Khóa Học Pha Chế",
       "Mỗi khóa học sẽ có thời gian học khác nhau",
       "Xem thêm chi tiết trong ảnh",
-      "/images/Course/Danh_Sach_Khoa_Hoc/danh_sach.png",
+      "/images/Course/Danh_Sach_Khoa_Hoc/danh_sach.jpg",
       [
-        "/images/Course/Danh_Sach_Khoa_Hoc/danh_sach.png",
-        "/images/Course/Danh_Sach_Khoa_Hoc/danh_sach.png",
-        "/images/Course/Danh_Sach_Khoa_Hoc/danh_sach.png",
+        "/images/Course/Danh_Sach_Khoa_Hoc/danh_sach.jpg",
       ]
     ),
   new Course(
@@ -1368,7 +1366,16 @@ export const COURSES = [
       "/images/Course/Nang_Cap_Menu/nang_cap_menu.jpg",
     [
       "/images/Course/Nang_Cap_Menu/nang_cap_menu.jpg",
+      "/images/Course/Nang_Cap_Menu/khoa_hoc_nang_cap_menu.PNG",
+      "/images/Course/Nang_Cap_Menu/voi1_voi2.PNG",
+      "/images/Course/Nang_Cap_Menu/voi3_voi4.PNG",
+      "/images/Course/Nang_Cap_Menu/may01.jpg",
+      "/images/Course/Nang_Cap_Menu/may02.jpg",
+      "/images/Course/Nang_Cap_Menu/may03.jpg",
+      "/images/Course/Nang_Cap_Menu/may04.jpg",
+      "/images/Course/Nang_Cap_Menu/maynitrogen.jpg",
     ]
+
     ),
 ];
 

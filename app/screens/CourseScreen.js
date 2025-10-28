@@ -216,116 +216,137 @@ const CourseScreen = ({ route, navigation }) => {
         )}
       </View>
 
-      {/* Modal chi tiết khóa học */}
-      <Modal visible={modalVisible} animationType="fade">
-        <View style={styles.modalContainer}>
-          <ScrollView contentContainerStyle={styles.scrollViewContent}>
-            {selectedCourse && (
-              <>
-                {Array.isArray(selectedCourse.imageUrls) &&
-                selectedCourse.imageUrls.length > 0 ? (
-                  <View style={{ alignItems: "center" }}>
-                    <TouchableOpacity
-                      activeOpacity={0.9}
-                      onPress={() => {
-                        setZoomIndex(currentImageIndex);
-                        setZoomVisible(true);
-                      }}
-                    >
-                      <Animated.Image
-                        source={{
-                          uri: getImageUri(selectedCourse.imageUrls[currentImageIndex]),
-                        }}
-                        style={[styles.modalImage, { opacity: fadeAnim }]}
-                        resizeMode="contain"
-                      />
-                    </TouchableOpacity>
+{/* Modal chi tiết khóa học */}
+<Modal visible={modalVisible} animationType="fade">
+  <View style={styles.modalContainer}>
+    <ScrollView contentContainerStyle={styles.scrollViewContent}>
+      {selectedCourse && (
+        <>
+          {/* 🎥 Nếu có videoUrl thì hiển thị video trước */}
+          {selectedCourse.videoUrl ? (
+            <View style={{ alignItems: "center" }}>
+              <Video
+                source={{ uri: getImageUri(selectedCourse.videoUrl) }}
+                style={styles.modalImage}
+                useNativeControls
+                resizeMode="contain"
+                shouldPlay
+                isLooping
+              />
+            </View>
+          ) : null}
 
-<Modal visible={zoomVisible} transparent={true}>
-  <View style={styles.zoomContainer}>
-<TouchableOpacity
-  style={styles.closeCircle}
-  onPress={() => setZoomVisible(false)}
-  activeOpacity={0.8}
->
-  <Text style={styles.closeText}>✕</Text>
-</TouchableOpacity>
+          {/* 🖼️ Nếu có mảng ảnh thì hiển thị ảnh có hiệu ứng chuyển */}
+          {Array.isArray(selectedCourse.imageUrls) &&
+          selectedCourse.imageUrls.length > 0 ? (
+            <View style={{ alignItems: "center" }}>
+              <TouchableOpacity
+                activeOpacity={0.9}
+                onPress={() => {
+                  setZoomIndex(currentImageIndex);
+                  setZoomVisible(true);
+                }}
+              >
+                <Animated.Image
+                  source={{
+                    uri: getImageUri(
+                      selectedCourse.imageUrls[currentImageIndex]
+                    ),
+                  }}
+                  style={[styles.modalImage, { opacity: fadeAnim }]}
+                  resizeMode="contain"
+                />
+              </TouchableOpacity>
 
+              {/* 🔍 Modal zoom ảnh */}
+              <Modal visible={zoomVisible} transparent={true}>
+                <View style={styles.zoomContainer}>
+                  <TouchableOpacity
+                    style={styles.closeCircle}
+                    onPress={() => setZoomVisible(false)}
+                    activeOpacity={0.8}
+                  >
+                    <Text style={styles.closeText}>✕</Text>
+                  </TouchableOpacity>
 
-    <ImageViewer
-      imageUrls={selectedCourse.imageUrls.map((url) => ({
-        url: getImageUri(url),
-      }))}
-      index={zoomIndex}
-      enableSwipeDown={true}
-      onSwipeDown={() => setZoomVisible(false)}
-      onClick={() => setZoomVisible(false)}
-      saveToLocalByLongPress={false}
-      renderIndicator={(currentIndex, allSize) => (
-        <View style={styles.indicatorBox}>
-          <Text style={styles.indicatorText}>
-            {currentIndex}/{allSize}
+                  <ImageViewer
+                    imageUrls={selectedCourse.imageUrls.map((url) => ({
+                      url: getImageUri(url),
+                    }))}
+                    index={zoomIndex}
+                    enableSwipeDown={true}
+                    onSwipeDown={() => setZoomVisible(false)}
+                    onClick={() => setZoomVisible(false)}
+                    saveToLocalByLongPress={false}
+                    renderIndicator={(currentIndex, allSize) => (
+                      <View style={styles.indicatorBox}>
+                        <Text style={styles.indicatorText}>
+                          {currentIndex}/{allSize}
+                        </Text>
+                      </View>
+                    )}
+                  />
+                </View>
+              </Modal>
+
+              {/* Nút chuyển ảnh */}
+              <TouchableOpacity
+                style={[styles.navButton, { left: 10 }]}
+                onPress={() => changeImage("prev")}
+              >
+                <Text style={styles.navButtonText}>‹</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.navButton, { right: 10 }]}
+                onPress={() => changeImage("next")}
+              >
+                <Text style={styles.navButtonText}>›</Text>
+              </TouchableOpacity>
+
+              {/* Dấu chấm */}
+              <View style={styles.dotContainer}>
+                {selectedCourse.imageUrls.map((_, i) => (
+                  <View
+                    key={i}
+                    style={[
+                      styles.dot,
+                      i === currentImageIndex && styles.dotActive,
+                    ]}
+                  />
+                ))}
+              </View>
+            </View>
+          ) : (
+            /* 🖼️ Nếu chỉ có 1 ảnh */
+            <Image
+              source={{ uri: getImageUri(selectedCourse.imageUrl) }}
+              style={styles.modalImage}
+              resizeMode="contain"
+            />
+          )}
+
+          {/* 🧾 Thông tin khóa học */}
+          <Text style={styles.modalTitle}>{selectedCourse.title}</Text>
+          <Text style={styles.modalDuration}>
+            🕒 Thời lượng: {selectedCourse.duration}
           </Text>
-        </View>
+          <Text style={styles.modalPrice}>
+            💰 Học phí: {selectedCourse.price}
+          </Text>
+
+          {/* 🔘 Nút đóng */}
+          <TouchableOpacity
+            onPress={() => setModalVisible(false)}
+            style={styles.closeButton}
+          >
+            <Text style={styles.closeButtonText}>Đóng</Text>
+          </TouchableOpacity>
+        </>
       )}
-    />
+    </ScrollView>
   </View>
 </Modal>
 
-
-                    {/* Nút chuyển ảnh */}
-                    <TouchableOpacity
-                      style={[styles.navButton, { left: 10 }]}
-                      onPress={() => changeImage("prev")}
-                    >
-                      <Text style={styles.navButtonText}>‹</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      style={[styles.navButton, { right: 10 }]}
-                      onPress={() => changeImage("next")}
-                    >
-                      <Text style={styles.navButtonText}>›</Text>
-                    </TouchableOpacity>
-                    {/* Dấu chấm */}
-                    <View style={styles.dotContainer}>
-                      {selectedCourse.imageUrls.map((_, i) => (
-                        <View
-                          key={i}
-                          style={[
-                            styles.dot,
-                            i === currentImageIndex && styles.dotActive,
-                          ]}
-                        />
-                      ))}
-                    </View>
-                  </View>
-                ) : (
-                  <Image
-                    source={{ uri: getImageUri(selectedCourse.imageUrl) }}
-                    style={styles.modalImage}
-                    resizeMode="contain"
-                  />
-                )}
-
-                <Text style={styles.modalTitle}>{selectedCourse.title}</Text>
-                <Text style={styles.modalDuration}>
-                  🕒 Thời lượng: {selectedCourse.duration}
-                </Text>
-                <Text style={styles.modalPrice}>
-                  💰 Học phí: {selectedCourse.price}
-                </Text>
-
-                <TouchableOpacity
-                  onPress={() => setModalVisible(false)}
-                  style={styles.closeButton}
-                >
-                  <Text style={styles.closeButtonText}>Đóng</Text>
-                </TouchableOpacity>
-              </>
-            )}
-          </ScrollView>
-        </View>
-      </Modal>
     </View>
   );
 };
@@ -507,3 +528,5 @@ closeText: {
 },
 
 });
+
+

@@ -7,6 +7,7 @@ class Course {
     this.price = price;
     this.imageUrl = imageUrl;
     this.imageUrls = imageUrls;
+
   }
 }
 
