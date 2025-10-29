@@ -245,7 +245,6 @@ const CatDrinkScreen = ({ route, navigation }) => {
                 )}
 
 
-        )}
             </View>
 
             {/* Modal chính: chi tiết đồ uống */}
@@ -348,24 +347,77 @@ const CatDrinkScreen = ({ route, navigation }) => {
                         {/* Tên món */}
                         <Text style={styles.modalTitle}>{selectedDrink?.title}</Text>
 
-                        {/* Công thức */}
-                        {selectedDrink?.recipe && (
-                            <View style={styles.recipeBox}>
-                                <Text style={styles.recipeTitle}>🍹 Công thức pha chế</Text>
+{/* ☕ Công thức pha chế (định dạng đẹp, tách rõ 2 phần) */}
+{selectedDrink?.recipe && (
+  <View style={styles.recipeBox}>
+    {/* Header */}
+    <View style={styles.recipeHeader}>
+      <Text style={styles.recipeIcon}>🥤</Text>
+      <Text style={styles.recipeTitle}>Công thức pha chế</Text>
+    </View>
 
-                                {/* ✅ Bọc thêm container để căn giữa */}
-                                <View style={styles.recipeListContainer}>
-                                    {selectedDrink.recipe
-                                        .split("\n")
-                                        .filter((line) => line.trim() !== "")
-                                        .map((line, index) => (
-                                            <Text key={index} style={styles.recipeLine}>
-                                                • {line.trim()}
-                                            </Text>
-                                        ))}
-                                </View>
-                            </View>
-                        )}
+    <View style={styles.recipeDivider} />
+
+    {(() => {
+      // 👉 Xử lý tách dữ liệu
+      const lines = selectedDrink.recipe
+        .split("\n")
+        .map((line) => line.trim())
+        .filter((line) => line !== "");
+
+      const ingredientIndex = lines.findIndex((l) =>
+        l.toLowerCase().includes("nguyên liệu")
+      );
+      const methodIndex = lines.findIndex((l) =>
+        l.toLowerCase().includes("cách pha chế")
+      );
+
+      const ingredients =
+        ingredientIndex !== -1 && methodIndex !== -1
+          ? lines.slice(ingredientIndex + 1, methodIndex)
+          : [];
+      const steps =
+        methodIndex !== -1 ? lines.slice(methodIndex + 1) : [];
+
+      return (
+        <View style={styles.recipeContent}>
+          {/* 🧂 Nguyên liệu */}
+          <Text style={styles.subTitle}>🧂 Nguyên liệu</Text>
+          <View style={styles.recipeListContainer}>
+            {ingredients.length > 0 ? (
+              ingredients.map((line, i) => (
+                <View key={`ing-${i}`} style={styles.recipeLineWrapper}>
+                  <Text style={styles.bullet}>•</Text>
+                  <Text style={styles.recipeLine}>{line}</Text>
+                </View>
+              ))
+            ) : (
+              <Text style={styles.recipeLineDim}>Không có thông tin nguyên liệu</Text>
+            )}
+          </View>
+
+          <View style={styles.sectionDivider} />
+
+          {/* ☕ Cách pha chế */}
+          <Text style={styles.subTitle}>☕ Cách pha chế</Text>
+          <View style={styles.recipeListContainer}>
+            {steps.length > 0 ? (
+              steps.map((line, i) => (
+                <View key={`step-${i}`} style={styles.recipeLineWrapper}>
+                  <Text style={styles.stepNumber}>{i + 1}.</Text>
+                  <Text style={styles.recipeLine}>{line}</Text>
+                </View>
+              ))
+            ) : (
+              <Text style={styles.recipeLineDim}>Không có thông tin pha chế</Text>
+            )}
+          </View>
+        </View>
+      );
+    })()}
+  </View>
+)}
+
 
 
 
@@ -831,32 +883,6 @@ const styles = StyleSheet.create({
     },
 
 
-    recipeTitle: {
-        color: "#F4C542",
-        fontSize: 18,
-        fontWeight: "bold",
-        textAlign: "center",
-        marginBottom: 8,
-    },
-
-    recipeBox: {
-        marginTop: 15,
-        backgroundColor: "rgba(255,255,255,0.08)",
-        borderRadius: 12,
-        paddingVertical: 18,
-        paddingHorizontal: 12,
-        width: "60%",              // Giữ khung gọn gàng
-        alignSelf: "center",       // Căn giữa toàn bộ khung
-        borderWidth: 1,
-        borderColor: "rgba(255,255,255,0.15)",
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.15,
-        shadowRadius: 4,
-        elevation: 3,
-        alignItems: "center",      // ✅ Căn giữa cả tiêu đề và danh sách
-    },
-
     recipeListContainer: {
         alignItems: "center",      // ✅ Căn giữa các dòng nguyên liệu
         justifyContent: "center",
@@ -910,7 +936,124 @@ closeText: {
   fontSize: 20,
   fontWeight: "bold",
 },
+// 🧾 PHẦN CÔNG THỨC PHA CHẾ
+recipeBox: {
+  backgroundColor: "rgba(255, 255, 255, 0.08)",
+  borderRadius: 16,
+  paddingVertical: 20,
+  paddingHorizontal: 22,
+  width: "85%",
+  alignSelf: "center",
+  borderWidth: 1,
+  borderColor: "rgba(255, 255, 255, 0.12)",
+  marginTop: 25,
+  shadowColor: "#000",
+  shadowOpacity: 0.25,
+  shadowOffset: { width: 0, height: 3 },
+  shadowRadius: 6,
+  elevation: 5,
+},
 
+recipeHeader: {
+  flexDirection: "row",
+  justifyContent: "center",
+  alignItems: "center",
+  marginBottom: 8,
+  gap: 6,
+},
 
+recipeIcon: {
+  fontSize: 22,
+},
 
+recipeTitle: {
+  fontSize: 18,
+  fontWeight: "bold",
+  color: "#F4C542",
+  textAlign: "center",
+  letterSpacing: 0.6,
+},
+
+recipeDivider: {
+  height: 1,
+  backgroundColor: "rgba(255,255,255,0.15)",
+  width: "80%",
+  alignSelf: "center",
+  marginVertical: 10,
+},
+recipeContent: {
+  width: "100%",
+  alignItems: "flex-start",
+  justifyContent: "center",
+},
+
+// 🌿 TIÊU ĐỀ NHỎ: "Nguyên liệu" / "Cách pha chế"
+subTitle: {
+  fontSize: 16,
+  fontWeight: "bold",
+  color: "#F4C542",
+  marginTop: 10,
+  marginBottom: 6,
+  textAlign: "left",
+  width: "100%",
+},
+
+// Đường ngăn giữa hai phần
+sectionDivider: {
+  height: 1,
+  backgroundColor: "rgba(255,255,255,0.08)",
+  width: "90%",
+  alignSelf: "center",
+  marginVertical: 12,
+},
+
+// 🧾 Danh sách nguyên liệu & hướng dẫn
+recipeListContainer: {
+  alignItems: "flex-start",
+  justifyContent: "center",
+  width: "100%",
+  paddingHorizontal: 5,
+  gap: 6,
+},
+recipeLineWrapper: {
+  flexDirection: "row",
+  alignItems: "flex-start",
+  gap: 8,
+  marginVertical: 2,
+  width: "100%",
+},
+
+bullet: {
+  color: "#F4C542",
+  fontSize: 14,
+  marginTop: 3,
+  fontWeight: "bold",
+},
+
+stepNumber: {
+  color: "#F4C542",
+  fontSize: 14,
+  marginTop: 2,
+  width: 18,
+  textAlign: "right",
+  fontWeight: "bold",
+},
+
+recipeLine: {
+  color: "#fff",
+  fontSize: 15,
+  lineHeight: 22,
+  flexShrink: 1,
+  textAlign: "left",
+  flex: 1,
+},
+
+recipeLineDim: {
+  color: "rgba(255,255,255,0.5)",
+  fontStyle: "italic",
+  fontSize: 14,
+  textAlign: "center",
+  alignSelf: "center",
+  width: "100%",
+},
 });
