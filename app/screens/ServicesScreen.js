@@ -59,8 +59,10 @@ function ServicesScreen({ navigation }) {
                 navigation.navigate("Nguyên Liệu Pha Chế", { serviceId: id });
             else if (id === "s5")
                 navigation.navigate("Trọn Bộ Dịch Vụ", { serviceId: id });
+            else if (id === "s6")
+                navigation.navigate("Setup Menu", { serviceId: id });
             else if (id === "s7")
-                navigation.navigate("Vật Liệu Setup Quán", { serviceId: id });
+                navigation.navigate("Máy Nitro Soda", { serviceId: id });
             else if (id === "s9")
                 navigation.navigate("Form Đánh Giá Dịch Vụ", { serviceId: id });
             else if (id === "s10")

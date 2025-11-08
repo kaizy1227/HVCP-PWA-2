@@ -16,6 +16,7 @@ import PaymentScreen from "./screens/PaymentScreen";
 import CartScreen from "./screens/CartScreen";
 import { CartProvider } from "./context/CartContext";
 import LoginScreen from "./screens/LoginScreen";
+import NitroSodaScreen from "./screens/NitroSodaScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -68,14 +69,7 @@ export default function Index() {
                             component={ServicesScreen}
                             options={{
                                 headerTitle: () => (
-                                    <View style={{ alignItems: "center" }}>
-                                        <Image
-                                            source={{
-                                                uri: "https://hocviencaphe.vn/wp-content/uploads/2019/07/logo310x95-min.png",
-                                            }}
-                                            style={{ width: 300, height: 55 }}
-                                            resizeMode="contain"
-                                        />
+                                    <View style={{ alignItems: "flex-start" }}>
                                     </View>
                                 ),
                             }}
@@ -88,6 +82,7 @@ export default function Index() {
                         <Stack.Screen name="Vật Liệu Setup Quán" component={EquipmentScreen} />
                         <Stack.Screen name="Form Đánh Giá Dịch Vụ" component={ServiceReviewScreen} />
                         <Stack.Screen name="Thanh Toán Dịch Vụ" component={PaymentScreen} />
+                        <Stack.Screen name="Máy Nitro Soda" component={NitroSodaScreen} />
                         <Stack.Screen
                             name="Giỏ hàng"
                             component={CartScreen}

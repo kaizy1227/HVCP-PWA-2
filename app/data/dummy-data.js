@@ -10,6 +10,8 @@ import Ingredient from "../models/ingredient"
 import CatIngredient from "../models/catingredient"
 import FullService from "../models/fullservice"
 import CatFullService from "../models/catfullservice"
+import NitroSoda from "../models/nitrosoda"
+import CatNitroSoda from "../models/catnitrosoda"
 
 export const USERS = [
     {
@@ -31,43 +33,171 @@ export const USERS = [
 
 export const CATFULLSERVICES = [
     new CatFullService('1', 'Dịch vụ trọn bộ'),
-    new CatFullService('2', 'Đào tạo các khóa học tại trung tâm'),
+//    new CatFullService('2', 'Đào tạo các khóa học tại trung tâm'),
     new CatFullService('3', 'Khóa khởi nghiệp'),
     new CatFullService('4', 'Đào tạo pha chế tại quán + hỗ trợ khai trương'),
     new CatFullService('5', 'Đào tạo vận hành'),
     new CatFullService('6', 'Setup menu'),
-    new CatFullService('7', 'Đào tạo thu ngân, phần mềm bán hàng'),
-    new CatFullService('8', 'Cung cấp nguyên vật liệu, dụng cụ'),
-    new CatFullService('9', 'Cung cấp máy móc, thiết bị'),
+//    new CatFullService('7', 'Đào tạo thu ngân, phần mềm bán hàng'),
+//    new CatFullService('8', 'Cung cấp nguyên vật liệu, dụng cụ'),
+//    new CatFullService('9', 'Cung cấp máy móc, thiết bị'),
     new CatFullService('10', 'Setup quầy'),
     new CatFullService('11', 'Thiết kế - thi công'),
     new CatFullService('12', 'Bộ nhận diện thương hiệu'),
-    new CatFullService('13', 'Đăng ký giấy phép kinh doanh - VSATTP'),
-    new CatFullService('14', 'Marketing từ cơ bản đến nâng cao'),
-    new CatFullService('15', 'Thiết kế web'),
-    new CatFullService('16', 'Trợ lí app bán hàng'),
-    new CatFullService('17', 'Chụp ảnh'),
-    new CatFullService('18', 'Quay phim'),
+    new CatFullService('13', 'Giấy phép kinh doanh - VSATTP'),
+//    new CatFullService('14', 'Marketing từ cơ bản đến nâng cao'),
+//    new CatFullService('15', 'Thiết kế web'),
+//    new CatFullService('16', 'Trợ lí app bán hàng'),
+//    new CatFullService('17', 'Chụp ảnh'),
+//    new CatFullService('18', 'Quay phim'),
 ];
 
+
 export const FULLSERVICES = [
-    new FullService("1a", ["1"], "Sản phẩm 1a", require('../images/dichvutronbo.png')),
-    new FullService("2a", ["2"], "Sản phẩm 2a", require('../images/khoahocphache.png')),
-    new FullService("3a", ["3"], "Sản phẩm 3a", { uri: 'https://scontent.fsgn5-14.fna.fbcdn.net/v/t39.30808-6/484327409_1117723770369671_980791333287956592_n.jpg?...' }),
-    new FullService("4a", ["4"], "Sản phẩm 4a", require('../images/daotaotaiquan.png')),
-    new FullService("5a", ["5"], "Sản phẩm 5a", require('../images/daotaovanhanh.png')),
-    new FullService("6a", ["6"], "Sản phẩm 6a", require('../images/setupmenu.png')),
-    new FullService("7a", ["7"], "Sản phẩm 7a", require('../images/tronbocombothungan.png')),
-    new FullService("12a", ["12"], "Sản phẩm 12a", require('../images/nhandienthuonghieu.png')),
-    new FullService("13a", ["13"], "Sản phẩm 13a", require('../images/dangkygiayphepkinhdoanh.png')),
-    new FullService("13b", ["13"], "Sản phẩm 13b", require('../images/hokinhdoanhvsattp.png')),
-    new FullService("13c", ["13"], "Sản phẩm 13c", require('../images/doanhnghiepvsattp.png')),
-    new FullService("14a", ["14"], "Sản phẩm 14a", require('../images/marketingcoban.png')),
-    new FullService("14b", ["14"], "Sản phẩm 14b", require('../images/marketingnangcao.png')),
-    new FullService("15a", ["15"], "Sản phẩm 15a", require('../images/goiwebsitecoban.png')),
-    new FullService("15b", ["15"], "Sản phẩm 15b", require('../images/goiwebsiteresponsive.png')),
-    new FullService("15c", ["15"], "Sản phẩm 15c", require('../images/goiwebsitecaocap.png')),
+  new FullService(
+    "1a",
+    ["1"],
+    "Gói Setup Quán Cafe Trọn Bộ",
+    require("../images/dichvutronbo.png"),
+    [
+      require("../images/dichvutronbo.png"),
+      { uri: "https://cdn.dieptra.com/services/setup1.jpg" },
+      { uri: "https://cdn.dieptra.com/services/setup2.jpg" },
+    ],
+    "Gói dịch vụ trọn gói từ thiết kế, setup quầy pha chế đến đào tạo nhân viên vận hành."
+  ),
+
+  new FullService(
+    "2a",
+    ["2"],
+    "Khóa Học Pha Chế Chuyên Nghiệp",
+    require("../images/khoahocphache.png"),
+    [
+      require("../images/khoahocphache.png"),
+      { uri: "https://cdn.dieptra.com/services/barista1.jpg" },
+      { uri: "https://cdn.dieptra.com/services/barista2.jpg" },
+    ],
+    "Chương trình đào tạo bài bản cho Barista, từ cơ bản đến nâng cao, phù hợp cho mở quán."
+  ),
+
+  new FullService(
+    "3a",
+    ["3"],
+    "Khóa khởi nghiệp",
+     '/images/FullService/khoa_khoi_nghiep/khoa_khoi_nghiep.jpg' ,
+    [
+      '/images/FullService/khoa_khoi_nghiep/khoa_khoi_nghiep.jpg' ,
+    ],
+    "Hướng dẫn khởi nghiệp, nâng cao kiến thức quản lý và vận hành quán tối ưu."
+  ),
+
+  new FullService(
+    "4a",
+    ["4"],
+    "Đào Tạo Tại Quán",
+    'images/FullService/dao_tao_tai_quan/dao_tao_tai_quan.png',
+    [
+      'images/FullService/dao_tao_tai_quan/dao_tao_tai_quan.png',
+      { uri: "https://cdn.dieptra.com/services/manage1.jpg" },
+    ],
+    "Khóa học chuyên sâu giúp chủ quán nắm vững quy trình quản lý, kiểm soát chi phí hiệu quả."
+  ),
+
+  new FullService(
+    "5a",
+    ["5"],
+    "Đào Tạo Quản Lý Vận Hành",
+    'images/FullService/dao_tao_quan_ly_van_hanh/dao_tao_quan_ly_van_hanh.png',
+    [
+      'images/FullService/dao_tao_quan_ly_van_hanh/dao_tao_quan_ly_van_hanh.png',
+      { uri: "https://cdn.dieptra.com/services/manage1.jpg" },
+    ],
+    "Khóa học chuyên sâu giúp chủ quán nắm vững quy trình quản lý, kiểm soát chi phí hiệu quả."
+  ),
+
+  new FullService(
+    "6a",
+    ["6"],
+    "Thiết Kế Setup Menu",
+    '/images/FullService/setup_menu/setup_menu.jpg' ,
+    [
+      '/images/FullService/setup_menu/setup_menu.jpg' ,
+      { uri: "https://cdn.dieptra.com/services/menu1.jpg" },
+    ],
+    "Thiết kế menu, tính cost, định lượng công thức và layout trình bày chuyên nghiệp."
+  ),
+
+  new FullService(
+    "7a",
+    ["7"],
+    "Trọn Bộ Combo Thu Ngân",
+    require("../images/tronbocombothungan.png"),
+    [
+      require("../images/tronbocombothungan.png"),
+      { uri: "https://cdn.dieptra.com/services/pos1.jpg" },
+      { uri: "https://cdn.dieptra.com/services/pos2.jpg" },
+    ],
+    "Gói combo gồm phần mềm quản lý, máy POS, máy in bill, két tiền — sẵn sàng sử dụng ngay."
+  ),
+
+  new FullService(
+    "11a",
+    ["11"],
+    "Thiết Kế Thi Công",
+    '/images/FullService/thiet_ke_thi_cong/thiet_ke_thi_cong_01.jpg' ,
+    [
+      '/images/FullService/thiet_ke_thi_cong/thiet_ke_thi_cong_01.jpg' ,
+      '/images/FullService/thiet_ke_thi_cong/thiet_ke_thi_cong_02.jpg' ,
+      { uri: "https://cdn.dieptra.com/services/pos2.jpg" },
+    ],
+    "Thiết kế thi công, khảo sát mặt bằng."
+  ),
+
+  new FullService(
+    "12a",
+    ["12"],
+    "Thiết Kế Nhận Diện Thương Hiệu",
+    '/images/FullService/nhan_dien_thuong_hieu/nhan_dien_thuong_hieu.png' ,
+    [
+     '/images/FullService/nhan_dien_thuong_hieu/nhan_dien_thuong_hieu.png' ,
+    ],
+    "Thiết kế logo, màu sắc, concept thương hiệu nhất quán cho quán cà phê của bạn."
+  ),
+
+  new FullService(
+    "13a",
+    ["13"],
+    "Đăng Ký Giấy Phép Kinh Doanh",
+    '/images/FullService/giay_phep_kinh_doanh/giay_phep_kinh_doanh.png' ,
+    [
+      '/images/FullService/giay_phep_kinh_doanh/giay_phep_kinh_doanh.png' ,
+    ],
+    "Hỗ trợ thủ tục pháp lý, đăng ký kinh doanh nhanh chóng, tiết kiệm thời gian."
+  ),
+
+  new FullService(
+    "13b",
+    ["13"],
+    "Đăng Ký Giấy Phép Vệ Sinh An Toàn Thực Phẩm (Hộ Kinh Doanh)",
+    '/images/FullService/giay_phep_kinh_doanh/ho_kinh_doanh.png' ,
+    [
+      '/images/FullService/giay_phep_kinh_doanh/ho_kinh_doanh.png' ,
+    ],
+    "Hỗ trợ thủ tục pháp lý, đăng ký kinh doanh nhanh chóng, tiết kiệm thời gian."
+  ),
+
+  new FullService(
+    "13c",
+    ["13"],
+    "Đăng Ký Giấy Phép Vệ Sinh An Toàn Thực Phẩm (Doanh Nghiệp)",
+    '/images/FullService/giay_phep_kinh_doanh/doanh_nghiep.png' ,
+    [
+      '/images/FullService/giay_phep_kinh_doanh/doanh_nghiep.png' ,
+    ],
+    "Hỗ trợ thủ tục pháp lý, đăng ký kinh doanh nhanh chóng, tiết kiệm thời gian."
+  ),
 ];
+
 
 export const CATDRINKS = [
     new CatDrink("1", "Món sáng tạo"),
@@ -1884,8 +2014,6 @@ new Drink(
                 ),
 ];
 
-
-
 export const SERVICES = [
     new Service("s1", "Đào tạo pha chế", require('../images/ServicesScreen/daotaophache.jpg')),
     new Service("s2", "Danh mục đồ uống", require('../images/ServicesScreen/danhmucdouong.jpg')),
@@ -1893,6 +2021,7 @@ export const SERVICES = [
     new Service("s4", "Nguyên liệu pha chế", require('../images/ServicesScreen/nguyenlieuphache.jpg')),
     new Service("s5", "Trọn bộ dịch vụ", require('../images/ServicesScreen/tronbodichvu.jpg')),
     new Service("s6", "Setup menu", require('../images/ServicesScreen/vatlieusetupquan.jpg')),
+    new Service("s7", "Máy nitro soda", require('../images/ServicesScreen/maynitrosoda.jpg')),
     new Service("s9", "Form Đánh Giá Dịch Vụ", require('../images/ServicesScreen/danhgiadichvu.jpg')),
     new Service("s10", "Thanh toán dịch vụ", require('../images/ServicesScreen/thanhtoandichvu.jpg')),
 ];
@@ -1991,6 +2120,33 @@ export const EQUIPMENTS = [
     ),
 ];
 
+export const CATNITROSODAS = [
+    new CatNitroSoda("1", "Giới Thiệu Máy"),
+    new CatNitroSoda("2", "Thông Tin Máy"),
+    new CatNitroSoda("3", "Pha Chế Máy"),
+
+];
+
+export const NITROSODAS = [
+    new NitroSoda(
+        "1",
+        ["1"],
+        "Giới thiệu về máy Nitro Soda",
+        "Mỗi khóa học sẽ có thời gian học khác nhau",
+        "Xem thêm chi tiết trong ảnh",
+//        "/images/Course/Nang_Cap_Menu/nitro_soda.mp4"
+        "/videos/nitro_soda.mp4" // ✅ đường dẫn public
+    ),
+    new NitroSoda(
+        "2",
+        ["2"],
+        "Danh Sách Các Khóa Học Pha Chế",
+        "Mỗi khóa học sẽ có thời gian học khác nhau",
+        "Xem thêm chi tiết trong ảnh",
+//        "/images/Course/Nang_Cap_Menu/nitro_soda.mp4"
+        "/videos/nitro_soda.mp4" // ✅ đường dẫn public
+    ),
+];
 export const COURSES = [
     new Course(
         "t0",
