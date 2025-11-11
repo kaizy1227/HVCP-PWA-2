@@ -2131,20 +2131,20 @@ export const NITROSODAS = [
     new NitroSoda(
         "1",
         ["1"],
-        "Giới thiệu về máy Nitro Soda",
+        "Máy Nitrogen thế hệ mới",
         "Mỗi khóa học sẽ có thời gian học khác nhau",
         "Xem thêm chi tiết trong ảnh",
 //        "/images/Course/Nang_Cap_Menu/nitro_soda.mp4"
-        "/videos/nitro_soda.mp4" // ✅ đường dẫn public
+        "/videos/nitro_soda_fixed.mp4" // ✅ đường dẫn public
     ),
     new NitroSoda(
         "2",
         ["2"],
-        "Danh Sách Các Khóa Học Pha Chế",
+        "Máy Nitrogen thế hệ mới",
         "Mỗi khóa học sẽ có thời gian học khác nhau",
         "Xem thêm chi tiết trong ảnh",
 //        "/images/Course/Nang_Cap_Menu/nitro_soda.mp4"
-        "/videos/nitro_soda.mp4" // ✅ đường dẫn public
+        "/videos/nitro_soda_fixed.mp4" // ✅ đường dẫn public
     ),
 ];
 export const COURSES = [

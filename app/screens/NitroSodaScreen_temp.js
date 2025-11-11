@@ -5,6 +5,7 @@ import {
   StyleSheet,
   FlatList,
   TouchableOpacity,
+  Image,
   Modal,
   ScrollView,
   Animated,
@@ -18,14 +19,39 @@ import {
 import { SERVICES, NITROSODAS, CATNITROSODAS } from "../data/dummy-data";
 import { commonHeaderOptions } from "../components/headerOptions";
 
-// 👉 Xử lý đường dẫn video/ảnh linh hoạt cho web & native
+// 👉 Xử lý đường dẫn linh hoạt cho web / native
 const getMediaUri = (path) => {
   if (!path) return null;
   if (path.startsWith("http") || path.startsWith("file:")) return path;
   if (typeof window !== "undefined" && window.location?.origin) {
-    return window.location.origin + path; // PWA / Web
+    return window.location.origin + path; // PWA
   }
   return path;
+};
+
+// 🎬 Hàm tạo thumbnail tự động từ video
+const getVideoThumbnail = async (videoUrl) => {
+  return new Promise((resolve, reject) => {
+    const video = document.createElement("video");
+    video.src = getMediaUri(videoUrl);
+    video.crossOrigin = "anonymous";
+
+    video.addEventListener("loadeddata", () => {
+      video.currentTime = 1; // lấy frame ở giây thứ 1
+    });
+
+    video.addEventListener("seeked", () => {
+      const canvas = document.createElement("canvas");
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      const ctx = canvas.getContext("2d");
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+      const imageUrl = canvas.toDataURL("image/jpeg", 0.8);
+      resolve(imageUrl);
+    });
+
+    video.addEventListener("error", (e) => reject(e));
+  });
 };
 
 const NitroSodaScreen = ({ route, navigation }) => {
@@ -37,6 +63,7 @@ const NitroSodaScreen = ({ route, navigation }) => {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedDrink, setSelectedDrink] = useState(null);
+  const [displayedDrinks, setDisplayedDrinks] = useState([]);
 
   const sidebarAnim = useRef(new Animated.Value(0)).current;
   const fadeListAnim = useRef(new Animated.Value(0)).current;
@@ -53,16 +80,36 @@ const NitroSodaScreen = ({ route, navigation }) => {
     }
   }, [seID, navigation]);
 
-  // 🔹 Hiệu ứng fade danh sách
+  // 🔹 Khi chọn danh mục → load video + thumbnail
   useEffect(() => {
     if (selectedCategory) {
-      fadeListAnim.setValue(0);
-      Animated.timing(fadeListAnim, {
-        toValue: 1,
-        duration: 600,
-        easing: Easing.out(Easing.ease),
-        useNativeDriver: true,
-      }).start();
+      const loadThumbnails = async () => {
+        const filtered = NITROSODAS.filter((c) =>
+          c.catnitrosodaIds.includes(selectedCategory)
+        );
+        const withThumbs = await Promise.all(
+          filtered.map(async (item) => {
+            if (!item.thumbnailUrl && item.videoUrl) {
+              try {
+                const thumb = await getVideoThumbnail(item.videoUrl);
+                return { ...item, thumbnailUrl: thumb };
+              } catch {
+                return { ...item, thumbnailUrl: "/images/nitro_poster.jpg" };
+              }
+            }
+            return item;
+          })
+        );
+        setDisplayedDrinks(withThumbs);
+        fadeListAnim.setValue(0);
+        Animated.timing(fadeListAnim, {
+          toValue: 1,
+          duration: 600,
+          easing: Easing.out(Easing.ease),
+          useNativeDriver: true,
+        }).start();
+      };
+      loadThumbnails();
     }
   }, [selectedCategory]);
 
@@ -79,10 +126,6 @@ const NitroSodaScreen = ({ route, navigation }) => {
     setSelectedDrink(item);
     setModalVisible(true);
   };
-
-  const displayedDrinks = selectedCategory
-    ? NITROSODAS.filter((c) => c.catnitrosodaIds.includes(selectedCategory))
-    : [];
 
   return (
     <View style={{ flex: 1, flexDirection: isDesktop ? "row" : "column" }}>
@@ -160,19 +203,21 @@ const NitroSodaScreen = ({ route, navigation }) => {
                   onPress={() => handlePress(item)}
                   activeOpacity={0.9}
                 >
-                  {/* 🎥 Video thumbnail */}
-                  <video
-                    src={getMediaUri(item.videoUrl)}
-                    style={styles.videoThumbnail}
-                    muted
-                    loop
-                    playsInline
-                    webkit-playsinline="true"
-                    x5-playsinline="true"
-                    preload="metadata"
-                    poster="/images/nitro_poster.jpg"
-                    onClick={(e) => e.target.play()}
-                  />
+                  {/* 🖼 Hiển thị thumbnail */}
+                  <View style={styles.thumbnailWrapper}>
+                    <Image
+                      source={{
+                        uri:
+                          item.thumbnailUrl ||
+                          getMediaUri("/images/nitro_poster.jpg"),
+                      }}
+                      style={styles.thumbnailImage}
+                      resizeMode="cover"
+                    />
+                    <View style={styles.playIconContainer}>
+                      <Text style={styles.playIcon}>▶</Text>
+                    </View>
+                  </View>
 
                   <View style={styles.cardTextBox}>
                     <Text style={styles.cardTitle}>{item.title}</Text>
@@ -205,23 +250,17 @@ const NitroSodaScreen = ({ route, navigation }) => {
                   src={getMediaUri(selectedDrink.videoUrl)}
                   style={styles.modalImage}
                   controls
+                  autoPlay
                   playsInline
-                  webkit-playsinline="true"
-                  x5-playsinline="true"
-                  muted
                   preload="auto"
-                  onLoadedMetadata={(e) => e.target.pause()}
-                  onClick={(e) => e.target.play()}
-                  poster="/images/nitro_poster.jpg"
+                  poster={selectedDrink.thumbnailUrl}
                 />
-
                 <Text style={styles.modalTitle}>{selectedDrink.title}</Text>
                 {selectedDrink.price ? (
                   <Text style={styles.modalPrice}>
                     💰 Giá: {selectedDrink.price}
                   </Text>
                 ) : null}
-
                 <TouchableOpacity
                   onPress={() => setModalVisible(false)}
                   style={styles.closeButton}
@@ -276,13 +315,34 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
     elevation: 5,
   },
-  videoThumbnail: {
+  thumbnailWrapper: {
     width: "100%",
     height: hp("25%"),
-    objectFit: "cover",
     borderTopLeftRadius: 18,
     borderTopRightRadius: 18,
+    overflow: "hidden",
+    position: "relative",
     backgroundColor: "#000",
+  },
+  thumbnailImage: {
+    width: "100%",
+    height: "100%",
+  },
+  playIconContainer: {
+    position: "absolute",
+    top: "40%",
+    left: "45%",
+    backgroundColor: "rgba(0,0,0,0.5)",
+    borderRadius: 30,
+    width: 60,
+    height: 60,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  playIcon: {
+    color: "#fff",
+    fontSize: 28,
+    fontWeight: "bold",
   },
   cardTextBox: { padding: 10, alignItems: "center" },
   cardTitle: {

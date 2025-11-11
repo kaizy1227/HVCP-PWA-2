@@ -5,12 +5,12 @@ import {
   StyleSheet,
   FlatList,
   TouchableOpacity,
+  Image,
   Modal,
   ScrollView,
   Animated,
   Easing,
   Dimensions,
-  Platform,
 } from "react-native";
 import {
   widthPercentageToDP as wp,
@@ -18,42 +18,58 @@ import {
 } from "react-native-responsive-screen";
 import { SERVICES, NITROSODAS, CATNITROSODAS } from "../data/dummy-data";
 import { commonHeaderOptions } from "../components/headerOptions";
-import { Video } from "expo-video";
 
-// 👉 Hàm xử lý đường dẫn linh hoạt cho web/native
-const getImageUri = (path) => {
+// 👉 Xử lý đường dẫn linh hoạt cho web / native
+const getMediaUri = (path) => {
   if (!path) return null;
   if (path.startsWith("http") || path.startsWith("file:")) return path;
   if (typeof window !== "undefined" && window.location?.origin) {
-    return window.location.origin + path;
+    return window.location.origin + path; // PWA
   }
   return path;
 };
 
-const getMediaSource = (pathOrRequire) => {
-  if (!pathOrRequire) return null;
-  if (typeof pathOrRequire === "string") {
-    return { uri: getImageUri(pathOrRequire) };
-  }
-  return pathOrRequire;
+// 🎬 Hàm tạo thumbnail tự động từ video
+const getVideoThumbnail = async (videoUrl) => {
+  return new Promise((resolve, reject) => {
+    const video = document.createElement("video");
+    video.src = getMediaUri(videoUrl);
+    video.crossOrigin = "anonymous";
+
+    video.addEventListener("loadeddata", () => {
+      video.currentTime = 1; // lấy frame ở giây thứ 1
+    });
+
+    video.addEventListener("seeked", () => {
+      const canvas = document.createElement("canvas");
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      const ctx = canvas.getContext("2d");
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+      const imageUrl = canvas.toDataURL("image/jpeg", 0.8);
+      resolve(imageUrl);
+    });
+
+    video.addEventListener("error", (e) => reject(e));
+  });
 };
 
 const NitroSodaScreen = ({ route, navigation }) => {
   const seID = route.params.serviceId;
   const { width } = Dimensions.get("window");
-
   const isTablet = width >= 768 && width < 1024;
   const isDesktop = width >= 1024;
 
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedDrink, setSelectedDrink] = useState(null);
+  const [displayedDrinks, setDisplayedDrinks] = useState([]);
 
   const sidebarAnim = useRef(new Animated.Value(0)).current;
-  const [sidebarVisible, setSidebarVisible] = useState(true);
   const fadeListAnim = useRef(new Animated.Value(0)).current;
+  const [sidebarVisible, setSidebarVisible] = useState(true);
 
-  // Cập nhật tiêu đề
+  // 🔹 Cập nhật tiêu đề động
   useEffect(() => {
     const service = SERVICES.find((service) => service.id === seID);
     if (service) {
@@ -64,16 +80,36 @@ const NitroSodaScreen = ({ route, navigation }) => {
     }
   }, [seID, navigation]);
 
-  // Hiệu ứng fade khi chọn danh mục
+  // 🔹 Khi chọn danh mục → load video + thumbnail
   useEffect(() => {
     if (selectedCategory) {
-      fadeListAnim.setValue(0);
-      Animated.timing(fadeListAnim, {
-        toValue: 1,
-        duration: 600,
-        easing: Easing.out(Easing.ease),
-        useNativeDriver: true,
-      }).start();
+      const loadThumbnails = async () => {
+        const filtered = NITROSODAS.filter((c) =>
+          c.catnitrosodaIds.includes(selectedCategory)
+        );
+        const withThumbs = await Promise.all(
+          filtered.map(async (item) => {
+            if (!item.thumbnailUrl && item.videoUrl) {
+              try {
+                const thumb = await getVideoThumbnail(item.videoUrl);
+                return { ...item, thumbnailUrl: thumb };
+              } catch {
+                return { ...item, thumbnailUrl: "/images/nitro_poster.jpg" };
+              }
+            }
+            return item;
+          })
+        );
+        setDisplayedDrinks(withThumbs);
+        fadeListAnim.setValue(0);
+        Animated.timing(fadeListAnim, {
+          toValue: 1,
+          duration: 600,
+          easing: Easing.out(Easing.ease),
+          useNativeDriver: true,
+        }).start();
+      };
+      loadThumbnails();
     }
   }, [selectedCategory]);
 
@@ -91,13 +127,9 @@ const NitroSodaScreen = ({ route, navigation }) => {
     setModalVisible(true);
   };
 
-  const displayedDrinks = selectedCategory
-    ? NITROSODAS.filter((c) => c.catnitrosodaIds.includes(selectedCategory))
-    : [];
-
   return (
     <View style={{ flex: 1, flexDirection: isDesktop ? "row" : "column" }}>
-      {/* Nút mở menu trên mobile */}
+      {/* ☰ Sidebar Toggle */}
       {!isDesktop && (
         <TouchableOpacity onPress={toggleSidebar} style={styles.toggleButton}>
           <Text style={{ color: "white" }}>
@@ -106,7 +138,7 @@ const NitroSodaScreen = ({ route, navigation }) => {
         </TouchableOpacity>
       )}
 
-      {/* Sidebar danh mục */}
+      {/* 🧭 Sidebar Danh Mục */}
       {(!isDesktop || sidebarVisible) && (
         <Animated.View
           style={[
@@ -136,7 +168,7 @@ const NitroSodaScreen = ({ route, navigation }) => {
         </Animated.View>
       )}
 
-      {/* Danh sách sản phẩm Nitro Soda */}
+      {/* 🎬 Danh Sách Nitro Soda */}
       <View
         style={{
           flex: 1,
@@ -171,36 +203,26 @@ const NitroSodaScreen = ({ route, navigation }) => {
                   onPress={() => handlePress(item)}
                   activeOpacity={0.9}
                 >
-                  {/* 🎥 Video thumbnail */}
-                  {Platform.OS === "web" ? (
-                    <video
-                      src={getImageUri(item.videoUrl)}
-                      style={styles.image}
-                      controls
-                      playsInline
-                      webkit-playsinline="true"
-                      x5-playsinline="true"
-                      muted
-                      loop
-                      preload="metadata"
-                      onClick={(e) => e.target.play()}
-                    />
-                  ) : (
-                    <Video
-                      source={getMediaSource(item.videoUrl)}
-                      style={styles.image}
+                  {/* 🖼 Hiển thị thumbnail */}
+                  <View style={styles.thumbnailWrapper}>
+                    <Image
+                      source={{
+                        uri:
+                          item.thumbnailUrl ||
+                          getMediaUri("/images/nitro_poster.jpg"),
+                      }}
+                      style={styles.thumbnailImage}
                       resizeMode="cover"
-                      shouldPlay={false}
-                      isMuted
                     />
-                  )}
+                    <View style={styles.playIconContainer}>
+                      <Text style={styles.playIcon}>▶</Text>
+                    </View>
+                  </View>
 
                   <View style={styles.cardTextBox}>
                     <Text style={styles.cardTitle}>{item.title}</Text>
                     {item.price ? (
-                      <Text style={styles.cardPrice}>
-                        💰 Giá: {item.price}
-                      </Text>
+                      <Text style={styles.cardPrice}>💰 Giá: {item.price}</Text>
                     ) : null}
                   </View>
                 </TouchableOpacity>
@@ -218,46 +240,27 @@ const NitroSodaScreen = ({ route, navigation }) => {
         )}
       </View>
 
-      {/* Modal chi tiết sản phẩm */}
+      {/* 🎞 Modal Chi Tiết */}
       <Modal visible={modalVisible} animationType="fade">
         <View style={styles.modalContainer}>
           <ScrollView contentContainerStyle={styles.scrollViewContent}>
             {selectedDrink && (
               <>
-                {/* 🎥 Video chi tiết */}
-                {Platform.OS === "web" ? (
-                  <video
-                    src={getImageUri(selectedDrink.videoUrl)}
-                    style={styles.modalImage}
-                    controls
-                    playsInline
-                    webkit-playsinline="true"
-                    x5-playsinline="true"
-                    muted
-                    loop
-                    preload="auto"
-                    onClick={(e) => e.target.play()}
-                  />
-                ) : (
-                  <Video
-                    source={getMediaSource(selectedDrink.videoUrl)}
-                    style={styles.modalImage}
-                    useNativeControls
-                    resizeMode="contain"
-                    shouldPlay
-                    isLooping
-                  />
-                )}
-
-                {/* 🧾 Thông tin sản phẩm */}
+                <video
+                  src={getMediaUri(selectedDrink.videoUrl)}
+                  style={styles.modalImage}
+                  controls
+                  autoPlay
+                  playsInline
+                  preload="auto"
+                  poster={selectedDrink.thumbnailUrl}
+                />
                 <Text style={styles.modalTitle}>{selectedDrink.title}</Text>
                 {selectedDrink.price ? (
                   <Text style={styles.modalPrice}>
                     💰 Giá: {selectedDrink.price}
                   </Text>
                 ) : null}
-
-                {/* 🔘 Nút đóng */}
                 <TouchableOpacity
                   onPress={() => setModalVisible(false)}
                   style={styles.closeButton}
@@ -312,12 +315,34 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
     elevation: 5,
   },
-  image: {
+  thumbnailWrapper: {
     width: "100%",
     height: hp("25%"),
     borderTopLeftRadius: 18,
     borderTopRightRadius: 18,
+    overflow: "hidden",
+    position: "relative",
     backgroundColor: "#000",
+  },
+  thumbnailImage: {
+    width: "100%",
+    height: "100%",
+  },
+  playIconContainer: {
+    position: "absolute",
+    top: "40%",
+    left: "45%",
+    backgroundColor: "rgba(0,0,0,0.5)",
+    borderRadius: 30,
+    width: 60,
+    height: 60,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  playIcon: {
+    color: "#fff",
+    fontSize: 28,
+    fontWeight: "bold",
   },
   cardTextBox: { padding: 10, alignItems: "center" },
   cardTitle: {
@@ -344,6 +369,7 @@ const styles = StyleSheet.create({
     height: hp("60%"),
     borderRadius: 12,
     marginBottom: 20,
+    objectFit: "contain",
     backgroundColor: "#000",
   },
   modalTitle: {

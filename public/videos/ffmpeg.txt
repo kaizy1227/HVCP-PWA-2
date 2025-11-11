@@ -1,0 +1,1 @@
+ffmpeg -i nitro_soda2.mp4 -vcodec libx264 -acodec aac -movflags +faststart nitro_soda_fixed.mp4
