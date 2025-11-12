@@ -20,16 +20,16 @@ import { SERVICES, COURSES, CATCOURSES } from "../data/dummy-data";
 import { commonHeaderOptions } from "../components/headerOptions";
 import ImageViewer from "react-native-image-zoom-viewer";
 
-
-// 👉 Hàm xử lý đường dẫn ảnh linh hoạt
-const getImageUri = (path) => {
+const getMediaUri = (path) => {
   if (!path) return null;
-  if (path.startsWith("http")) return path;
+  if (path.startsWith("http") || path.startsWith("file:")) return path;
   if (typeof window !== "undefined" && window.location?.origin) {
     return window.location.origin + path;
   }
   return path;
 };
+
+const isVideo = (url) => /\.(mp4|mov|webm|avi|mkv)$/i.test(url);
 
 const CourseScreen = ({ route, navigation }) => {
   const seID = route.params.serviceId;
@@ -42,16 +42,12 @@ const CourseScreen = ({ route, navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [zoomVisible, setZoomVisible] = useState(false);
   const [zoomIndex, setZoomIndex] = useState(0);
-
   const [selectedCourse, setSelectedCourse] = useState(null);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const fadeAnim = useRef(new Animated.Value(1)).current;
 
   const sidebarAnim = useRef(new Animated.Value(0)).current;
-  const [sidebarVisible, setSidebarVisible] = useState(true);
   const fadeListAnim = useRef(new Animated.Value(0)).current;
+  const [sidebarVisible, setSidebarVisible] = useState(true);
 
-  // 🔹 Cập nhật tiêu đề
   useEffect(() => {
     const service = SERVICES.find((service) => service.id === seID);
     if (service) {
@@ -62,7 +58,6 @@ const CourseScreen = ({ route, navigation }) => {
     }
   }, [seID, navigation]);
 
-  // 🔹 Hiệu ứng fade khi chọn danh mục
   useEffect(() => {
     if (selectedCategory) {
       fadeListAnim.setValue(0);
@@ -86,27 +81,7 @@ const CourseScreen = ({ route, navigation }) => {
 
   const handlePress = (course) => {
     setSelectedCourse(course);
-    setCurrentImageIndex(0);
     setModalVisible(true);
-  };
-
-  const changeImage = (direction) => {
-    if (!Array.isArray(selectedCourse?.imageUrls)) return;
-    const total = selectedCourse.imageUrls.length;
-    Animated.timing(fadeAnim, {
-      toValue: 0,
-      duration: 200,
-      useNativeDriver: true,
-    }).start(() => {
-      setCurrentImageIndex((prev) =>
-        direction === "next" ? (prev + 1) % total : (prev - 1 + total) % total
-      );
-      Animated.timing(fadeAnim, {
-        toValue: 1,
-        duration: 200,
-        useNativeDriver: true,
-      }).start();
-    });
   };
 
   const displayedCourses = selectedCategory
@@ -115,7 +90,6 @@ const CourseScreen = ({ route, navigation }) => {
 
   return (
     <View style={{ flex: 1, flexDirection: isDesktop ? "row" : "column" }}>
-      {/* Nút mở menu trên mobile */}
       {!isDesktop && (
         <TouchableOpacity onPress={toggleSidebar} style={styles.toggleButton}>
           <Text style={{ color: "white" }}>
@@ -124,7 +98,6 @@ const CourseScreen = ({ route, navigation }) => {
         </TouchableOpacity>
       )}
 
-      {/* Sidebar danh mục */}
       {(!isDesktop || sidebarVisible) && (
         <Animated.View
           style={[
@@ -154,7 +127,6 @@ const CourseScreen = ({ route, navigation }) => {
         </Animated.View>
       )}
 
-      {/* Danh sách khóa học */}
       <View
         style={{
           flex: 1,
@@ -182,9 +154,7 @@ const CourseScreen = ({ route, navigation }) => {
               keyExtractor={(item) => item.id}
               numColumns={isDesktop ? 3 : isTablet ? 2 : 1}
               showsVerticalScrollIndicator={false}
-              contentContainerStyle={{
-                paddingBottom: 100,
-              }}
+              contentContainerStyle={{ paddingBottom: 100 }}
               renderItem={({ item }) => (
                 <TouchableOpacity
                   style={styles.card}
@@ -192,7 +162,7 @@ const CourseScreen = ({ route, navigation }) => {
                   activeOpacity={0.9}
                 >
                   <Image
-                    source={{ uri: getImageUri(item.imageUrl) }}
+                    source={{ uri: getMediaUri(item.imageUrl) }}
                     style={styles.image}
                     resizeMode="contain"
                   />
@@ -208,7 +178,7 @@ const CourseScreen = ({ route, navigation }) => {
             />
           </Animated.View>
         ) : (
-          <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+          <View style={styles.centered}>
             <Text style={{ color: "#A47148", fontSize: 18 }}>
               👉 Chọn danh mục để xem danh sách khóa học
             </Text>
@@ -216,137 +186,111 @@ const CourseScreen = ({ route, navigation }) => {
         )}
       </View>
 
-{/* Modal chi tiết khóa học */}
-<Modal visible={modalVisible} animationType="fade">
-  <View style={styles.modalContainer}>
-    <ScrollView contentContainerStyle={styles.scrollViewContent}>
-      {selectedCourse && (
-        <>
-          {/* 🎥 Nếu có videoUrl thì hiển thị video trước */}
-          {selectedCourse.videoUrl ? (
-            <View style={{ alignItems: "center" }}>
-              <Video
-                source={{ uri: getImageUri(selectedCourse.videoUrl) }}
-                style={styles.modalImage}
-                useNativeControls
-                resizeMode="contain"
-                shouldPlay
-                isLooping
-              />
-            </View>
-          ) : null}
+      {/* 🧾 Modal chi tiết khóa học */}
+      <Modal visible={modalVisible} animationType="fade">
+        <View style={styles.modalContainer}>
+          <ScrollView contentContainerStyle={styles.scrollViewContent}>
+            {selectedCourse && (
+              <>
+                {/* 🎬 Hiển thị tất cả media theo danh sách */}
+                {selectedCourse.mediaUrls?.map((url, index) => {
+                  const mediaUri = getMediaUri(url);
 
-          {/* 🖼️ Nếu có mảng ảnh thì hiển thị ảnh có hiệu ứng chuyển */}
-          {Array.isArray(selectedCourse.imageUrls) &&
-          selectedCourse.imageUrls.length > 0 ? (
-            <View style={{ alignItems: "center" }}>
-              <TouchableOpacity
-                activeOpacity={0.9}
-                onPress={() => {
-                  setZoomIndex(currentImageIndex);
-                  setZoomVisible(true);
-                }}
-              >
-                <Animated.Image
-                  source={{
-                    uri: getImageUri(
-                      selectedCourse.imageUrls[currentImageIndex]
-                    ),
-                  }}
-                  style={[styles.modalImage, { opacity: fadeAnim }]}
-                  resizeMode="contain"
-                />
-              </TouchableOpacity>
-
-              {/* 🔍 Modal zoom ảnh */}
-              <Modal visible={zoomVisible} transparent={true}>
-                <View style={styles.zoomContainer}>
-                  <TouchableOpacity
-                    style={styles.closeCircle}
-                    onPress={() => setZoomVisible(false)}
-                    activeOpacity={0.8}
-                  >
-                    <Text style={styles.closeText}>✕</Text>
-                  </TouchableOpacity>
-
-                  <ImageViewer
-                    imageUrls={selectedCourse.imageUrls.map((url) => ({
-                      url: getImageUri(url),
-                    }))}
-                    index={zoomIndex}
-                    enableSwipeDown={true}
-                    onSwipeDown={() => setZoomVisible(false)}
-                    onClick={() => setZoomVisible(false)}
-                    saveToLocalByLongPress={false}
-                    renderIndicator={(currentIndex, allSize) => (
-                      <View style={styles.indicatorBox}>
-                        <Text style={styles.indicatorText}>
-                          {currentIndex}/{allSize}
-                        </Text>
+                  if (isVideo(url)) {
+                    return (
+                      <View key={index} style={styles.mediaItemWrapper}>
+                        <video
+                          src={mediaUri}
+                          style={{
+                            width: wp("90%"),
+                            height: hp("60%"),
+                            borderRadius: 12,
+                            objectFit: "contain",
+                            backgroundColor: "#000",
+                          }}
+                          controls
+                          playsInline
+                          preload="metadata"
+                          onError={(e) => {
+                            console.error("Video error:", e);
+                            console.log("Video URL:", mediaUri);
+                          }}
+                        />
+                        <Text style={styles.mediaLabel}>🎥 Video {index + 1}</Text>
                       </View>
-                    )}
-                  />
-                </View>
-              </Modal>
+                    );
+                  }
 
-              {/* Nút chuyển ảnh */}
-              <TouchableOpacity
-                style={[styles.navButton, { left: 10 }]}
-                onPress={() => changeImage("prev")}
-              >
-                <Text style={styles.navButtonText}>‹</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={[styles.navButton, { right: 10 }]}
-                onPress={() => changeImage("next")}
-              >
-                <Text style={styles.navButtonText}>›</Text>
-              </TouchableOpacity>
+                  return (
+                    <View key={index} style={styles.mediaItemWrapper}>
+                      <TouchableOpacity
+                        onPress={() => {
+                          const imageIndex = selectedCourse.mediaUrls
+                            .slice(0, index)
+                            .filter(u => !isVideo(u)).length;
+                          setZoomIndex(imageIndex);
+                          setZoomVisible(true);
+                        }}
+                        activeOpacity={0.9}
+                      >
+                        <Image
+                          source={{ uri: mediaUri }}
+                          style={{
+                            width: wp("90%"),
+                            height: hp("60%"),
+                            borderRadius: 12,
+                          }}
+                          resizeMode="contain"
+                          onError={(e) => {
+                            console.log("Image error:", mediaUri);
+                          }}
+                        />
+                      </TouchableOpacity>
+                      <Text style={styles.mediaLabel}>🖼️ Ảnh {index + 1}</Text>
+                    </View>
+                  );
+                })}
 
-              {/* Dấu chấm */}
-              <View style={styles.dotContainer}>
-                {selectedCourse.imageUrls.map((_, i) => (
-                  <View
-                    key={i}
-                    style={[
-                      styles.dot,
-                      i === currentImageIndex && styles.dotActive,
-                    ]}
-                  />
-                ))}
-              </View>
-            </View>
-          ) : (
-            /* 🖼️ Nếu chỉ có 1 ảnh */
-            <Image
-              source={{ uri: getImageUri(selectedCourse.imageUrl) }}
-              style={styles.modalImage}
-              resizeMode="contain"
-            />
-          )}
+                {/* 🔍 Zoom Modal cho ảnh */}
+                <Modal visible={zoomVisible} transparent>
+                  <View style={styles.zoomContainer}>
+                    <TouchableOpacity
+                      style={styles.closeCircle}
+                      onPress={() => setZoomVisible(false)}
+                    >
+                      <Text style={styles.closeText}>✕</Text>
+                    </TouchableOpacity>
+                    <ImageViewer
+                      imageUrls={selectedCourse.mediaUrls
+                        .filter((url) => !isVideo(url))
+                        .map((url) => ({ url: getMediaUri(url) }))}
+                      index={zoomIndex}
+                      enableSwipeDown
+                      onSwipeDown={() => setZoomVisible(false)}
+                    />
+                  </View>
+                </Modal>
 
-          {/* 🧾 Thông tin khóa học */}
-          <Text style={styles.modalTitle}>{selectedCourse.title}</Text>
-          <Text style={styles.modalDuration}>
-            🕒 Thời lượng: {selectedCourse.duration}
-          </Text>
-          <Text style={styles.modalPrice}>
-            💰 Học phí: {selectedCourse.price}
-          </Text>
+                {/* Course Info */}
+                <Text style={styles.modalTitle}>{selectedCourse.title}</Text>
+                <Text style={styles.modalDuration}>
+                  🕒 Thời lượng: {selectedCourse.duration}
+                </Text>
+                <Text style={styles.modalPrice}>
+                  💰 Học phí: {selectedCourse.price}
+                </Text>
 
-          {/* 🔘 Nút đóng */}
-          <TouchableOpacity
-            onPress={() => setModalVisible(false)}
-            style={styles.closeButton}
-          >
-            <Text style={styles.closeButtonText}>Đóng</Text>
-          </TouchableOpacity>
-        </>
-      )}
-    </ScrollView>
-  </View>
-</Modal>
-
+                <TouchableOpacity
+                  onPress={() => setModalVisible(false)}
+                  style={styles.closeButton}
+                >
+                  <Text style={styles.closeButtonText}>Đóng</Text>
+                </TouchableOpacity>
+              </>
+            )}
+          </ScrollView>
+        </View>
+      </Modal>
     </View>
   );
 };
@@ -422,11 +366,16 @@ const styles = StyleSheet.create({
     paddingTop: 40,
   },
   scrollViewContent: { alignItems: "center", padding: 20 },
-  modalImage: {
-    width: wp("90%"),
-    height: hp("60%"),
-    borderRadius: 12,
+  mediaItemWrapper: {
     marginBottom: 20,
+    alignItems: "center",
+  },
+  mediaLabel: {
+    color: "#F4C542",
+    fontSize: 16,
+    fontWeight: "600",
+    marginTop: 10,
+    textAlign: "center",
   },
   modalTitle: {
     fontSize: 22,
@@ -459,74 +408,35 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
   },
-  navButton: {
-    position: "absolute",
-    top: "45%",
-    backgroundColor: "rgba(0,0,0,0.3)",
-    paddingVertical: 10,
-    paddingHorizontal: 15,
-    borderRadius: 50,
-    zIndex: 5,
-  },
-  navButtonText: { color: "#fff", fontSize: 32, fontWeight: "bold" },
-  dotContainer: {
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 10,
-    gap: 6,
-  },
-  dot: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    backgroundColor: "rgba(255,255,255,0.4)",
-  },
-  dotActive: {
-    backgroundColor: "#F4C542",
-    width: 10,
-    height: 10,
-  },
   zoomContainer: {
     flex: 1,
     backgroundColor: "rgba(0,0,0,0.95)",
   },
-  indicatorBox: {
+  closeCircle: {
     position: "absolute",
-    top: 50,
-    alignSelf: "center",
-    backgroundColor: "rgba(0,0,0,0.5)",
-    borderRadius: 10,
-    paddingHorizontal: 12,
-    paddingVertical: 4,
+    top: 40,
+    right: 20,
+    zIndex: 10,
+    backgroundColor: "#4A2306",
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    justifyContent: "center",
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOpacity: 0.3,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 3,
+    elevation: 5,
   },
-  indicatorText: {
+  closeText: {
     color: "#fff",
-    fontSize: 14,
+    fontSize: 20,
+    fontWeight: "bold",
   },
-closeCircle: {
-  position: "absolute",
-  top: 40,
-  right: 20,
-  zIndex: 10,
-  backgroundColor: "#4A2306", // nâu cà phê
-  width: 40,
-  height: 40,
-  borderRadius: 20, // tạo hình tròn
-  justifyContent: "center",
-  alignItems: "center",
-  shadowColor: "#000",
-  shadowOpacity: 0.3,
-  shadowOffset: { width: 0, height: 2 },
-  shadowRadius: 3,
-  elevation: 5, // hiệu ứng nổi trên Android
-},
-closeText: {
-  color: "#fff",
-  fontSize: 20,
-  fontWeight: "bold",
-},
-
+  centered: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
 });
-
-

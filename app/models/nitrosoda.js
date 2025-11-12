@@ -5,14 +5,16 @@ class NitroSoda {
     title,
     duration,
     price,
-    videoUrl // 🎥 chỉ dùng video
+    imageUrl,        // 🎥 Video chính
+    mediaUrls = []   // 🖼 Bộ ảnh minh họa
   ) {
     this.id = id;
     this.catnitrosodaIds = catnitrosodaIds;
     this.title = title;
     this.duration = duration;
     this.price = price;
-    this.videoUrl = videoUrl; // ✅ đường dẫn hoặc require() video
+    this.imageUrl = imageUrl;
+    this.mediaUrls = mediaUrls;
   }
 }
 

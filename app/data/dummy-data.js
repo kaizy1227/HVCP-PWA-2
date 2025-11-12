@@ -2021,7 +2021,7 @@ export const SERVICES = [
     new Service("s4", "Nguyên liệu pha chế", require('../images/ServicesScreen/nguyenlieuphache.jpg')),
     new Service("s5", "Trọn bộ dịch vụ", require('../images/ServicesScreen/tronbodichvu.jpg')),
     new Service("s6", "Setup menu", require('../images/ServicesScreen/vatlieusetupquan.jpg')),
-    new Service("s7", "Máy nitro soda", require('../images/ServicesScreen/maynitrosoda.jpg')),
+    new Service("s7", "Máy Nitro Soda", require('../images/ServicesScreen/maynitrosoda.jpg')),
     new Service("s9", "Form Đánh Giá Dịch Vụ", require('../images/ServicesScreen/danhgiadichvu.jpg')),
     new Service("s10", "Thanh toán dịch vụ", require('../images/ServicesScreen/thanhtoandichvu.jpg')),
 ];
@@ -2121,31 +2121,87 @@ export const EQUIPMENTS = [
 ];
 
 export const CATNITROSODAS = [
-    new CatNitroSoda("1", "Giới Thiệu Máy"),
-    new CatNitroSoda("2", "Thông Tin Máy"),
-    new CatNitroSoda("3", "Pha Chế Máy"),
-
+    new CatNitroSoda("gioi_thieu_may", "Giới Thiệu Máy"),
+    new CatNitroSoda("thong_tin_may", "Thông Tin Máy"),
+    new CatNitroSoda("pha_che_mon", "Pha Chế Món"),
+    new CatNitroSoda("khoa_nang_cap_menu", "Khóa Nâng Cấp Menu"),
+    new CatNitroSoda("setup_quan", "Setup Quán"),
 ];
 
 export const NITROSODAS = [
     new NitroSoda(
         "1",
-        ["1"],
-        "Máy Nitrogen thế hệ mới",
-        "Mỗi khóa học sẽ có thời gian học khác nhau",
-        "Xem thêm chi tiết trong ảnh",
-//        "/images/Course/Nang_Cap_Menu/nitro_soda.mp4"
-        "/videos/nitro_soda_fixed.mp4" // ✅ đường dẫn public
+        ["gioi_thieu_may"],
+        "Giới thiệu máy Nitrogen công nghệ mới",
+        "️Máy pha chế với công nghệ Nitrogen thế hệ mới",
+        "🎥 Cùng xem video để khám phá sức mạnh của Nitrogen trong pha chế nhé!",
+        "/images/may_nitro_soda/gioi_thieu_may/gioi_thieu_nitro_soda.png",
+        [
+            "/images/may_nitro_soda/gioi_thieu_may/gioi_thieu_nitro_soda.mp4",
+        ]
     ),
-    new NitroSoda(
-        "2",
-        ["2"],
-        "Máy Nitrogen thế hệ mới",
-        "Mỗi khóa học sẽ có thời gian học khác nhau",
-        "Xem thêm chi tiết trong ảnh",
-//        "/images/Course/Nang_Cap_Menu/nitro_soda.mp4"
-        "/videos/nitro_soda_fixed.mp4" // ✅ đường dẫn public
+        new NitroSoda(
+        "1",
+        ["thong_tin_may"],
+        "Thông tin máy Nitro Soda",
+        "Máy Nitro Soda pha trà và cà phê có từ 1 vòi đến 4 vòi để bạn lựa chọn",
+        "Bạn có thể pha các loại đồ uống hot trend như: KOMBUCHA SODA, TRÀ SHAN TUYẾT THĂNG HOA, CAFE NITROGEN, Ô LONG NITRO TEA",
+        "/images/Course/Nang_Cap_Menu/may01.jpg",
+        [
+            "/images/Course/Nang_Cap_Menu/may01.jpg",
+            "/images/Course/Nang_Cap_Menu/may02.jpg",
+            "/images/Course/Nang_Cap_Menu/may03.jpg",
+            "/images/Course/Nang_Cap_Menu/may04.jpg",
+            "/images/Course/Nang_Cap_Menu/voi1_voi2.PNG",
+            "/images/Course/Nang_Cap_Menu/voi3_voi4.PNG",
+        ]
     ),
+        new NitroSoda(
+            "1",
+            ["pha_che_mon"],
+            "Kombucha Lựu",
+            "Phiên bản nâng cấp với công nghệ Nitrogen thế hệ mới! 🍸 🍹",
+            `Công nghệ Nitrogen giúp từng ngụm kombucha trở nên bọt mịn như kem, hương vị cân bằng và cảm giác êm mượt hơn khi thưởng thức.
+             Một bước tiến mới trong trải nghiệm kombucha – vừa tốt cho sức khỏe, vừa nâng tầm hương vị.`,
+            "/images/may_nitro_soda/pha_che_mon/tra_kombucha_luu.jpg",
+            [
+                "/images/may_nitro_soda/pha_che_mon/Kombucha_luu.mp4",
+            ]
+        ),
+        new NitroSoda(
+            "1",
+            ["khoa_nang_cap_menu"],
+            "Nâng cấp menu với máy khí Nitro Soda",
+            "Không chỉ đơn thuần là học pha chế, bạn sẽ tiếp cận được công nghệ tiên phong từ Học Viện Cà Phê 🍸 🍹",
+            `Khám phá những ly đồ uống BẮT MẮT, BẮT TREND.
+            Không cần lắc, chỉ cần rót là đã có ly đồ uống thơm ngon và quan trọng nhất là giữ chân khách hàng bằng vị giác.`,
+            "/images/may_nitro_soda/khoa_nang_cap_menu/nang_cap_menu.jpg",
+            [
+                "/images/may_nitro_soda/khoa_nang_cap_menu/nangcapmenu.mp4",
+            ]
+        ),
+        new NitroSoda(
+            "1",
+            ["setup_quan"],
+            "Học Viện Cà Phê",
+            "Lắp máy Nitrogen tại quán Học Viện Cà Phê.",
+            "🎥 Cùng xem video để khám phá sức mạnh của Nitrogen trong pha chế nhé!",
+            "/images/may_nitro_soda/setup_quan/hvcp/lapmay_hvcp.jpg",
+            [
+                "/images/may_nitro_soda/setup_quan/hvcp/lapmay_hvcp.mp4",
+            ]
+        ),
+        new NitroSoda(
+            "2",
+            ["setup_quan"],
+            "Kom Phê Cha",
+            "Lắp máy Nitrogen tại quán Kom Phê Cha.",
+            "🎥 Cùng xem video để khám phá sức mạnh của Nitrogen trong pha chế nhé!",
+            "/images/may_nitro_soda/setup_quan/komphecha/lapmay_komphecha.jpg",
+            [
+                "/images/may_nitro_soda/setup_quan/komphecha/lapmay_komphecha.mp4",
+            ]
+        ),
 ];
 export const COURSES = [
     new Course(
