@@ -1,1 +1,1 @@
-ffmpeg -i nitro_soda2.mp4 -vcodec libx264 -acodec aac -movflags +faststart nitro_soda_fixed.mp4
+ffmpeg -i lapmay_komphecha.mp4 -vcodec libx264 -acodec aac -movflags +faststart lapmay_komphecha_fixed.mp4

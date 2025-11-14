@@ -2126,6 +2126,7 @@ export const CATNITROSODAS = [
     new CatNitroSoda("pha_che_mon", "Pha Chế Món"),
     new CatNitroSoda("khoa_nang_cap_menu", "Khóa Nâng Cấp Menu"),
     new CatNitroSoda("setup_quan", "Setup Quán"),
+    new CatNitroSoda("lap_may_cho_quan", "Lắp máy cho quán"),
 ];
 
 export const NITROSODAS = [
@@ -2138,6 +2139,10 @@ export const NITROSODAS = [
         "/images/may_nitro_soda/gioi_thieu_may/gioi_thieu_nitro_soda.png",
         [
             "/images/may_nitro_soda/gioi_thieu_may/gioi_thieu_nitro_soda.mp4",
+            "/images/may_nitro_soda/gioi_thieu_may/may_nitro_soda_1voi.jpg",
+            "/images/may_nitro_soda/gioi_thieu_may/may_nitro_soda_2voi.jpg",
+            "/images/may_nitro_soda/gioi_thieu_may/may_nitro_soda_3voi.jpg",
+            "/images/may_nitro_soda/gioi_thieu_may/may_nitro_soda_4voi.jpg",
         ]
     ),
         new NitroSoda(
@@ -2184,11 +2189,19 @@ export const NITROSODAS = [
             "1",
             ["setup_quan"],
             "Học Viện Cà Phê",
-            "Lắp máy Nitrogen tại quán Học Viện Cà Phê.",
+            "Lắp máy Nitrogen tại Học Viện Cà Phê.",
             "🎥 Cùng xem video để khám phá sức mạnh của Nitrogen trong pha chế nhé!",
             "/images/may_nitro_soda/setup_quan/hvcp/lapmay_hvcp.jpg",
             [
                 "/images/may_nitro_soda/setup_quan/hvcp/lapmay_hvcp.mp4",
+                "/images/may_nitro_soda/setup_quan/hvcp/tra.jpg",
+                "/images/may_nitro_soda/setup_quan/hvcp/tra0.jpg",
+                "/images/may_nitro_soda/setup_quan/hvcp/tra1.jpg",
+                "/images/may_nitro_soda/setup_quan/hvcp/tra2.jpg",
+                "/images/may_nitro_soda/setup_quan/hvcp/tra3.jpg",
+                "/images/may_nitro_soda/setup_quan/hvcp/tra4.jpg",
+                "/images/may_nitro_soda/setup_quan/hvcp/tra5.jpg",
+
             ]
         ),
         new NitroSoda(
@@ -2200,8 +2213,49 @@ export const NITROSODAS = [
             "/images/may_nitro_soda/setup_quan/komphecha/lapmay_komphecha.jpg",
             [
                 "/images/may_nitro_soda/setup_quan/komphecha/lapmay_komphecha.mp4",
+                "/images/may_nitro_soda/setup_quan/komphecha/komphecha1.jpg",
+                "/images/may_nitro_soda/setup_quan/komphecha/komphecha2.jpg",
+                "/images/may_nitro_soda/setup_quan/komphecha/komphecha3.jpg",
+                "/images/may_nitro_soda/setup_quan/komphecha/komphecha4.jpg",
+                "/images/may_nitro_soda/setup_quan/komphecha/komphecha5.jpg",
+                "/images/may_nitro_soda/setup_quan/komphecha/komphecha6.jpg",
+                "/images/may_nitro_soda/setup_quan/komphecha/komphecha7.jpg",
+                "/images/may_nitro_soda/setup_quan/komphecha/komphecha8.jpg",
+                "/images/may_nitro_soda/setup_quan/komphecha/komphecha9.jpg",
             ]
         ),
+        new NitroSoda(
+            "3",
+            ["setup_quan"],
+            "Bạch Dương",
+            "Lắp máy Nitrogen tại Bạch Dương.",
+            "🎥 Cùng xem video để khám phá sức mạnh của Nitrogen trong pha chế nhé!",
+            "/images/may_nitro_soda/setup_quan/bachduong/bachduong.jpg",
+            [
+                "/images/may_nitro_soda/setup_quan/bachduong/bachduong.mp4",
+                "/images/may_nitro_soda/setup_quan/bachduong/bachduong0.jpg",
+                "/images/may_nitro_soda/setup_quan/bachduong/bachduong1.jpg",
+                "/images/may_nitro_soda/setup_quan/bachduong/bachduong2.jpg",
+                "/images/may_nitro_soda/setup_quan/bachduong/bachduong3.jpg",
+                "/images/may_nitro_soda/setup_quan/bachduong/bachduong4.jpg",
+            ]
+        ),
+    new NitroSoda(
+                "1",
+                ["hinh_anh_lap_may"],
+                "Quán 1",
+                "Lắp máy Nitrogen tại Quán 1.",
+                "🖼️ Cùng xem hình ảnh máy Nitrogen được lắp tại quán của khách hàng nhé!",
+                "/images/may_nitro_soda/setup_quan/bachduong/bachduong.jpg",
+                [
+                    "/images/may_nitro_soda/setup_quan/bachduong/bachduong.mp4",
+                    "/images/may_nitro_soda/setup_quan/bachduong/bachduong0.jpg",
+                    "/images/may_nitro_soda/setup_quan/bachduong/bachduong1.jpg",
+                    "/images/may_nitro_soda/setup_quan/bachduong/bachduong2.jpg",
+                    "/images/may_nitro_soda/setup_quan/bachduong/bachduong3.jpg",
+                    "/images/may_nitro_soda/setup_quan/bachduong/bachduong4.jpg",
+                ]
+            ),
 ];
 export const COURSES = [
     new Course(
