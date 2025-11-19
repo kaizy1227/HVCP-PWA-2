@@ -17,6 +17,7 @@ import CartScreen from "./screens/CartScreen";
 import { CartProvider } from "./context/CartContext";
 import LoginScreen from "./screens/LoginScreen";
 import NitroSodaScreen from "./screens/NitroSodaScreen";
+import DesignSetupScreen from "./screens/DesignSetupScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -83,6 +84,7 @@ export default function Index() {
                         <Stack.Screen name="Form Đánh Giá Dịch Vụ" component={ServiceReviewScreen} />
                         <Stack.Screen name="Thanh Toán Dịch Vụ" component={PaymentScreen} />
                         <Stack.Screen name="Máy Nitro Soda" component={NitroSodaScreen} />
+                        <Stack.Screen name="Thiết Kế Thi Công" component={DesignSetupScreen} />
                         <Stack.Screen
                             name="Giỏ hàng"
                             component={CartScreen}

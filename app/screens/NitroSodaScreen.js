@@ -211,6 +211,15 @@ const NitroSodaScreen = ({ route, navigation }) => {
       {/* 🧾 Modal chi tiết sản phẩm */}
       <Modal visible={modalVisible} animationType="fade">
         <View style={styles.modalContainer}>
+          {/* 🔙 Nút back ở góc trên bên trái */}
+          <TouchableOpacity
+            style={styles.backButton}
+            onPress={() => setModalVisible(false)}
+            activeOpacity={0.8}
+          >
+            <Text style={styles.backButtonText}></Text>
+          </TouchableOpacity>
+
           <ScrollView contentContainerStyle={styles.scrollViewContent}>
             {selectedDrink && (
               <>
@@ -233,9 +242,7 @@ const NitroSodaScreen = ({ route, navigation }) => {
                           controls
                           playsInline
                           preload="metadata"
-                          onError={(e) =>
-                            console.error("Video error:", e, mediaUri)
-                          }
+                          onError={(e) => console.error("Video error:", e, mediaUri)}
                         />
                         <Text style={styles.mediaLabel}>🎥 Video {index + 1}</Text>
                       </View>
@@ -276,7 +283,7 @@ const NitroSodaScreen = ({ route, navigation }) => {
                       style={styles.closeCircle}
                       onPress={() => setZoomVisible(false)}
                     >
-                      <Text style={styles.closeText}>✕</Text>
+                      <Text style={styles.closeText}>←</Text>
                     </TouchableOpacity>
                     <ImageViewer
                       imageUrls={selectedDrink.mediaUrls
@@ -293,18 +300,12 @@ const NitroSodaScreen = ({ route, navigation }) => {
                 <Text style={styles.modalTitle}>{selectedDrink.title}</Text>
                 <Text style={styles.modalDuration}>⭐️ {selectedDrink.duration}</Text>
                 <Text style={styles.modalPrice}>{selectedDrink.price}</Text>
-
-                <TouchableOpacity
-                  onPress={() => setModalVisible(false)}
-                  style={styles.closeButton}
-                >
-                  <Text style={styles.closeButtonText}>Đóng</Text>
-                </TouchableOpacity>
               </>
             )}
           </ScrollView>
         </View>
       </Modal>
+
     </View>
   );
 };
@@ -396,4 +397,28 @@ const styles = StyleSheet.create({
   },
   closeText: { color: "#fff", fontSize: 20, fontWeight: "bold" },
   centered: { flex: 1, justifyContent: "center", alignItems: "center" },
+  backButton: {
+    position: "absolute",
+    top: 40,
+    left: 20,
+    zIndex: 20,
+    backgroundColor: "rgba(244,197,66,0.9)", // màu vàng cà phê nhạt
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    justifyContent: "center",
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOpacity: 0.3,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 3,
+    elevation: 5,
+  },
+  backButtonText: {
+    color: "#4A2306",
+    fontSize: 22,
+    fontWeight: "bold",
+    marginTop: -2,
+  },
+
 });

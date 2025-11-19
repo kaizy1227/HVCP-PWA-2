@@ -12,6 +12,7 @@ import FullService from "../models/fullservice"
 import CatFullService from "../models/catfullservice"
 import NitroSoda from "../models/nitrosoda"
 import CatNitroSoda from "../models/catnitrosoda"
+import DesignSetup from "../models/designsetup"
 
 export const USERS = [
     {
@@ -30,22 +31,131 @@ export const USERS = [
     },
 ];
 
+export const DESIGNSETUPS = [
+      new DesignSetup(
+        "1",
+        "Trà Sữa 2T – Bắc Giang",
+        "/images/thiet_ke_thi_cong/video/1. Thiết Kế Cafe Đẹp Tại Hà Nội.png",
+        [
+          "/images/thiet_ke_thi_cong/video/1. Thiết Kế Cafe Đẹp Tại Hà Nội.mp4",
+        ]
+      ),
+      new DesignSetup(
+        "2",
+        "Trà Sữa 2T – Bắc Giang",
+        "/images/thiet_ke_thi_cong/video/2. Setup Quán Cafe 5 Tầng 2 Mặt Tiền.png",
+        [
+          "/images/thiet_ke_thi_cong/video/2. Setup Quán Cafe 5 Tầng 2 Mặt Tiền.mp4",
+        ]
+      ),
+      new DesignSetup(
+        "3",
+        "Trà Sữa 2T – Bắc Giang",
+        "/images/thiet_ke_thi_cong/video/2. Setup Quán Cafe 5 Tầng 2 Mặt Tiền.png",
+        [
+          "/images/thiet_ke_thi_cong/video/2. Setup Quán Cafe 5 Tầng 2 Mặt Tiền.mp4",
+        ]
+      ),
+      new DesignSetup(
+        "4",
+        "Trà Sữa 2T – Bắc Giang",
+        "/images/thiet_ke_thi_cong/video/3. Thiết Kế Thi Công Quán Cafe Tại Sơn La.png",
+        [
+          "/images/thiet_ke_thi_cong/video/3. Thiết Kế Thi Công Quán Cafe Tại Sơn La.mp4",
+        ]
+      ),
+    new DesignSetup("8", "68 Coffee – Hà Đông Hà Nội", '/images/thiet_ke_thi_cong/1. 68 Coffee – Hà Đông Hà Nội.jpg'),
+    new DesignSetup("8", "1991 Cafe – Đông Triều Quảng Ninh", '/images/thiet_ke_thi_cong/2. 1991 Cafe – Đông Triều Quảng Ninh.jpg'),
+    new DesignSetup("8", "8898 Coffee – Bắc Giang", '/images/thiet_ke_thi_cong/3. 8898 Coffee – Bắc Giang.jpg'),
+    new DesignSetup("8", "Anya Tea – Lai Châu", '/images/thiet_ke_thi_cong/4. Anya Tea – Lai Châu.jpg'),
+    new DesignSetup("8", "B&B Coffee – Thanh Hóa", '/images/thiet_ke_thi_cong/5. B&B Coffee – Thanh Hóa.jpg'),
+    new DesignSetup("8", "Black White Milk Tea – Huế", '/images/thiet_ke_thi_cong/6. Black White Milk Tea – Huế.jpg'),
+    new DesignSetup("8", "Bờm Garden Coffee – Kim Bảng Hà Nam", '/images/thiet_ke_thi_cong/7. Bờm Garden Coffee – Kim Bảng Hà Nam.jpg'),
+    new DesignSetup("8", "Cafe Bida – Long Biên HN", '/images/thiet_ke_thi_cong/8. Cafe Bida – Long Biên HN.jpg'),
+    new DesignSetup("8", "Cafe Indochine _ Quảng Ninh", '/images/thiet_ke_thi_cong/9. Cafe Indochine _ Quảng Ninh.jpg'),
+    new DesignSetup("8", "Cafe indochine Quảng Ninh", '/images/thiet_ke_thi_cong/10. Cafe indochine Quảng Ninh.jpg'),
+
+    new DesignSetup("8", "Cafe Sách Bình An – Gia Lâm Hà Nội", '/images/thiet_ke_thi_cong/11. Cafe Sách Bình An – Gia Lâm Hà Nội.jpg'),
+    new DesignSetup("8", "Cafe Sân Vườn The Garden – Vĩnh Phúc", '/images/thiet_ke_thi_cong/12. Cafe Sân Vườn The Garden – Vĩnh Phúc.jpg'),
+    new DesignSetup("8", "Cafe Sân Vườn Tropical – Nam Định", '/images/thiet_ke_thi_cong/13. Cafe Sân Vườn Tropical – Nam Định.jpg'),
+    new DesignSetup("8", "Casa Tea – Bắc Ninh", '/images/thiet_ke_thi_cong/14. Casa Tea – Bắc Ninh.jpg'),
+    new DesignSetup("8", "Châu Coffee – Hà Đông Hà Nội", '/images/thiet_ke_thi_cong/15. Châu Coffee – Hà Đông Hà Nội.jpg'),
+    new DesignSetup("8", "Coffee And Tea – Cao Bằng", '/images/thiet_ke_thi_cong/16. Coffee And Tea – Cao Bằng.jpg'),
+    new DesignSetup("8", "Coffee And Tea – Vĩnh Phúc", '/images/thiet_ke_thi_cong/17. Coffee And Tea – Vĩnh Phúc.jpg'),
+    new DesignSetup("8", "Coffee And Tea Mộc – Yên Bái", '/images/thiet_ke_thi_cong/18. Coffee And Tea Mộc – Yên Bái.jpg'),
+    new DesignSetup("8", "Coffee Danh Lam – Quảng Nam", '/images/thiet_ke_thi_cong/19. Coffee Danh Lam – Quảng Nam.jpg'),
+    new DesignSetup("8", "Coffee Gió – Đan Phượng Hà Nội", '/images/thiet_ke_thi_cong/20. Coffee Gió – Đan Phượng Hà Nội.jpg'),
+
+    new DesignSetup("8", "Coffee Vila – Hòa Bình", '/images/thiet_ke_thi_cong/21. Coffee Vila – Hòa Bình.jpg'),
+    new DesignSetup("8", "D Lam Coffee – Kim Mã Hà Nội", '/images/thiet_ke_thi_cong/22. D Lam Coffee – Kim Mã Hà Nội.jpg'),
+    new DesignSetup("8", "Đậu Coffee Tea – Quảng Ninh", '/images/thiet_ke_thi_cong/23. Đậu Coffee Tea – Quảng Ninh.jpg'),
+    new DesignSetup("8", "De Lavie Indochine Coffee – Hà Nội", '/images/thiet_ke_thi_cong/24. De Lavie Indochine Coffee – Hà Nội.jpg'),
+    new DesignSetup("8", "Đông Dương Coffee – Đông Anh Hà Nội", '/images/thiet_ke_thi_cong/25. Đông Dương Coffee – Đông Anh Hà Nội.jpg'),
+    new DesignSetup("8", "Gem Tea Coffee – Phú Thọ", '/images/thiet_ke_thi_cong/26. Gem Tea Coffee – Phú Thọ.jpg'),
+    new DesignSetup("8", "Hayla Coffee – Sơn Tây Hà Nội", '/images/thiet_ke_thi_cong/27. Hayla Coffee – Sơn Tây Hà Nội.jpg'),
+    new DesignSetup("8", "Hẻm Quán – Hà Tĩnh", '/images/thiet_ke_thi_cong/28. Hẻm Quán – Hà Tĩnh.jpg'),
+    new DesignSetup("8", "Huê Khánh Coffee + Tea – Cao Bằng", '/images/thiet_ke_thi_cong/29. Huê Khánh Coffee + Tea – Cao Bằng.jpg'),
+    new DesignSetup("8", "ichigo Coffee – Tea – Thái Bình", '/images/thiet_ke_thi_cong/30. ichigo Coffee – Tea – Thái Bình.jpg'),
+
+    new DesignSetup("8", "King Koi Coffee – Tp Lào Cai", '/images/thiet_ke_thi_cong/31. King Koi Coffee – Tp Lào Cai.jpg'),
+    new DesignSetup("8", "Koi And You – Tuyên Quang", '/images/thiet_ke_thi_cong/32. Koi And You – Tuyên Quang.jpg'),
+    new DesignSetup("8", "Koi And You Cafe – Su Phì Hà Giang", '/images/thiet_ke_thi_cong/33. Koi And You Cafe – Su Phì Hà Giang.jpg'),
+    new DesignSetup("8", "Lucky Tea – Bắc Giang", '/images/thiet_ke_thi_cong/34. Lucky Tea – Bắc Giang.jpg'),
+    new DesignSetup("8", "Mi Coffee – Quảng Ninh", '/images/thiet_ke_thi_cong/35. Mi Coffee – Quảng Ninh.jpg'),
+    new DesignSetup("8", "Mi Mi Tea – Thanh Hóa", '/images/thiet_ke_thi_cong/36. Mi Mi Tea – Thanh Hóa.jpg'),
+    new DesignSetup("8", "Mill Tea – Hòa Bình", '/images/thiet_ke_thi_cong/37. Mill Tea – Hòa Bình.jpg'),
+    new DesignSetup("8", "Miria Hải Phòng", '/images/thiet_ke_thi_cong/38. Miria Hải Phòng.jpg'),
+    new DesignSetup("8", "Nắng Cafe – Thuận Thành Bắc Ninh", '/images/thiet_ke_thi_cong/39. Nắng Cafe – Thuận Thành Bắc Ninh.jpg'),
+    new DesignSetup("8", "No1 Coffee Tại Cầu Giấy – Hà Nội", '/images/thiet_ke_thi_cong/40. No1 Coffee Tại Cầu Giấy – Hà Nội.jpg'),
+
+    new DesignSetup("8", "One Coffee Tea – Bắc Giang", '/images/thiet_ke_thi_cong/41. One Coffee Tea – Bắc Giang.jpg'),
+    new DesignSetup("8", "Paris Tiệm Trà Chanh – Hà Nam", '/images/thiet_ke_thi_cong/42. Paris Tiệm Trà Chanh – Hà Nam.jpg'),
+    new DesignSetup("8", "Quán Cafe E coffee – Vĩnh Phúc", '/images/thiet_ke_thi_cong/43. Quán Cafe E coffee – Vĩnh Phúc.jpg'),
+    new DesignSetup("8", "Quán Kem Tươi Cam – Hà Tĩnh", '/images/thiet_ke_thi_cong/44. Quán Kem Tươi Cam – Hà Tĩnh.jpg'),
+    new DesignSetup("8", "Queen Coffee – Gia Lâm Hà Nội", '/images/thiet_ke_thi_cong/45. Queen Coffee – Gia Lâm Hà Nội.jpg'),
+    new DesignSetup("8", "Sữa Chua Trân Châu – Hải Dương", '/images/thiet_ke_thi_cong/46. Sữa Chua Trân Châu – Hải Dương.jpg'),
+    new DesignSetup("8", "Sung Coffee – Hạ Long Quảng Ninh", '/images/thiet_ke_thi_cong/47. Sung Coffee – Hạ Long Quảng Ninh.jpg'),
+    new DesignSetup("8", "Thảo Nguyên Coffee – Ecopark Hà Nội", '/images/thiet_ke_thi_cong/48. Thảo Nguyên Coffee – Ecopark Hà Nội.jpg'),
+    new DesignSetup("8", "Thu Thắng Coffee – Vĩnh Phúc", '/images/thiet_ke_thi_cong/49. Thu Thắng Coffee – Vĩnh Phúc.jpg'),
+    new DesignSetup("8", "Tiệm Trà Chanh – Đông Anh Hà Nội", '/images/thiet_ke_thi_cong/50. Tiệm Trà Chanh – Đông Anh Hà Nội.jpg'),
+
+    new DesignSetup("8", "Tiệm Trà Chanh – Tĩnh Gia Thanh Hóa", '/images/thiet_ke_thi_cong/51. Tiệm Trà Chanh – Tĩnh Gia Thanh Hóa.jpg'),
+    new DesignSetup("8", "Tiệm Trà Chanh Phố – Thanh Hóa", '/images/thiet_ke_thi_cong/52. Tiệm Trà Chanh Phố – Thanh Hóa.jpg'),
+    new DesignSetup("8", "Tiệm Trà Chanh Tại Mê Linh – Hà Nội", '/images/thiet_ke_thi_cong/53. Tiệm Trà Chanh Tại Mê Linh – Hà Nội.jpg'),
+    new DesignSetup("8", "Tiệm Trà Chanh Tmore – Yên Bái", '/images/thiet_ke_thi_cong/54. Tiệm Trà Chanh Tmore – Yên Bái.jpg'),
+    new DesignSetup("8", "Tiệm Trà Sữa – Bắc Giang", '/images/thiet_ke_thi_cong/55. Tiệm Trà Sữa – Bắc Giang.jpg'),
+    new DesignSetup("8", "Tiến Mạnh Store Cafe – Cầu Giấy Hà Nội", '/images/thiet_ke_thi_cong/56. Tiến Mạnh Store Cafe – Cầu Giấy Hà Nội.jpg'),
+    new DesignSetup("8", "Tiktak View Coffee – Đông Anh Hà Nội", '/images/thiet_ke_thi_cong/57. Tiktak View Coffee – Đông Anh Hà Nội.jpg'),
+    new DesignSetup("8", "Tokyo Tea – Vĩnh Phúc", '/images/thiet_ke_thi_cong/58. Tokyo Tea – Vĩnh Phúc.jpg'),
+    new DesignSetup("8", "Trà Chanh Chill – Ba Đình Hà Nội", '/images/thiet_ke_thi_cong/59. Trà Chanh Chill – Ba Đình Hà Nội.jpg'),
+    new DesignSetup("8", "Trà Đạo Quán – Đống Đa Hà Nội", '/images/thiet_ke_thi_cong/60. Trà Đạo Quán – Đống Đa Hà Nội.jpg'),
+
+    new DesignSetup("8", "Trà Sữa 2T – Bắc Giang", '/images/thiet_ke_thi_cong/61. Trà Sữa 2T – Bắc Giang.jpg'),
+    new DesignSetup("8", "Trà Sữa Chou – Long Biên Hà Nội", '/images/thiet_ke_thi_cong/62. Trà Sữa Chou – Long Biên Hà Nội.jpg'),
+    new DesignSetup("8", "Trà Sữa Crush – Thạch Thất Hà Nội", '/images/thiet_ke_thi_cong/63. Trà Sữa Crush – Thạch Thất Hà Nội.jpg'),
+    new DesignSetup("8", "Trà Sữa Lan Lan – Lai Châu", '/images/thiet_ke_thi_cong/64. Trà Sữa Lan Lan – Lai Châu.jpg'),
+    new DesignSetup("8", "Trà Sữa Tocotoco Nghệ An", '/images/thiet_ke_thi_cong/65. Trà Sữa Tocotoco Nghệ An.jpg'),
+    new DesignSetup("8", "Trung Nguyên E- Coffee Hải Dương", '/images/thiet_ke_thi_cong/66. Trung Nguyên E- Coffee Hải Dương.jpg'),
+    new DesignSetup("8", "Cafe Khung Thép Tiền Chế – Yên Bái", '/images/thiet_ke_thi_cong/67. Xây Dựng Quán Cafe Khung Thép Tiền Chế – Yên Bái.jpg'),
+
+];
+
 
 export const CATFULLSERVICES = [
-    new CatFullService('1', 'Dịch vụ trọn bộ'),
-//    new CatFullService('2', 'Đào tạo các khóa học tại trung tâm'),
-    new CatFullService('3', 'Khóa khởi nghiệp'),
-    new CatFullService('4', 'Đào tạo pha chế tại quán + hỗ trợ khai trương'),
-    new CatFullService('5', 'Đào tạo vận hành'),
-    new CatFullService('6', 'Setup menu'),
-//    new CatFullService('7', 'Đào tạo thu ngân, phần mềm bán hàng'),
+    new CatFullService('dich_vu_tron_bo', 'Dịch vụ trọn bộ'),
+    new CatFullService('dao_tao_pha_che', 'Đào tạo pha chế'),
+    new CatFullService('khoa_khoi_nghiep', 'Khóa khởi nghiệp'),
+    new CatFullService('dao_tao_tai_quan', 'Đào tạo pha chế tại quán + hỗ trợ khai trương'),
+    new CatFullService('dao_tao_van_hanh', 'Đào tạo vận hành'),
+    new CatFullService('setup_menu', 'Setup menu'),
+    new CatFullService('tron_bo_combo_thu_ngan', 'Trọn bộ combo thu ngân'),
 //    new CatFullService('8', 'Cung cấp nguyên vật liệu, dụng cụ'),
 //    new CatFullService('9', 'Cung cấp máy móc, thiết bị'),
     new CatFullService('10', 'Setup quầy'),
-    new CatFullService('11', 'Thiết kế - thi công'),
-    new CatFullService('12', 'Bộ nhận diện thương hiệu'),
-    new CatFullService('13', 'Giấy phép kinh doanh - VSATTP'),
-//    new CatFullService('14', 'Marketing từ cơ bản đến nâng cao'),
+    new CatFullService('thiet_ke_thi_cong', 'Thiết kế - thi công'),
+    new CatFullService('bo_nhan_dien_thuong_hieu', 'Bộ nhận diện thương hiệu'),
+    new CatFullService('giay_phep_kinh_doanh', 'Giấy phép kinh doanh - VSATTP'),
+    new CatFullService('marketing', 'Marketing từ cơ bản đến nâng cao'),
 //    new CatFullService('15', 'Thiết kế web'),
 //    new CatFullService('16', 'Trợ lí app bán hàng'),
 //    new CatFullService('17', 'Chụp ảnh'),
@@ -55,144 +165,136 @@ export const CATFULLSERVICES = [
 
 export const FULLSERVICES = [
   new FullService(
-    "1a",
-    ["1"],
-    "Gói Setup Quán Cafe Trọn Bộ",
-    require("../images/dichvutronbo.png"),
+    "1",
+    ["dich_vu_tron_bo"],
+    "Gói Setup Quán Cafe Trọn Gói",
+    '/images/tron_bo_dich_vu/dich_vu_tron_bo/dich_vu_tron_bo.png' ,
     [
-      require("../images/dichvutronbo.png"),
-      { uri: "https://cdn.dieptra.com/services/setup1.jpg" },
-      { uri: "https://cdn.dieptra.com/services/setup2.jpg" },
+      '/images/tron_bo_dich_vu/dich_vu_tron_bo/dich_vu_tron_bo.png' ,
     ],
     "Gói dịch vụ trọn gói từ thiết kế, setup quầy pha chế đến đào tạo nhân viên vận hành."
   ),
 
   new FullService(
-    "2a",
-    ["2"],
+    "1",
+    ["dao_tao_pha_che"],
     "Khóa Học Pha Chế Chuyên Nghiệp",
-    require("../images/khoahocphache.png"),
+    '/images/tron_bo_dich_vu/dao_tao_pha_che/dao_tao_pha_che.jpg' ,
     [
-      require("../images/khoahocphache.png"),
-      { uri: "https://cdn.dieptra.com/services/barista1.jpg" },
-      { uri: "https://cdn.dieptra.com/services/barista2.jpg" },
+      '/images/tron_bo_dich_vu/dao_tao_pha_che/dao_tao_pha_che.jpg' ,
     ],
     "Chương trình đào tạo bài bản cho Barista, từ cơ bản đến nâng cao, phù hợp cho mở quán."
   ),
 
   new FullService(
-    "3a",
-    ["3"],
+    "1",
+    ["khoa_khoi_nghiep"],
     "Khóa khởi nghiệp",
-     '/images/FullService/khoa_khoi_nghiep/khoa_khoi_nghiep.jpg' ,
+     '/images/tron_bo_dich_vu/khoa_khoi_nghiep/khoa_khoi_nghiep.jpg' ,
     [
-      '/images/FullService/khoa_khoi_nghiep/khoa_khoi_nghiep.jpg' ,
+      '/images/tron_bo_dich_vu/khoa_khoi_nghiep/khoa_khoi_nghiep.jpg' ,
     ],
     "Hướng dẫn khởi nghiệp, nâng cao kiến thức quản lý và vận hành quán tối ưu."
   ),
 
   new FullService(
-    "4a",
-    ["4"],
+    "1",
+    ["dao_tao_tai_quan"],
     "Đào Tạo Tại Quán",
-    'images/FullService/dao_tao_tai_quan/dao_tao_tai_quan.png',
+    'images/tron_bo_dich_vu/dao_tao_tai_quan/dao_tao_tai_quan.png',
     [
-      'images/FullService/dao_tao_tai_quan/dao_tao_tai_quan.png',
-      { uri: "https://cdn.dieptra.com/services/manage1.jpg" },
+      'images/tron_bo_dich_vu/dao_tao_tai_quan/dao_tao_tai_quan.png',
     ],
     "Khóa học chuyên sâu giúp chủ quán nắm vững quy trình quản lý, kiểm soát chi phí hiệu quả."
   ),
 
   new FullService(
-    "5a",
-    ["5"],
+    "1",
+    ["dao_tao_van_hanh"],
     "Đào Tạo Quản Lý Vận Hành",
-    'images/FullService/dao_tao_quan_ly_van_hanh/dao_tao_quan_ly_van_hanh.png',
+    'images/tron_bo_dich_vu/dao_tao_quan_ly_van_hanh/dao_tao_quan_ly_van_hanh.png',
     [
-      'images/FullService/dao_tao_quan_ly_van_hanh/dao_tao_quan_ly_van_hanh.png',
+      'images/tron_bo_dich_vu/dao_tao_quan_ly_van_hanh/dao_tao_quan_ly_van_hanh.png',
       { uri: "https://cdn.dieptra.com/services/manage1.jpg" },
     ],
     "Khóa học chuyên sâu giúp chủ quán nắm vững quy trình quản lý, kiểm soát chi phí hiệu quả."
   ),
 
   new FullService(
-    "6a",
-    ["6"],
+    "1",
+    ["setup_menu"],
     "Thiết Kế Setup Menu",
-    '/images/FullService/setup_menu/setup_menu.jpg' ,
+    '/images/tron_bo_dich_vu/setup_menu/setup_menu.jpg' ,
     [
-      '/images/FullService/setup_menu/setup_menu.jpg' ,
+      '/images/tron_bo_dich_vu/setup_menu/setup_menu.jpg' ,
       { uri: "https://cdn.dieptra.com/services/menu1.jpg" },
     ],
     "Thiết kế menu, tính cost, định lượng công thức và layout trình bày chuyên nghiệp."
   ),
 
   new FullService(
-    "7a",
-    ["7"],
+    "1",
+    ["tron_bo_combo_thu_ngan"],
     "Trọn Bộ Combo Thu Ngân",
-    require("../images/tronbocombothungan.png"),
+    '/images/tron_bo_dich_vu/tron_bo_combo_thu_ngan/tron_bo_combo_thu_ngan.png' ,
     [
-      require("../images/tronbocombothungan.png"),
-      { uri: "https://cdn.dieptra.com/services/pos1.jpg" },
-      { uri: "https://cdn.dieptra.com/services/pos2.jpg" },
+      '/images/tron_bo_dich_vu/tron_bo_combo_thu_ngan/tron_bo_combo_thu_ngan.png' ,
     ],
     "Gói combo gồm phần mềm quản lý, máy POS, máy in bill, két tiền — sẵn sàng sử dụng ngay."
   ),
 
   new FullService(
     "11a",
-    ["11"],
+    ["thiet_ke_thi_cong"],
     "Thiết Kế Thi Công",
-    '/images/FullService/thiet_ke_thi_cong/thiet_ke_thi_cong_01.jpg' ,
+    '/images/tron_bo_dich_vu/thiet_ke_thi_cong/thiet_ke_thi_cong_01.jpg' ,
     [
-      '/images/FullService/thiet_ke_thi_cong/thiet_ke_thi_cong_01.jpg' ,
-      '/images/FullService/thiet_ke_thi_cong/thiet_ke_thi_cong_02.jpg' ,
-      { uri: "https://cdn.dieptra.com/services/pos2.jpg" },
+      '/images/tron_bo_dich_vu/thiet_ke_thi_cong/thiet_ke_thi_cong_01.jpg' ,
+      '/images/tron_bo_dich_vu/thiet_ke_thi_cong/thiet_ke_thi_cong_02.jpg' ,
     ],
     "Thiết kế thi công, khảo sát mặt bằng."
   ),
 
   new FullService(
     "12a",
-    ["12"],
+    ["bo_nhan_dien_thuong_hieu"],
     "Thiết Kế Nhận Diện Thương Hiệu",
-    '/images/FullService/nhan_dien_thuong_hieu/nhan_dien_thuong_hieu.png' ,
+    '/images/tron_bo_dich_vu/nhan_dien_thuong_hieu/nhan_dien_thuong_hieu.png' ,
     [
-     '/images/FullService/nhan_dien_thuong_hieu/nhan_dien_thuong_hieu.png' ,
+     '/images/tron_bo_dich_vu/nhan_dien_thuong_hieu/nhan_dien_thuong_hieu.png' ,
     ],
     "Thiết kế logo, màu sắc, concept thương hiệu nhất quán cho quán cà phê của bạn."
   ),
 
   new FullService(
     "13a",
-    ["13"],
+    ["giay_phep_kinh_doanh"],
     "Đăng Ký Giấy Phép Kinh Doanh",
-    '/images/FullService/giay_phep_kinh_doanh/giay_phep_kinh_doanh.png' ,
+    '/images/tron_bo_dich_vu/giay_phep_kinh_doanh/giay_phep_kinh_doanh.png' ,
     [
-      '/images/FullService/giay_phep_kinh_doanh/giay_phep_kinh_doanh.png' ,
+      '/images/tron_bo_dich_vu/giay_phep_kinh_doanh/giay_phep_kinh_doanh.png' ,
     ],
     "Hỗ trợ thủ tục pháp lý, đăng ký kinh doanh nhanh chóng, tiết kiệm thời gian."
   ),
 
   new FullService(
     "13b",
-    ["13"],
+    ["giay_phep_kinh_doanh"],
     "Đăng Ký Giấy Phép Vệ Sinh An Toàn Thực Phẩm (Hộ Kinh Doanh)",
-    '/images/FullService/giay_phep_kinh_doanh/ho_kinh_doanh.png' ,
+    '/images/tron_bo_dich_vu/giay_phep_kinh_doanh/ho_kinh_doanh.png' ,
     [
-      '/images/FullService/giay_phep_kinh_doanh/ho_kinh_doanh.png' ,
+      '/images/tron_bo_dich_vu/giay_phep_kinh_doanh/ho_kinh_doanh.png' ,
     ],
     "Hỗ trợ thủ tục pháp lý, đăng ký kinh doanh nhanh chóng, tiết kiệm thời gian."
   ),
 
   new FullService(
     "13c",
-    ["13"],
+    ["giay_phep_kinh_doanh"],
     "Đăng Ký Giấy Phép Vệ Sinh An Toàn Thực Phẩm (Doanh Nghiệp)",
-    '/images/FullService/giay_phep_kinh_doanh/doanh_nghiep.png' ,
+    '/images/tron_bo_dich_vu/giay_phep_kinh_doanh/doanh_nghiep.png' ,
     [
-      '/images/FullService/giay_phep_kinh_doanh/doanh_nghiep.png' ,
+      '/images/tron_bo_dich_vu/giay_phep_kinh_doanh/doanh_nghiep.png' ,
     ],
     "Hỗ trợ thủ tục pháp lý, đăng ký kinh doanh nhanh chóng, tiết kiệm thời gian."
   ),
@@ -226,7 +328,6 @@ export const CATINGREDIENTS = [
     new CatIngredient("topping", "Topping"),
     new CatIngredient("tra", "Trà"),
 ];
-
 
 export const INGREDIENTS = [
     new Ingredient("SP000554", ["bot"], "Bột Mochi Lermao", "110,000", "Chưa có dữ liệu", "Chưa có dữ liệu", '/images/Nguyen_lieu_pha_che/bot/no_data.png'),
@@ -2022,6 +2123,7 @@ export const SERVICES = [
     new Service("s5", "Trọn bộ dịch vụ", require('../images/ServicesScreen/tronbodichvu.jpg')),
     new Service("s6", "Setup menu", require('../images/ServicesScreen/vatlieusetupquan.jpg')),
     new Service("s7", "Máy Nitro Soda", require('../images/ServicesScreen/maynitrosoda.jpg')),
+    new Service("s8", "Thiết kế thi công", require('../images/ServicesScreen/thietkethicong.jpg')),
     new Service("s9", "Form Đánh Giá Dịch Vụ", require('../images/ServicesScreen/danhgiadichvu.jpg')),
     new Service("s10", "Thanh toán dịch vụ", require('../images/ServicesScreen/thanhtoandichvu.jpg')),
 ];
@@ -2126,7 +2228,6 @@ export const CATNITROSODAS = [
     new CatNitroSoda("pha_che_mon", "Pha Chế Món"),
     new CatNitroSoda("khoa_nang_cap_menu", "Khóa Nâng Cấp Menu"),
     new CatNitroSoda("setup_quan", "Setup Quán"),
-    new CatNitroSoda("lap_may_cho_quan", "Lắp máy cho quán"),
 ];
 
 export const NITROSODAS = [
