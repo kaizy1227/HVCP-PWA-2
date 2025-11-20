@@ -1,1 +1,0 @@
-ffmpeg -i lapmay_hvcp.mov -vcodec libx264 -crf 28 -preset slow -acodec aac -b:a 128k gioi_thieu_nitro_soda_compressed.mp4

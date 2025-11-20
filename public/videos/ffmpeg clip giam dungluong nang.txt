@@ -1,0 +1,1 @@
+ffmpeg -i 10.mp4 -vcodec libx264 -crf 32 -preset veryslow -acodec aac -b:a 96k -movflags +faststart 10_small.mp4

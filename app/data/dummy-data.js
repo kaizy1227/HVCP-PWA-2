@@ -34,110 +34,537 @@ export const USERS = [
 export const DESIGNSETUPS = [
       new DesignSetup(
         "1",
-        "Trà Sữa 2T – Bắc Giang",
-        "/images/thiet_ke_thi_cong/video/1. Thiết Kế Cafe Đẹp Tại Hà Nội.png",
+        "[Video] Thiết Kế Cafe Đẹp Tại Hà Nội",
+        "/images/thiet_ke_thi_cong/video/1. Thiết Kế Cafe Đẹp Tại Hà Nội.PNG",
         [
           "/images/thiet_ke_thi_cong/video/1. Thiết Kế Cafe Đẹp Tại Hà Nội.mp4",
         ]
       ),
       new DesignSetup(
         "2",
-        "Trà Sữa 2T – Bắc Giang",
-        "/images/thiet_ke_thi_cong/video/2. Setup Quán Cafe 5 Tầng 2 Mặt Tiền.png",
+        "[Video] Setup Quán Cafe 5 Tầng 2 Mặt Tiền",
+        "/images/thiet_ke_thi_cong/video/2. Setup Quán Cafe 5 Tầng 2 Mặt Tiền.PNG",
         [
           "/images/thiet_ke_thi_cong/video/2. Setup Quán Cafe 5 Tầng 2 Mặt Tiền.mp4",
         ]
       ),
       new DesignSetup(
         "3",
-        "Trà Sữa 2T – Bắc Giang",
-        "/images/thiet_ke_thi_cong/video/2. Setup Quán Cafe 5 Tầng 2 Mặt Tiền.png",
-        [
-          "/images/thiet_ke_thi_cong/video/2. Setup Quán Cafe 5 Tầng 2 Mặt Tiền.mp4",
-        ]
-      ),
-      new DesignSetup(
-        "4",
-        "Trà Sữa 2T – Bắc Giang",
-        "/images/thiet_ke_thi_cong/video/3. Thiết Kế Thi Công Quán Cafe Tại Sơn La.png",
+        "[Video] Thiết Kế Thi Công Quán Cafe Tại Sơn La",
+        "/images/thiet_ke_thi_cong/video/3. Thiết Kế Thi Công Quán Cafe Tại Sơn La.PNG",
         [
           "/images/thiet_ke_thi_cong/video/3. Thiết Kế Thi Công Quán Cafe Tại Sơn La.mp4",
         ]
       ),
-    new DesignSetup("8", "68 Coffee – Hà Đông Hà Nội", '/images/thiet_ke_thi_cong/1. 68 Coffee – Hà Đông Hà Nội.jpg'),
-    new DesignSetup("8", "1991 Cafe – Đông Triều Quảng Ninh", '/images/thiet_ke_thi_cong/2. 1991 Cafe – Đông Triều Quảng Ninh.jpg'),
-    new DesignSetup("8", "8898 Coffee – Bắc Giang", '/images/thiet_ke_thi_cong/3. 8898 Coffee – Bắc Giang.jpg'),
-    new DesignSetup("8", "Anya Tea – Lai Châu", '/images/thiet_ke_thi_cong/4. Anya Tea – Lai Châu.jpg'),
-    new DesignSetup("8", "B&B Coffee – Thanh Hóa", '/images/thiet_ke_thi_cong/5. B&B Coffee – Thanh Hóa.jpg'),
-    new DesignSetup("8", "Black White Milk Tea – Huế", '/images/thiet_ke_thi_cong/6. Black White Milk Tea – Huế.jpg'),
-    new DesignSetup("8", "Bờm Garden Coffee – Kim Bảng Hà Nam", '/images/thiet_ke_thi_cong/7. Bờm Garden Coffee – Kim Bảng Hà Nam.jpg'),
-    new DesignSetup("8", "Cafe Bida – Long Biên HN", '/images/thiet_ke_thi_cong/8. Cafe Bida – Long Biên HN.jpg'),
-    new DesignSetup("8", "Cafe Indochine _ Quảng Ninh", '/images/thiet_ke_thi_cong/9. Cafe Indochine _ Quảng Ninh.jpg'),
-    new DesignSetup("8", "Cafe indochine Quảng Ninh", '/images/thiet_ke_thi_cong/10. Cafe indochine Quảng Ninh.jpg'),
+      new DesignSetup(
+        "4",
+        "[Video] Mẫu Thiết Kế Quán Cafe Đẹp - Kiến Trúc Độc Đáo + Không Gian Xanh",
+        "/images/thiet_ke_thi_cong/video/4. Mẫu Thiết Kế Quán Cafe Đẹp - Kiến Trúc Độc Đáo + Không Gian Xanh.PNG",
+        [
+          "/images/thiet_ke_thi_cong/video/4. Mẫu Thiết Kế Quán Cafe Đẹp - Kiến Trúc Độc Đáo + Không Gian Xanh.mp4",
+        ]
+      ),
+      new DesignSetup(
+        "5",
+        "[Video] Setup Mở Quán Cafe View ĐỒNG LÚA",
+        "/images/thiet_ke_thi_cong/video/5. Setup Mở Quán Cafe View ĐỒNG LÚA.PNG",
+        [
+          "/images/thiet_ke_thi_cong/video/5. Setup Mở Quán Cafe View ĐỒNG LÚA.mp4",
+        ]
+      ),
+      new DesignSetup(
+        "6",
+        "[Video] Thiết Kế Quán Cafe Phong Cách Indochine Tại Vĩnh Yên",
+        "/images/thiet_ke_thi_cong/video/6. Thiết Kế Quán Cafe Phong Cách Indochine Tại Vĩnh Yên.PNG",
+        [
+          "/images/thiet_ke_thi_cong/video/6. Thiết Kế Quán Cafe Phong Cách Indochine Tại Vĩnh Yên.mp4",
+        ]
+      ),
+      new DesignSetup(
+        "7",
+        "[Video] Công Trình Thiết Kế Thi Công Tại Hải Phòng",
+        "/images/thiet_ke_thi_cong/video/7. Công Trình Thiết Kế Thi Công Tại Hải Phòng.PNG",
+        [
+          "/images/thiet_ke_thi_cong/video/7. Công Trình Thiết Kế Thi Công Tại Hải Phòng.mp4",
+        ]
+      ),
+      new DesignSetup(
+        "8",
+        "[Video] Thiết Kế Quán Cafe Sân Vườn _ Hồ Cá Koi",
+        "/images/thiet_ke_thi_cong/video/8. Thiết Kế Quán Cafe Sân Vườn _ Hồ Cá Koi.PNG",
+        [
+          "/images/thiet_ke_thi_cong/video/8. Thiết Kế Quán Cafe Sân Vườn _ Hồ Cá Koi.mp4",
+        ]
+      ),
+      new DesignSetup(
+        "9",
+        "[Video] Setup Quán Cafe Cá Koi Đầu Tiên Tại Hà Nội",
+        "/images/thiet_ke_thi_cong/video/9. Setup Quán Cafe Cá Koi Đầu Tiên Tại Hà Nội.PNG",
+        [
+          "/images/thiet_ke_thi_cong/video/9. Setup Quán Cafe Cá Koi Đầu Tiên Tại Hà Nội.mp4",
+        ]
+      ),
+      new DesignSetup(
+        "10",
+        "[Video] Mẫu Thiết Kế Quán Cafe Sân Vườn Hoa Đẹp",
+        "/images/thiet_ke_thi_cong/video/10. Mẫu Thiết Kế Quán Cafe Sân Vườn Hoa Đẹp.PNG",
+        [
+          "/images/thiet_ke_thi_cong/video/10. Mẫu Thiết Kế Quán Cafe Sân Vườn Hoa Đẹp.mp4",
+        ]
+      ),
+      new DesignSetup(
+        "11",
+        "[Video] Thiết Kế Trang Trí Quán Cafe Nhỏ Đẹp Phong Cách Vintage",
+        "/images/thiet_ke_thi_cong/video/11. Thiết Kế Trang Trí Quán Cafe Nhỏ Đẹp Phong Cách Vintage.PNG",
+        [
+          "/images/thiet_ke_thi_cong/video/11. Thiết Kế Trang Trí Quán Cafe Nhỏ Đẹp Phong Cách Vintage.mp4",
+        ]
+      ),
+      new DesignSetup(
+        "12",
+        "[Video] Thiết Kế Setup Quán Cafe Sân Vườn Đẹp Tại Hà Nam - Diện Tích 800m",
+        "/images/thiet_ke_thi_cong/video/12. Thiết Kế Setup Quán Cafe Sân Vườn Đẹp Tại Hà Nam - Diện Tích 800m.PNG",
+        [
+          "/images/thiet_ke_thi_cong/video/12. Thiết Kế Setup Quán Cafe Sân Vườn Đẹp Tại Hà Nam - Diện Tích 800m.mp4",
+        ]
+      ),
+      new DesignSetup(
+        "13",
+        "[Video] Thiết Kế Quán Cafe 2 Miền Tiền",
+        "/images/thiet_ke_thi_cong/video/13. Thiết Kế Quán Cafe 2 Miền Tiền.PNG",
+        [
+          "/images/thiet_ke_thi_cong/video/13. Thiết Kế Quán Cafe 2 Miền Tiền.mp4",
+        ]
+      ),
+      new DesignSetup(
+        "14",
+        "[Video] Mở Quán Trà Sữa - Cafe Nhỏ Đẹp 60m2 Với 200 Triệu Tại Hà Nội",
+        "/images/thiet_ke_thi_cong/video/14. Mở Quán Trà Sữa - Cafe Nhỏ Đẹp 60m2 Với 200 Triệu Tại Hà Nội.PNG",
+        [
+          "/images/thiet_ke_thi_cong/video/14. Mở Quán Trà Sữa - Cafe Nhỏ Đẹp 60m2 Với 200 Triệu Tại Hà Nội.mp4",
+        ]
+      ),
+      new DesignSetup(
+        "15",
+        "[Video] Setup Mở Quán Cafe Đẹp Phong Cách indochine - Với 300 Triệu",
+        "/images/thiet_ke_thi_cong/video/15. Setup Mở Quán Cafe Đẹp Phong Cách indochine - Với 300 Triệu.PNG",
+        [
+          "/images/thiet_ke_thi_cong/video/15. Setup Mở Quán Cafe Đẹp Phong Cách indochine - Với 300 Triệu.mp4",
+        ]
+      ),
+      new DesignSetup(
+        "16",
+        "[Video] Thiết Kế Thi Công Quán Trà Đạo + Cafe Sân Thượng Tại Hà Nội",
+        "/images/thiet_ke_thi_cong/video/16. Thiết Kế Thi Công Quán Trà Đạo + Cafe Sân Thượng Tại Hà Nội.PNG",
+        [
+          "/images/thiet_ke_thi_cong/video/16. Thiết Kế Thi Công Quán Trà Đạo + Cafe Sân Thượng Tại Hà Nội.mp4",
+        ]
+      ),
+  new DesignSetup(
+    "8",
+    "68 Coffee – Hà Đông Hà Nội",
+    "/images/thiet_ke_thi_cong/1. 68 Coffee – Hà Đông Hà Nội.jpg",
+    ["/images/thiet_ke_thi_cong/1. 68 Coffee – Hà Đông Hà Nội.jpg"]
+  ),
 
-    new DesignSetup("8", "Cafe Sách Bình An – Gia Lâm Hà Nội", '/images/thiet_ke_thi_cong/11. Cafe Sách Bình An – Gia Lâm Hà Nội.jpg'),
-    new DesignSetup("8", "Cafe Sân Vườn The Garden – Vĩnh Phúc", '/images/thiet_ke_thi_cong/12. Cafe Sân Vườn The Garden – Vĩnh Phúc.jpg'),
-    new DesignSetup("8", "Cafe Sân Vườn Tropical – Nam Định", '/images/thiet_ke_thi_cong/13. Cafe Sân Vườn Tropical – Nam Định.jpg'),
-    new DesignSetup("8", "Casa Tea – Bắc Ninh", '/images/thiet_ke_thi_cong/14. Casa Tea – Bắc Ninh.jpg'),
-    new DesignSetup("8", "Châu Coffee – Hà Đông Hà Nội", '/images/thiet_ke_thi_cong/15. Châu Coffee – Hà Đông Hà Nội.jpg'),
-    new DesignSetup("8", "Coffee And Tea – Cao Bằng", '/images/thiet_ke_thi_cong/16. Coffee And Tea – Cao Bằng.jpg'),
-    new DesignSetup("8", "Coffee And Tea – Vĩnh Phúc", '/images/thiet_ke_thi_cong/17. Coffee And Tea – Vĩnh Phúc.jpg'),
-    new DesignSetup("8", "Coffee And Tea Mộc – Yên Bái", '/images/thiet_ke_thi_cong/18. Coffee And Tea Mộc – Yên Bái.jpg'),
-    new DesignSetup("8", "Coffee Danh Lam – Quảng Nam", '/images/thiet_ke_thi_cong/19. Coffee Danh Lam – Quảng Nam.jpg'),
-    new DesignSetup("8", "Coffee Gió – Đan Phượng Hà Nội", '/images/thiet_ke_thi_cong/20. Coffee Gió – Đan Phượng Hà Nội.jpg'),
+  new DesignSetup(
+    "9",
+    "1991 Cafe – Đông Triều Quảng Ninh",
+    "/images/thiet_ke_thi_cong/2. 1991 Cafe – Đông Triều Quảng Ninh.jpg",
+    ["/images/thiet_ke_thi_cong/2. 1991 Cafe – Đông Triều Quảng Ninh.jpg"]
+  ),
+      new DesignSetup(
+        "8",
+        "8898 Coffee – Bắc Giang",
+        "/images/thiet_ke_thi_cong/3. 8898 Coffee – Bắc Giang.jpg",
+        ["/images/thiet_ke_thi_cong/3. 8898 Coffee – Bắc Giang.jpg"]
+      ),
+      new DesignSetup(
+        "8",
+        "Anya Tea – Lai Châu",
+        "/images/thiet_ke_thi_cong/4. Anya Tea – Lai Châu.jpg",
+        ["/images/thiet_ke_thi_cong/4. Anya Tea – Lai Châu.jpg"]
+      ),
+      new DesignSetup(
+        "8",
+        "B&B Coffee – Thanh Hóa",
+        "/images/thiet_ke_thi_cong/5. B&B Coffee – Thanh Hóa.jpg",
+        ["/images/thiet_ke_thi_cong/5. B&B Coffee – Thanh Hóa.jpg"]
+      ),
+      new DesignSetup(
+        "8",
+        "Black White Milk Tea – Huế",
+        "/images/thiet_ke_thi_cong/6. Black White Milk Tea – Huế.jpg",
+        ["/images/thiet_ke_thi_cong/6. Black White Milk Tea – Huế.jpg"]
+      ),
+      new DesignSetup(
+        "8",
+        "Bờm Garden Coffee – Kim Bảng Hà Nam",
+        "/images/thiet_ke_thi_cong/7. Bờm Garden Coffee – Kim Bảng Hà Nam.jpg",
+        ["/images/thiet_ke_thi_cong/7. Bờm Garden Coffee – Kim Bảng Hà Nam.jpg"]
+      ),
+      new DesignSetup(
+        "8",
+        "Cafe Bida – Long Biên HN",
+        "/images/thiet_ke_thi_cong/8. Cafe Bida – Long Biên HN.jpg",
+        ["/images/thiet_ke_thi_cong/8. Cafe Bida – Long Biên HN.jpg"]
+      ),
+      new DesignSetup(
+        "8",
+        "Cafe Indochine _ Quảng Ninh",
+        "/images/thiet_ke_thi_cong/9. Cafe Indochine _ Quảng Ninh.jpg",
+        ["/images/thiet_ke_thi_cong/9. Cafe Indochine _ Quảng Ninh.jpg"]
+      ),
+      new DesignSetup(
+        "8",
+        "Cafe indochine Quảng Ninh",
+        "/images/thiet_ke_thi_cong/10. Cafe indochine Quảng Ninh.jpg",
+        ["/images/thiet_ke_thi_cong/10. Cafe indochine Quảng Ninh.jpg"]
+      ),
+      new DesignSetup(
+        "8",
+        "Cafe Sách Bình An – Gia Lâm Hà Nội",
+        "/images/thiet_ke_thi_cong/11. Cafe Sách Bình An – Gia Lâm Hà Nội.jpg",
+        ["/images/thiet_ke_thi_cong/11. Cafe Sách Bình An – Gia Lâm Hà Nội.jpg"]
+      ),
+      new DesignSetup(
+        "8",
+        "Cafe Sân Vườn The Garden – Vĩnh Phúc",
+        "/images/thiet_ke_thi_cong/12. Cafe Sân Vườn The Garden – Vĩnh Phúc.jpg",
+        ["/images/thiet_ke_thi_cong/12. Cafe Sân Vườn The Garden – Vĩnh Phúc.jpg"]
+      ),
+      new DesignSetup(
+        "8",
+        "Cafe Sân Vườn Tropical – Nam Định",
+        "/images/thiet_ke_thi_cong/13. Cafe Sân Vườn Tropical – Nam Định.jpg",
+        ["/images/thiet_ke_thi_cong/13. Cafe Sân Vườn Tropical – Nam Định.jpg"]
+      ),
+      new DesignSetup(
+        "8",
+        "Casa Tea – Bắc Ninh",
+        "/images/thiet_ke_thi_cong/14. Casa Tea – Bắc Ninh.jpg",
+        ["/images/thiet_ke_thi_cong/14. Casa Tea – Bắc Ninh.jpg"]
+      ),
+      new DesignSetup(
+        "8",
+        "Châu Coffee – Hà Đông Hà Nội",
+        "/images/thiet_ke_thi_cong/15. Châu Coffee – Hà Đông Hà Nội.jpg",
+        ["/images/thiet_ke_thi_cong/15. Châu Coffee – Hà Đông Hà Nội.jpg"]
+      ),
+      new DesignSetup(
+        "8",
+        "Coffee And Tea – Cao Bằng",
+        "/images/thiet_ke_thi_cong/16. Coffee And Tea – Cao Bằng.jpg",
+        ["/images/thiet_ke_thi_cong/16. Coffee And Tea – Cao Bằng.jpg"]
+      ),
+      new DesignSetup(
+        "8",
+        "Coffee And Tea – Vĩnh Phúc",
+        "/images/thiet_ke_thi_cong/17. Coffee And Tea – Vĩnh Phúc.jpg",
+        ["/images/thiet_ke_thi_cong/17. Coffee And Tea – Vĩnh Phúc.jpg"]
+      ),
+      new DesignSetup(
+        "8",
+        "Coffee And Tea Mộc – Yên Bái",
+        "/images/thiet_ke_thi_cong/18. Coffee And Tea Mộc – Yên Bái.jpg",
+        ["/images/thiet_ke_thi_cong/18. Coffee And Tea Mộc – Yên Bái.jpg"]
+      ),
+      new DesignSetup(
+        "8",
+        "Coffee Danh Lam – Quảng Nam",
+        "/images/thiet_ke_thi_cong/19. Coffee Danh Lam – Quảng Nam.jpg",
+        ["/images/thiet_ke_thi_cong/19. Coffee Danh Lam – Quảng Nam.jpg"]
+      ),
+      new DesignSetup(
+        "8",
+        "Coffee Gió – Đan Phượng Hà Nội",
+        "/images/thiet_ke_thi_cong/20. Coffee Gió – Đan Phượng Hà Nội.jpg",
+        ["/images/thiet_ke_thi_cong/20. Coffee Gió – Đan Phượng Hà Nội.jpg"]
+      ),
 
-    new DesignSetup("8", "Coffee Vila – Hòa Bình", '/images/thiet_ke_thi_cong/21. Coffee Vila – Hòa Bình.jpg'),
-    new DesignSetup("8", "D Lam Coffee – Kim Mã Hà Nội", '/images/thiet_ke_thi_cong/22. D Lam Coffee – Kim Mã Hà Nội.jpg'),
-    new DesignSetup("8", "Đậu Coffee Tea – Quảng Ninh", '/images/thiet_ke_thi_cong/23. Đậu Coffee Tea – Quảng Ninh.jpg'),
-    new DesignSetup("8", "De Lavie Indochine Coffee – Hà Nội", '/images/thiet_ke_thi_cong/24. De Lavie Indochine Coffee – Hà Nội.jpg'),
-    new DesignSetup("8", "Đông Dương Coffee – Đông Anh Hà Nội", '/images/thiet_ke_thi_cong/25. Đông Dương Coffee – Đông Anh Hà Nội.jpg'),
-    new DesignSetup("8", "Gem Tea Coffee – Phú Thọ", '/images/thiet_ke_thi_cong/26. Gem Tea Coffee – Phú Thọ.jpg'),
-    new DesignSetup("8", "Hayla Coffee – Sơn Tây Hà Nội", '/images/thiet_ke_thi_cong/27. Hayla Coffee – Sơn Tây Hà Nội.jpg'),
-    new DesignSetup("8", "Hẻm Quán – Hà Tĩnh", '/images/thiet_ke_thi_cong/28. Hẻm Quán – Hà Tĩnh.jpg'),
-    new DesignSetup("8", "Huê Khánh Coffee + Tea – Cao Bằng", '/images/thiet_ke_thi_cong/29. Huê Khánh Coffee + Tea – Cao Bằng.jpg'),
-    new DesignSetup("8", "ichigo Coffee – Tea – Thái Bình", '/images/thiet_ke_thi_cong/30. ichigo Coffee – Tea – Thái Bình.jpg'),
+    new DesignSetup(
+      "8",
+      "Coffee Vila – Hòa Bình",
+      "/images/thiet_ke_thi_cong/21. Coffee Vila – Hòa Bình.jpg",
+      ["/images/thiet_ke_thi_cong/21. Coffee Vila – Hòa Bình.jpg"]
+    ),
+    new DesignSetup(
+      "8",
+      "D Lam Coffee – Kim Mã Hà Nội",
+      "/images/thiet_ke_thi_cong/22. D Lam Coffee – Kim Mã Hà Nội.jpg",
+      ["/images/thiet_ke_thi_cong/22. D Lam Coffee – Kim Mã Hà Nội.jpg"]
+    ),
+    new DesignSetup(
+      "8",
+      "Đậu Coffee Tea – Quảng Ninh",
+      "/images/thiet_ke_thi_cong/23. Đậu Coffee Tea – Quảng Ninh.jpg",
+      ["/images/thiet_ke_thi_cong/23. Đậu Coffee Tea – Quảng Ninh.jpg"]
+    ),
+    new DesignSetup(
+      "8",
+      "De Lavie Indochine Coffee – Hà Nội",
+      "/images/thiet_ke_thi_cong/24. De Lavie Indochine Coffee – Hà Nội.jpg",
+      ["/images/thiet_ke_thi_cong/24. De Lavie Indochine Coffee – Hà Nội.jpg"]
+    ),
+    new DesignSetup(
+      "8",
+      "Đông Dương Coffee – Đông Anh Hà Nội",
+      "/images/thiet_ke_thi_cong/25. Đông Dương Coffee – Đông Anh Hà Nội.jpg",
+      ["/images/thiet_ke_thi_cong/25. Đông Dương Coffee – Đông Anh Hà Nội.jpg"]
+    ),
+    new DesignSetup(
+      "8",
+      "Gem Tea Coffee – Phú Thọ",
+      "/images/thiet_ke_thi_cong/26. Gem Tea Coffee – Phú Thọ.jpg",
+      ["/images/thiet_ke_thi_cong/26. Gem Tea Coffee – Phú Thọ.jpg"]
+    ),
+    new DesignSetup(
+      "8",
+      "Hayla Coffee – Sơn Tây Hà Nội",
+      "/images/thiet_ke_thi_cong/27. Hayla Coffee – Sơn Tây Hà Nội.jpg",
+      ["/images/thiet_ke_thi_cong/27. Hayla Coffee – Sơn Tây Hà Nội.jpg"]
+    ),
+    new DesignSetup(
+      "8",
+      "Hẻm Quán – Hà Tĩnh",
+      "/images/thiet_ke_thi_cong/28. Hẻm Quán – Hà Tĩnh.jpg",
+      ["/images/thiet_ke_thi_cong/28. Hẻm Quán – Hà Tĩnh.jpg"]
+    ),
+    new DesignSetup(
+      "8",
+      "Huê Khánh Coffee + Tea – Cao Bằng",
+      "/images/thiet_ke_thi_cong/29. Huê Khánh Coffee + Tea – Cao Bằng.jpg",
+      ["/images/thiet_ke_thi_cong/29. Huê Khánh Coffee + Tea – Cao Bằng.jpg"]
+    ),
+    new DesignSetup(
+      "8",
+      "ichigo Coffee – Tea – Thái Bình",
+      "/images/thiet_ke_thi_cong/30. ichigo Coffee – Tea – Thái Bình.jpg",
+      ["/images/thiet_ke_thi_cong/30. ichigo Coffee – Tea – Thái Bình.jpg"]
+    ),
+    new DesignSetup(
+      "8",
+      "King Koi Coffee – Tp Lào Cai",
+      "/images/thiet_ke_thi_cong/31. King Koi Coffee – Tp Lào Cai.jpg",
+      ["/images/thiet_ke_thi_cong/31. King Koi Coffee – Tp Lào Cai.jpg"]
+    ),
+    new DesignSetup(
+      "8",
+      "Koi And You – Tuyên Quang",
+      "/images/thiet_ke_thi_cong/32. Koi And You – Tuyên Quang.jpg",
+      ["/images/thiet_ke_thi_cong/32. Koi And You – Tuyên Quang.jpg"]
+    ),
+    new DesignSetup(
+      "8",
+      "Koi And You Cafe – Su Phì Hà Giang",
+      "/images/thiet_ke_thi_cong/33. Koi And You Cafe – Su Phì Hà Giang.jpg",
+      ["/images/thiet_ke_thi_cong/33. Koi And You Cafe – Su Phì Hà Giang.jpg"]
+    ),
+    new DesignSetup(
+      "8",
+      "Lucky Tea – Bắc Giang",
+      "/images/thiet_ke_thi_cong/34. Lucky Tea – Bắc Giang.jpg",
+      ["/images/thiet_ke_thi_cong/34. Lucky Tea – Bắc Giang.jpg"]
+    ),
+    new DesignSetup(
+      "8",
+      "Mi Coffee – Quảng Ninh",
+      "/images/thiet_ke_thi_cong/35. Mi Coffee – Quảng Ninh.jpg",
+      ["/images/thiet_ke_thi_cong/35. Mi Coffee – Quảng Ninh.jpg"]
+    ),
+    new DesignSetup(
+      "8",
+      "Mi Mi Tea – Thanh Hóa",
+      "/images/thiet_ke_thi_cong/36. Mi Mi Tea – Thanh Hóa.jpg",
+      ["/images/thiet_ke_thi_cong/36. Mi Mi Tea – Thanh Hóa.jpg"]
+    ),
+    new DesignSetup(
+      "8",
+      "Mill Tea – Hòa Bình",
+      "/images/thiet_ke_thi_cong/37. Mill Tea – Hòa Bình.jpg",
+      ["/images/thiet_ke_thi_cong/37. Mill Tea – Hòa Bình.jpg"]
+    ),
+    new DesignSetup(
+      "8",
+      "Miria Hải Phòng",
+      "/images/thiet_ke_thi_cong/38. Miria Hải Phòng.jpg",
+      ["/images/thiet_ke_thi_cong/38. Miria Hải Phòng.jpg"]
+    ),
+    new DesignSetup(
+      "8",
+      "Nắng Cafe – Thuận Thành Bắc Ninh",
+      "/images/thiet_ke_thi_cong/39. Nắng Cafe – Thuận Thành Bắc Ninh.jpg",
+      ["/images/thiet_ke_thi_cong/39. Nắng Cafe – Thuận Thành Bắc Ninh.jpg"]
+    ),
+    new DesignSetup(
+      "8",
+      "No1 Coffee Tại Cầu Giấy – Hà Nội",
+      "/images/thiet_ke_thi_cong/40. No1 Coffee Tại Cầu Giấy – Hà Nội.jpg",
+      ["/images/thiet_ke_thi_cong/40. No1 Coffee Tại Cầu Giấy – Hà Nội.jpg"]
+    ),
 
-    new DesignSetup("8", "King Koi Coffee – Tp Lào Cai", '/images/thiet_ke_thi_cong/31. King Koi Coffee – Tp Lào Cai.jpg'),
-    new DesignSetup("8", "Koi And You – Tuyên Quang", '/images/thiet_ke_thi_cong/32. Koi And You – Tuyên Quang.jpg'),
-    new DesignSetup("8", "Koi And You Cafe – Su Phì Hà Giang", '/images/thiet_ke_thi_cong/33. Koi And You Cafe – Su Phì Hà Giang.jpg'),
-    new DesignSetup("8", "Lucky Tea – Bắc Giang", '/images/thiet_ke_thi_cong/34. Lucky Tea – Bắc Giang.jpg'),
-    new DesignSetup("8", "Mi Coffee – Quảng Ninh", '/images/thiet_ke_thi_cong/35. Mi Coffee – Quảng Ninh.jpg'),
-    new DesignSetup("8", "Mi Mi Tea – Thanh Hóa", '/images/thiet_ke_thi_cong/36. Mi Mi Tea – Thanh Hóa.jpg'),
-    new DesignSetup("8", "Mill Tea – Hòa Bình", '/images/thiet_ke_thi_cong/37. Mill Tea – Hòa Bình.jpg'),
-    new DesignSetup("8", "Miria Hải Phòng", '/images/thiet_ke_thi_cong/38. Miria Hải Phòng.jpg'),
-    new DesignSetup("8", "Nắng Cafe – Thuận Thành Bắc Ninh", '/images/thiet_ke_thi_cong/39. Nắng Cafe – Thuận Thành Bắc Ninh.jpg'),
-    new DesignSetup("8", "No1 Coffee Tại Cầu Giấy – Hà Nội", '/images/thiet_ke_thi_cong/40. No1 Coffee Tại Cầu Giấy – Hà Nội.jpg'),
-
-    new DesignSetup("8", "One Coffee Tea – Bắc Giang", '/images/thiet_ke_thi_cong/41. One Coffee Tea – Bắc Giang.jpg'),
-    new DesignSetup("8", "Paris Tiệm Trà Chanh – Hà Nam", '/images/thiet_ke_thi_cong/42. Paris Tiệm Trà Chanh – Hà Nam.jpg'),
-    new DesignSetup("8", "Quán Cafe E coffee – Vĩnh Phúc", '/images/thiet_ke_thi_cong/43. Quán Cafe E coffee – Vĩnh Phúc.jpg'),
-    new DesignSetup("8", "Quán Kem Tươi Cam – Hà Tĩnh", '/images/thiet_ke_thi_cong/44. Quán Kem Tươi Cam – Hà Tĩnh.jpg'),
-    new DesignSetup("8", "Queen Coffee – Gia Lâm Hà Nội", '/images/thiet_ke_thi_cong/45. Queen Coffee – Gia Lâm Hà Nội.jpg'),
-    new DesignSetup("8", "Sữa Chua Trân Châu – Hải Dương", '/images/thiet_ke_thi_cong/46. Sữa Chua Trân Châu – Hải Dương.jpg'),
-    new DesignSetup("8", "Sung Coffee – Hạ Long Quảng Ninh", '/images/thiet_ke_thi_cong/47. Sung Coffee – Hạ Long Quảng Ninh.jpg'),
-    new DesignSetup("8", "Thảo Nguyên Coffee – Ecopark Hà Nội", '/images/thiet_ke_thi_cong/48. Thảo Nguyên Coffee – Ecopark Hà Nội.jpg'),
-    new DesignSetup("8", "Thu Thắng Coffee – Vĩnh Phúc", '/images/thiet_ke_thi_cong/49. Thu Thắng Coffee – Vĩnh Phúc.jpg'),
-    new DesignSetup("8", "Tiệm Trà Chanh – Đông Anh Hà Nội", '/images/thiet_ke_thi_cong/50. Tiệm Trà Chanh – Đông Anh Hà Nội.jpg'),
-
-    new DesignSetup("8", "Tiệm Trà Chanh – Tĩnh Gia Thanh Hóa", '/images/thiet_ke_thi_cong/51. Tiệm Trà Chanh – Tĩnh Gia Thanh Hóa.jpg'),
-    new DesignSetup("8", "Tiệm Trà Chanh Phố – Thanh Hóa", '/images/thiet_ke_thi_cong/52. Tiệm Trà Chanh Phố – Thanh Hóa.jpg'),
-    new DesignSetup("8", "Tiệm Trà Chanh Tại Mê Linh – Hà Nội", '/images/thiet_ke_thi_cong/53. Tiệm Trà Chanh Tại Mê Linh – Hà Nội.jpg'),
-    new DesignSetup("8", "Tiệm Trà Chanh Tmore – Yên Bái", '/images/thiet_ke_thi_cong/54. Tiệm Trà Chanh Tmore – Yên Bái.jpg'),
-    new DesignSetup("8", "Tiệm Trà Sữa – Bắc Giang", '/images/thiet_ke_thi_cong/55. Tiệm Trà Sữa – Bắc Giang.jpg'),
-    new DesignSetup("8", "Tiến Mạnh Store Cafe – Cầu Giấy Hà Nội", '/images/thiet_ke_thi_cong/56. Tiến Mạnh Store Cafe – Cầu Giấy Hà Nội.jpg'),
-    new DesignSetup("8", "Tiktak View Coffee – Đông Anh Hà Nội", '/images/thiet_ke_thi_cong/57. Tiktak View Coffee – Đông Anh Hà Nội.jpg'),
-    new DesignSetup("8", "Tokyo Tea – Vĩnh Phúc", '/images/thiet_ke_thi_cong/58. Tokyo Tea – Vĩnh Phúc.jpg'),
-    new DesignSetup("8", "Trà Chanh Chill – Ba Đình Hà Nội", '/images/thiet_ke_thi_cong/59. Trà Chanh Chill – Ba Đình Hà Nội.jpg'),
-    new DesignSetup("8", "Trà Đạo Quán – Đống Đa Hà Nội", '/images/thiet_ke_thi_cong/60. Trà Đạo Quán – Đống Đa Hà Nội.jpg'),
-
-    new DesignSetup("8", "Trà Sữa 2T – Bắc Giang", '/images/thiet_ke_thi_cong/61. Trà Sữa 2T – Bắc Giang.jpg'),
-    new DesignSetup("8", "Trà Sữa Chou – Long Biên Hà Nội", '/images/thiet_ke_thi_cong/62. Trà Sữa Chou – Long Biên Hà Nội.jpg'),
-    new DesignSetup("8", "Trà Sữa Crush – Thạch Thất Hà Nội", '/images/thiet_ke_thi_cong/63. Trà Sữa Crush – Thạch Thất Hà Nội.jpg'),
-    new DesignSetup("8", "Trà Sữa Lan Lan – Lai Châu", '/images/thiet_ke_thi_cong/64. Trà Sữa Lan Lan – Lai Châu.jpg'),
-    new DesignSetup("8", "Trà Sữa Tocotoco Nghệ An", '/images/thiet_ke_thi_cong/65. Trà Sữa Tocotoco Nghệ An.jpg'),
-    new DesignSetup("8", "Trung Nguyên E- Coffee Hải Dương", '/images/thiet_ke_thi_cong/66. Trung Nguyên E- Coffee Hải Dương.jpg'),
-    new DesignSetup("8", "Cafe Khung Thép Tiền Chế – Yên Bái", '/images/thiet_ke_thi_cong/67. Xây Dựng Quán Cafe Khung Thép Tiền Chế – Yên Bái.jpg'),
-
+  new DesignSetup(
+    "8",
+    "One Coffee Tea – Bắc Giang",
+    "/images/thiet_ke_thi_cong/41. One Coffee Tea – Bắc Giang.jpg",
+    ["/images/thiet_ke_thi_cong/41. One Coffee Tea – Bắc Giang.jpg"]
+  ),
+  new DesignSetup(
+    "8",
+    "Paris Tiệm Trà Chanh – Hà Nam",
+    "/images/thiet_ke_thi_cong/42. Paris Tiệm Trà Chanh – Hà Nam.jpg",
+    ["/images/thiet_ke_thi_cong/42. Paris Tiệm Trà Chanh – Hà Nam.jpg"]
+  ),
+  new DesignSetup(
+    "8",
+    "Quán Cafe E coffee – Vĩnh Phúc",
+    "/images/thiet_ke_thi_cong/43. Quán Cafe E coffee – Vĩnh Phúc.jpg",
+    ["/images/thiet_ke_thi_cong/43. Quán Cafe E coffee – Vĩnh Phúc.jpg"]
+  ),
+  new DesignSetup(
+    "8",
+    "Quán Kem Tươi Cam – Hà Tĩnh",
+    "/images/thiet_ke_thi_cong/44. Quán Kem Tươi Cam – Hà Tĩnh.jpg",
+    ["/images/thiet_ke_thi_cong/44. Quán Kem Tươi Cam – Hà Tĩnh.jpg"]
+  ),
+  new DesignSetup(
+    "8",
+    "Queen Coffee – Gia Lâm Hà Nội",
+    "/images/thiet_ke_thi_cong/45. Queen Coffee – Gia Lâm Hà Nội.jpg",
+    ["/images/thiet_ke_thi_cong/45. Queen Coffee – Gia Lâm Hà Nội.jpg"]
+  ),
+  new DesignSetup(
+    "8",
+    "Sữa Chua Trân Châu – Hải Dương",
+    "/images/thiet_ke_thi_cong/46. Sữa Chua Trân Châu – Hải Dương.jpg",
+    ["/images/thiet_ke_thi_cong/46. Sữa Chua Trân Châu – Hải Dương.jpg"]
+  ),
+  new DesignSetup(
+    "8",
+    "Sung Coffee – Hạ Long Quảng Ninh",
+    "/images/thiet_ke_thi_cong/47. Sung Coffee – Hạ Long Quảng Ninh.jpg",
+    ["/images/thiet_ke_thi_cong/47. Sung Coffee – Hạ Long Quảng Ninh.jpg"]
+  ),
+  new DesignSetup(
+    "8",
+    "Thảo Nguyên Coffee – Ecopark Hà Nội",
+    "/images/thiet_ke_thi_cong/48. Thảo Nguyên Coffee – Ecopark Hà Nội.jpg",
+    ["/images/thiet_ke_thi_cong/48. Thảo Nguyên Coffee – Ecopark Hà Nội.jpg"]
+  ),
+  new DesignSetup(
+    "8",
+    "Thu Thắng Coffee – Vĩnh Phúc",
+    "/images/thiet_ke_thi_cong/49. Thu Thắng Coffee – Vĩnh Phúc.jpg",
+    ["/images/thiet_ke_thi_cong/49. Thu Thắng Coffee – Vĩnh Phúc.jpg"]
+  ),
+  new DesignSetup(
+    "8",
+    "Tiệm Trà Chanh – Đông Anh Hà Nội",
+    "/images/thiet_ke_thi_cong/50. Tiệm Trà Chanh – Đông Anh Hà Nội.jpg",
+    ["/images/thiet_ke_thi_cong/50. Tiệm Trà Chanh – Đông Anh Hà Nội.jpg"]
+  ),
+  new DesignSetup(
+    "8",
+    "Tiệm Trà Chanh – Tĩnh Gia Thanh Hóa",
+    "/images/thiet_ke_thi_cong/51. Tiệm Trà Chanh – Tĩnh Gia Thanh Hóa.jpg",
+    ["/images/thiet_ke_thi_cong/51. Tiệm Trà Chanh – Tĩnh Gia Thanh Hóa.jpg"]
+  ),
+  new DesignSetup(
+    "8",
+    "Tiệm Trà Chanh Phố – Thanh Hóa",
+    "/images/thiet_ke_thi_cong/52. Tiệm Trà Chanh Phố – Thanh Hóa.jpg",
+    ["/images/thiet_ke_thi_cong/52. Tiệm Trà Chanh Phố – Thanh Hóa.jpg"]
+  ),
+  new DesignSetup(
+    "8",
+    "Tiệm Trà Chanh Tại Mê Linh – Hà Nội",
+    "/images/thiet_ke_thi_cong/53. Tiệm Trà Chanh Tại Mê Linh – Hà Nội.jpg",
+    ["/images/thiet_ke_thi_cong/53. Tiệm Trà Chanh Tại Mê Linh – Hà Nội.jpg"]
+  ),
+  new DesignSetup(
+    "8",
+    "Tiệm Trà Chanh Tmore – Yên Bái",
+    "/images/thiet_ke_thi_cong/54. Tiệm Trà Chanh Tmore – Yên Bái.jpg",
+    ["/images/thiet_ke_thi_cong/54. Tiệm Trà Chanh Tmore – Yên Bái.jpg"]
+  ),
+  new DesignSetup(
+    "8",
+    "Tiệm Trà Sữa – Bắc Giang",
+    "/images/thiet_ke_thi_cong/55. Tiệm Trà Sữa – Bắc Giang.jpg",
+    ["/images/thiet_ke_thi_cong/55. Tiệm Trà Sữa – Bắc Giang.jpg"]
+  ),
+  new DesignSetup(
+    "8",
+    "Tiến Mạnh Store Cafe – Cầu Giấy Hà Nội",
+    "/images/thiet_ke_thi_cong/56. Tiến Mạnh Store Cafe – Cầu Giấy Hà Nội.jpg",
+    ["/images/thiet_ke_thi_cong/56. Tiến Mạnh Store Cafe – Cầu Giấy Hà Nội.jpg"]
+  ),
+  new DesignSetup(
+    "8",
+    "Tiktak View Coffee – Đông Anh Hà Nội",
+    "/images/thiet_ke_thi_cong/57. Tiktak View Coffee – Đông Anh Hà Nội.jpg",
+    ["/images/thiet_ke_thi_cong/57. Tiktak View Coffee – Đông Anh Hà Nội.jpg"]
+  ),
+  new DesignSetup(
+    "8",
+    "Tokyo Tea – Vĩnh Phúc",
+    "/images/thiet_ke_thi_cong/58. Tokyo Tea – Vĩnh Phúc.jpg",
+    ["/images/thiet_ke_thi_cong/58. Tokyo Tea – Vĩnh Phúc.jpg"]
+  ),
+  new DesignSetup(
+    "8",
+    "Trà Chanh Chill – Ba Đình Hà Nội",
+    "/images/thiet_ke_thi_cong/59. Trà Chanh Chill – Ba Đình Hà Nội.jpg",
+    ["/images/thiet_ke_thi_cong/59. Trà Chanh Chill – Ba Đình Hà Nội.jpg"]
+  ),
+  new DesignSetup(
+    "8",
+    "Trà Đạo Quán – Đống Đa Hà Nội",
+    "/images/thiet_ke_thi_cong/60. Trà Đạo Quán – Đống Đa Hà Nội.jpg",
+    ["/images/thiet_ke_thi_cong/60. Trà Đạo Quán – Đống Đa Hà Nội.jpg"]
+  ),
+  new DesignSetup(
+    "8",
+    "Trà Sữa 2T – Bắc Giang",
+    "/images/thiet_ke_thi_cong/61. Trà Sữa 2T – Bắc Giang.jpg",
+    ["/images/thiet_ke_thi_cong/61. Trà Sữa 2T – Bắc Giang.jpg"]
+  ),
+  new DesignSetup(
+    "8",
+    "Trà Sữa Chou – Long Biên Hà Nội",
+    "/images/thiet_ke_thi_cong/62. Trà Sữa Chou – Long Biên Hà Nội.jpg",
+    ["/images/thiet_ke_thi_cong/62. Trà Sữa Chou – Long Biên Hà Nội.jpg"]
+  ),
+  new DesignSetup(
+    "8",
+    "Trà Sữa Crush – Thạch Thất Hà Nội",
+    "/images/thiet_ke_thi_cong/63. Trà Sữa Crush – Thạch Thất Hà Nội.jpg",
+    ["/images/thiet_ke_thi_cong/63. Trà Sữa Crush – Thạch Thất Hà Nội.jpg"]
+  ),
+  new DesignSetup(
+    "8",
+    "Trà Sữa Lan Lan – Lai Châu",
+    "/images/thiet_ke_thi_cong/64. Trà Sữa Lan Lan – Lai Châu.jpg",
+    ["/images/thiet_ke_thi_cong/64. Trà Sữa Lan Lan – Lai Châu.jpg"]
+  ),
+  new DesignSetup(
+    "8",
+    "Trà Sữa Tocotoco Nghệ An",
+    "/images/thiet_ke_thi_cong/65. Trà Sữa Tocotoco Nghệ An.jpg",
+    ["/images/thiet_ke_thi_cong/65. Trà Sữa Tocotoco Nghệ An.jpg"]
+  ),
+  new DesignSetup(
+    "8",
+    "Trung Nguyên E- Coffee Hải Dương",
+    "/images/thiet_ke_thi_cong/66. Trung Nguyên E- Coffee Hải Dương.jpg",
+    ["/images/thiet_ke_thi_cong/66. Trung Nguyên E- Coffee Hải Dương.jpg"]
+  ),
+  new DesignSetup(
+    "8",
+    "Cafe Khung Thép Tiền Chế – Yên Bái",
+    "/images/thiet_ke_thi_cong/67. Xây Dựng Quán Cafe Khung Thép Tiền Chế – Yên Bái.jpg",
+    ["/images/thiet_ke_thi_cong/67. Xây Dựng Quán Cafe Khung Thép Tiền Chế – Yên Bái.jpg"]
+  ),
 ];
 
 
