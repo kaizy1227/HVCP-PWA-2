@@ -40,27 +40,43 @@ const LoginScreen = ({ navigation }) => {
     checkLogin();
   }, [navigation]);
 
-  const handleLogin = async () => {
-    try {
-      if (!phone.trim() || !password) {
-        Alert.alert("Thiếu thông tin", "Vui lòng nhập SĐT và mật khẩu");
-        return;
-      }
-
-      setLoading(true);
-
-      const user = await loginToServer({ phone, password });
-
-      await AsyncStorage.setItem("loggedInUser", JSON.stringify(user));
-      Alert.alert("✅ Đăng nhập thành công", `Chào ${user.name || "bạn"}!`);
-      navigation.replace("Học Viện Cà Phê");
-    } catch (err) {
-      console.log("LOGIN ERROR:", err);
-      Alert.alert("❌ Sai thông tin", err?.message || "SĐT hoặc mật khẩu không đúng!");
-    } finally {
-      setLoading(false);
+const handleLogin = async () => {
+  try {
+    if (!phone.trim() || !password) {
+      Alert.alert("Thiếu thông tin", "Vui lòng nhập tài khoản và mật khẩu");
+      return;
     }
-  };
+
+    // ✅ Admin local chỉ chạy khi bật flag
+    const localAdminEnabled = process.env.EXPO_PUBLIC_LOCAL_ADMIN === "true";
+    const adminPhone = process.env.EXPO_PUBLIC_ADMIN_PHONE || "admin";
+    const adminPassword = process.env.EXPO_PUBLIC_ADMIN_PASSWORD || "123";
+
+    if (localAdminEnabled && phone.trim() === adminPhone && password === adminPassword) {
+      const user = { record_id: "local-admin", name: "Admin (Local)", phone: adminPhone };
+      await AsyncStorage.setItem("loggedInUser", JSON.stringify(user));
+      Alert.alert("✅ Đăng nhập thành công", "Chào Admin (Local)!");
+      navigation.replace("Học Viện Cà Phê");
+      return;
+    }
+
+    // ✅ Nếu không phải admin local thì login bằng Lark API như bình thường
+    setLoading(true);
+
+    const user = await loginToServer({ phone, password });
+
+    await AsyncStorage.setItem("loggedInUser", JSON.stringify(user));
+    Alert.alert("✅ Đăng nhập thành công", `Chào ${user.name || "bạn"}!`);
+    navigation.replace("Học Viện Cà Phê");
+  } catch (err) {
+    console.log("LOGIN ERROR:", err);
+    Alert.alert("❌ Đăng nhập thất bại", "Vui lòng kiểm tra lại thông tin đăng nhập");
+  } finally {
+    setLoading(false);
+  }
+};
+
+
 
   return (
     <View style={styles.container}>

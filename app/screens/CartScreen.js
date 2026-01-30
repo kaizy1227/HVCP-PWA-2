@@ -111,7 +111,13 @@ const CartScreen = ({ navigation }) => {
 
           <TouchableOpacity
             style={styles.checkoutButton}
-            onPress={() => navigation.navigate("Thanh Toán Dịch Vụ")}
+            onPress={() =>
+              navigation.navigate("Thanh Toán Dịch Vụ", {
+                fromCart: true,
+                amount: totalAmount,
+              })
+            }
+
           >
             <Text style={styles.checkoutText}>💳 Thanh toán ngay</Text>
           </TouchableOpacity>

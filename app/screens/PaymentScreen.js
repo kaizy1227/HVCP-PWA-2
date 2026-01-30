@@ -13,36 +13,61 @@ import {
 } from "react-native";
 import React, { useState, useEffect, useMemo } from "react";
 import { SERVICES } from "../data/dummy-data";
-import CustomDropdown from "../components/CustomDropdown";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const PaymentScreen = ({ route, navigation }) => {
-  const mccID = route.params?.serviceId;
+  const mccID = route.params?.serviceId; // có thể undefined nếu đi từ giỏ hàng
+  const fromCart = route.params?.fromCart === true;
+  const amountFromCart = route.params?.amount; // number
 
-  const [customerName, setCustomerName] = useState("");
-  const [paymentAmount, setPaymentAmount] = useState("");
-  const [paymentType, setPaymentType] = useState("cọc");
+  const [customerName, setCustomerName] = useState(route.params?.customerName || "");
+  const [paymentAmount, setPaymentAmount] = useState(
+    amountFromCart != null ? String(amountFromCart) : ""
+  );
+
   const [qrCodeValue, setQrCodeValue] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
 
-useEffect(() => {
-  const service = SERVICES.find((s) => s.id === mccID);
+  useEffect(() => {
+    const baseHeaderOptions = {
+      headerTintColor: "white",
+      headerStyle: { backgroundColor: "rgba(74, 35, 6, 0.67)" },
+    };
 
-  navigation.setOptions({
-    // nếu có service thì đổi title theo service, không thì dùng title mặc định
-    title: service ? service.title.toUpperCase() : "THANH TOÁN DỊCH VỤ",
-    headerTintColor: "white",
-    headerStyle: { backgroundColor: "rgba(74, 35, 6, 0.67)" },
-    headerTitleStyle: { textTransform: "uppercase" },
-  });
-}, [mccID, navigation]);
+    if (fromCart || !mccID) {
+      navigation.setOptions({
+        title: "THANH TOÁN",
+        ...baseHeaderOptions,
+      });
+    } else {
+      const service = SERVICES.find((s) => s.id === mccID);
+      navigation.setOptions({
+        title: service ? service.title.toUpperCase() : "THANH TOÁN",
+        ...baseHeaderOptions,
+      });
+    }
 
+    (async () => {
+      try {
+        const raw = await AsyncStorage.getItem("loggedInUser");
+        if (raw) {
+          const u = JSON.parse(raw);
+          if (!customerName) setCustomerName(u?.name || "");
+        }
+        if (amountFromCart != null && !paymentAmount) {
+          setPaymentAmount(String(amountFromCart));
+        }
+      } catch (e) {
+        console.log("AUTO FILL ERROR:", e);
+      }
+    })();
+  }, [navigation, mccID, fromCart]);
 
-  // ✅ Config tài khoản nhận (đổi theo của bạn)
-  const BANK_NAME = "ACB";        // theo format sepay đang dùng
+  // ✅ Config tài khoản nhận
+  const BANK_NAME = "ACB";
   const ACCOUNT_NUMBER = "13474611";
 
   const parsedAmount = useMemo(() => {
-    // Cho phép user nhập "8,236,000" vẫn parse được
     const raw = String(paymentAmount || "").replace(/[^\d]/g, "");
     return raw ? Number(raw) : 0;
   }, [paymentAmount]);
@@ -53,7 +78,9 @@ useEffect(() => {
       return;
     }
 
-    const description = `Thanh toán ${paymentType} - ${customerName.trim()}`;
+    // ✅ Nội dung chỉ còn tên khách hàng
+    const description = customerName.trim();
+
     const qrUrl =
       `https://qr.sepay.vn/img` +
       `?acc=${encodeURIComponent(ACCOUNT_NUMBER)}` +
@@ -61,13 +88,8 @@ useEffect(() => {
       `&amount=${encodeURIComponent(String(parsedAmount))}` +
       `&des=${encodeURIComponent(description)}`;
 
-    // ✅ Hiển thị QR ngay trong app
     setQrCodeValue(qrUrl);
     setModalVisible(true);
-
-    // ❌ Nếu bạn không có backend, KHÔNG cần đoạn fetch này.
-    // Nếu bạn muốn "ghi nhận" thanh toán ở local (không backend),
-    // bạn có thể lưu vào AsyncStorage/IndexedDB sau.
   };
 
   return (
@@ -88,16 +110,6 @@ useEffect(() => {
           onChangeText={setPaymentAmount}
           placeholder="Nhập số tiền"
           keyboardType="numeric"
-        />
-
-        <CustomDropdown
-          label="Loại thanh toán:"
-          selectedValue={paymentType}
-          onSelect={setPaymentType}
-          options={[
-            { label: "Cọc", value: "cọc" },
-            { label: "Thanh toán đủ", value: "thanh toán đủ" },
-          ]}
         />
 
         <Button title="Tạo QR thanh toán" onPress={handleSubmit} />
@@ -134,7 +146,6 @@ useEffect(() => {
                 <Text style={styles.modalBtnOutlineText}>Đóng</Text>
               </TouchableOpacity>
 
-              {/* Tuỳ chọn: mở ảnh QR bằng trình duyệt (không bắt buộc) */}
               <TouchableOpacity
                 style={[styles.modalBtn, styles.modalBtnPrimary]}
                 onPress={() => {
