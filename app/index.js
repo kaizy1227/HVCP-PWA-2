@@ -18,6 +18,7 @@ import { CartProvider } from "./context/CartContext";
 import LoginScreen from "./screens/LoginScreen";
 import NitroSodaScreen from "./screens/NitroSodaScreen";
 import DesignSetupScreen from "./screens/DesignSetupScreen";
+import RegisterScreen from "./screens/RegisterScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -64,6 +65,14 @@ export default function Index() {
                             component={LoginScreen}
                             options={{ headerShown: false }}
                         />
+                        <Stack.Screen name="Đăng ký"
+                        component={RegisterScreen}
+                         options={{
+                                                         headerStyle: { backgroundColor: "rgba(74,35,6,0.9)" },
+                                                         headerTintColor: "#fff",
+                                                         headerTitleStyle: { fontWeight: "bold", textTransform: "uppercase" },
+                                                     }}/>
+
 
                         <Stack.Screen
                             name="Học Viện Cà Phê"
@@ -85,6 +94,7 @@ export default function Index() {
                         <Stack.Screen name="Thanh Toán Dịch Vụ" component={PaymentScreen} />
                         <Stack.Screen name="Máy Nitro Soda" component={NitroSodaScreen} />
                         <Stack.Screen name="Thiết Kế Thi Công" component={DesignSetupScreen} />
+
                         <Stack.Screen
                             name="Giỏ hàng"
                             component={CartScreen}

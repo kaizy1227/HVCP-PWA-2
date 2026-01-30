@@ -59,6 +59,15 @@ const LoginScreen = ({ navigation }) => {
             <TouchableOpacity onPress={handleLogin} style={styles.button}>
                 <Text style={styles.buttonText}>Đăng nhập</Text>
             </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("Đăng ký")}
+              style={{ marginTop: 12 }}
+            >
+              <Text style={{ color: "#fff", textDecorationLine: "underline" }}>
+                Chưa có tài khoản? Đăng ký
+              </Text>
+            </TouchableOpacity>
+
         </View>
     );
 };
