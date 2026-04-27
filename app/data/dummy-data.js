@@ -20,7 +20,7 @@ export const USERS = [
         username: "admin",
         password: "123",
         role: "admin",
-        name: "Admin",
+        name: "admin",
     },
     {
         id: "u2",
@@ -29,6 +29,13 @@ export const USERS = [
         role: "it",
         name: "Hải",
     },
+    {
+            id: "u3",
+            username: "Admin",
+            password: "123",
+            role: "admin",
+            name: "Admin",
+        },
 ];
 
 export const DESIGNSETUPS = [
@@ -41,14 +48,6 @@ export const DESIGNSETUPS = [
         ]
       ),
       new DesignSetup(
-        "2",
-        "[Video] Setup Quán Cafe 5 Tầng 2 Mặt Tiền",
-        "/images/thiet_ke_thi_cong/video/2. Setup Quán Cafe 5 Tầng 2 Mặt Tiền.PNG",
-        [
-          "/images/thiet_ke_thi_cong/video/2. Setup Quán Cafe 5 Tầng 2 Mặt Tiền.mp4",
-        ]
-      ),
-      new DesignSetup(
         "3",
         "[Video] Thiết Kế Thi Công Quán Cafe Tại Sơn La",
         "/images/thiet_ke_thi_cong/video/3. Thiết Kế Thi Công Quán Cafe Tại Sơn La.PNG",
@@ -56,22 +55,7 @@ export const DESIGNSETUPS = [
           "/images/thiet_ke_thi_cong/video/3. Thiết Kế Thi Công Quán Cafe Tại Sơn La.mp4",
         ]
       ),
-      new DesignSetup(
-        "4",
-        "[Video] Mẫu Thiết Kế Quán Cafe Đẹp - Kiến Trúc Độc Đáo + Không Gian Xanh",
-        "/images/thiet_ke_thi_cong/video/4. Mẫu Thiết Kế Quán Cafe Đẹp - Kiến Trúc Độc Đáo + Không Gian Xanh.PNG",
-        [
-          "/images/thiet_ke_thi_cong/video/4. Mẫu Thiết Kế Quán Cafe Đẹp - Kiến Trúc Độc Đáo + Không Gian Xanh.mp4",
-        ]
-      ),
-      new DesignSetup(
-        "5",
-        "[Video] Setup Mở Quán Cafe View ĐỒNG LÚA",
-        "/images/thiet_ke_thi_cong/video/5. Setup Mở Quán Cafe View ĐỒNG LÚA.PNG",
-        [
-          "/images/thiet_ke_thi_cong/video/5. Setup Mở Quán Cafe View ĐỒNG LÚA.mp4",
-        ]
-      ),
+
       new DesignSetup(
         "6",
         "[Video] Thiết Kế Quán Cafe Phong Cách Indochine Tại Vĩnh Yên",
@@ -152,14 +136,7 @@ export const DESIGNSETUPS = [
           "/images/thiet_ke_thi_cong/video/15. Setup Mở Quán Cafe Đẹp Phong Cách indochine - Với 300 Triệu.mp4",
         ]
       ),
-      new DesignSetup(
-        "16",
-        "[Video] Thiết Kế Thi Công Quán Trà Đạo + Cafe Sân Thượng Tại Hà Nội",
-        "/images/thiet_ke_thi_cong/video/16. Thiết Kế Thi Công Quán Trà Đạo + Cafe Sân Thượng Tại Hà Nội.PNG",
-        [
-          "/images/thiet_ke_thi_cong/video/16. Thiết Kế Thi Công Quán Trà Đạo + Cafe Sân Thượng Tại Hà Nội.mp4",
-        ]
-      ),
+
   new DesignSetup(
     "8",
     "68 Coffee – Hà Đông Hà Nội",
