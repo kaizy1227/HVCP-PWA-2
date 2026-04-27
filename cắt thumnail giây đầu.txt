@@ -1,0 +1,1 @@
+ffmpeg -ss 00:00:01 -i 1.mp4 -frames:v 1 -vf "scale=1280:-1:flags=lanczos,unsharp=5:5:1.0:5:5:0.0" -q:v 1 thumb-giay-1.jpg
