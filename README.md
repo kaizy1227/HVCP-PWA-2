@@ -5,144 +5,89 @@
 <h1 align="center">HVCP PWA</h1>
 
 <p align="center">
-  Cổng dịch vụ nội bộ đa nền tảng dành cho Học Viện Cà Phê.
+  Ứng dụng tư vấn bán hàng nội bộ trên máy tính bảng dành cho đội ngũ Sale Học Viện Cà Phê.
 </p>
 
 <p align="center">
-  <a href="https://expo.dev/"><img alt="Expo 52" src="https://img.shields.io/badge/Expo-52-000020?logo=expo&logoColor=white" /></a>
-  <a href="https://reactnative.dev/"><img alt="React Native 0.76" src="https://img.shields.io/badge/React_Native-0.76-61DAFB?logo=react&logoColor=20232A" /></a>
-  <img alt="PWA" src="https://img.shields.io/badge/Web-PWA-5A0FC8?logo=pwa&logoColor=white" />
-  <a href="https://hocviencaphehcm.vercel.app"><img alt="Vercel production" src="https://img.shields.io/badge/Production-Vercel-000000?logo=vercel&logoColor=white" /></a>
+  <a href="https://hocviencaphehcm.vercel.app"><strong>Xem ứng dụng đang hoạt động</strong></a>
 </p>
 
-<p align="center">
-  <a href="https://hocviencaphehcm.vercel.app"><strong>Mở ứng dụng production</strong></a>
-</p>
+![Các nhóm dịch vụ trên HVCP PWA](./docs/screenshots/services-overview.png)
 
-![Giao diện danh mục dịch vụ HVCP](./docs/screenshots/services-overview.png)
+## Ứng dụng này dùng để làm gì?
 
-## Giới thiệu
+HVCP PWA tập trung các nội dung tư vấn của Học Viện Cà Phê vào một giao diện trực quan, giúp Sale dễ dàng giới thiệu dịch vụ khi gặp khách hàng.
 
-HVCP PWA tập trung các nội dung và công cụ phục vụ hoạt động tư vấn của Học Viện Cà Phê trong một giao diện thống nhất. Ứng dụng hỗ trợ Web/PWA, Android và iOS trên cùng nền tảng Expo + React Native.
+Ứng dụng được tối ưu cho tình huống Sale cầm máy tính bảng tư vấn trực tiếp: mở nhanh danh mục, cho khách xem hình ảnh và video minh họa, giới thiệu sản phẩm – dịch vụ, sau đó hỗ trợ khách lựa chọn phương án phù hợp ngay trong buổi trao đổi.
 
-Đây là ứng dụng sử dụng nội bộ. Màn hình đăng nhập, dữ liệu danh mục và nội dung media hiện được đóng gói trực tiếp cùng dự án.
+## Cách Sale sử dụng
 
-## Tính năng chính
+1. Mở ứng dụng trên máy tính bảng và chọn nhóm nội dung khách hàng quan tâm.
+2. Trình bày đồ uống, thiết bị, nguyên liệu, khóa học hoặc dịch vụ bằng hình ảnh trực quan.
+3. Mở video, hình ảnh và thông tin chi tiết để khách hàng dễ hình dung phương án thực tế.
+4. Tổng hợp nhu cầu và tiếp tục tư vấn các dịch vụ liên quan trong cùng một ứng dụng.
 
-- Đào tạo pha chế và nội dung khóa học.
-- Danh mục đồ uống, công thức và media minh họa.
+## Giao diện thực tế
+
+### Danh mục dịch vụ
+
+![Danh mục dịch vụ](./docs/screenshots/service-catalog.png)
+
+Màn hình chính chia nội dung thành các nhóm rõ ràng như đào tạo pha chế, danh mục đồ uống, máy pha chế, nguyên liệu, Nitro Soda và thiết kế thi công. Sale có thể chuyển nhanh giữa các nội dung mà không phải tìm kiếm tài liệu rời rạc.
+
+### Danh mục đồ uống
+
+![Danh mục đồ uống](./docs/screenshots/drink-catalog.png)
+
+Các món được trình bày theo dạng thẻ hình ảnh, phù hợp để cùng khách hàng tham khảo ý tưởng menu. Từ đây, Sale có thể mở từng món để giới thiệu cụ thể hơn về sản phẩm.
+
+### Tư vấn Máy Nitro Soda
+
+![Nội dung tư vấn Máy Nitro Soda](./docs/screenshots/nitro-soda.png)
+
+Nội dung kết hợp video và hình ảnh thực tế, giúp khách hàng hiểu trực quan về thiết bị, cách vận hành và khả năng ứng dụng Nitro Soda trong mô hình kinh doanh đồ uống.
+
+### Tham khảo thiết kế và thi công
+
+![Thư viện thiết kế và thi công](./docs/screenshots/design-construction.png)
+
+Thư viện công trình và video mẫu giúp Sale trao đổi với khách hàng về phong cách, quy mô và định hướng không gian quán ngay trong buổi tư vấn.
+
+## Nội dung hỗ trợ tư vấn
+
+- Đào tạo pha chế và các khóa học.
+- Danh mục đồ uống, công thức và hình ảnh minh họa.
 - Máy pha chế, thiết bị và nguyên liệu.
-- Trọn bộ dịch vụ và setup menu.
-- Máy Nitro Soda.
-- Thiết kế và thi công quán.
-- Đánh giá dịch vụ.
-- Giỏ hàng và thanh toán bằng mã QR.
-- Lưu phiên đăng nhập và giỏ hàng bằng AsyncStorage.
+- Dịch vụ setup menu và trọn bộ giải pháp mở quán.
+- Máy Nitro Soda và nội dung hướng dẫn liên quan.
+- Mẫu thiết kế, thi công và công trình tham khảo.
+- Đánh giá dịch vụ, giỏ hàng và thanh toán.
 
-## Công nghệ
+## Giá trị mang lại
 
-| Thành phần | Công nghệ |
+- Giúp Sale mang theo một bộ tài liệu tư vấn thống nhất trên máy tính bảng.
+- Tăng tính trực quan khi trao đổi với khách hàng bằng hình ảnh và video thực tế.
+- Rút ngắn thời gian tìm kiếm thông tin trong quá trình tư vấn.
+- Giúp khách hàng dễ hình dung các sản phẩm, dịch vụ và phương án triển khai.
+- Có thể sử dụng trực tiếp trên trình duyệt hoặc cài như một ứng dụng PWA.
+
+## Vai trò của tôi
+
+Tôi phụ trách toàn bộ quá trình phân tích nhu cầu sử dụng, xây dựng giao diện, tổ chức nội dung, tích hợp chức năng, kiểm thử và triển khai ứng dụng.
+
+ChatGPT được sử dụng như một công cụ hỏi đáp và tham khảo trong quá trình thực hiện; các quyết định triển khai, viết mã, tích hợp, kiểm thử và đưa sản phẩm lên môi trường thực tế do tôi trực tiếp thực hiện.
+
+## Thông tin dự án
+
+| Hạng mục | Thông tin |
 | --- | --- |
-| Nền tảng | Expo 52 |
-| Giao diện | React 18, React Native 0.76, React Native Web |
-| Điều hướng | React Navigation |
-| Lưu trữ phía client | AsyncStorage |
-| Web bundler | Metro |
-| PWA | Web manifest và service worker hook |
-| Triển khai | Vercel |
-
-## Bắt đầu
-
-### Yêu cầu
-
-- Node.js 22.x
-- npm
-
-### Cài đặt
-
-```bash
-git clone https://github.com/kaizy1227/HVCP-PWA-2.git
-cd HVCP-PWA-2
-npm install
-npm run web
-```
-
-Expo sẽ khởi chạy bản web và hiển thị địa chỉ local trong terminal.
-
-## Các lệnh thường dùng
-
-| Lệnh | Công dụng |
-| --- | --- |
-| `npm start` | Khởi chạy Expo development server |
-| `npm run web` | Chạy ứng dụng trên web |
-| `npm run android` | Chạy trên Android |
-| `npm run ios` | Chạy trên iOS |
-| `npm run lint` | Kiểm tra mã nguồn bằng Expo ESLint |
-| `npm test` | Chạy Jest ở chế độ watch |
-| `npm run build:web` | Xuất bản web tĩnh vào `dist/` |
-
-## Cấu trúc dự án
-
-```text
-HVCP-PWA-2/
-├── app/
-│   ├── components/       # Thành phần giao diện dùng chung
-│   ├── context/          # State giỏ hàng
-│   ├── data/             # Dữ liệu danh mục và nội dung
-│   ├── images/           # Ảnh được bundle cùng ứng dụng
-│   ├── models/           # Model dữ liệu
-│   └── screens/          # Các màn hình chính
-├── assets/               # Icon, splash và tài nguyên Expo
-├── public/
-│   ├── icons/            # Icon PWA
-│   ├── images/           # Ảnh public
-│   ├── videos/           # Video public
-│   ├── manifest.json     # Web app manifest
-│   └── service-worker.js # Service worker
-├── scripts/              # Script hậu xử lý bản build
-├── app.json              # Cấu hình Expo
-├── vercel.json           # Cấu hình triển khai Vercel
-└── package.json
-```
-
-## Cập nhật nội dung
-
-| Nội dung | Vị trí |
-| --- | --- |
-| Danh mục dịch vụ, khóa học, đồ uống và sản phẩm | `app/data/dummy-data.js` |
-| Ảnh thẻ ở màn hình dịch vụ | `app/images/ServicesScreen/` |
-| Media theo từng màn hình | `public/images/`, `public/videos/` |
-| Cấu hình PWA | `public/manifest.json`, `public/service-worker.js` |
-| Hậu xử lý manifest sau build | `scripts/inject-manifest.js` |
-
-Ảnh thẻ dịch vụ hiện dùng khung vuông `1080 × 1080`. Khi thay ảnh nên giữ đúng kích thước và kiểm tra lại khả năng đọc tiêu đề ở kích thước thumbnail.
-
-## Build và triển khai
-
-Tạo bản web production:
-
-```bash
-npm run build:web
-```
-
-Bản build được xuất vào thư mục `dist/`. Nhánh `main` được kết nối với Vercel project `hocviencaphehcm`; mỗi commit mới trên nhánh này sẽ kích hoạt deployment production.
-
-- Production: <https://hocviencaphehcm.vercel.app>
-- Build command: `npm run build:web`
-- Output directory: `dist`
-
-## Trạng thái PWA
-
-Ứng dụng đã có manifest, icon cài đặt và service worker hook. Chế độ cache/offline toàn phần chưa được bật; cần kiểm thử riêng trước khi sử dụng ứng dụng trong môi trường mất kết nối.
-
-## Quy ước làm việc
-
-- Không commit khóa truy cập, token hoặc webhook mới vào repository.
-- Tối ưu ảnh và video trước khi đưa vào `public/` để hạn chế dung lượng deployment.
-- Build bản web trước khi đưa thay đổi lên `main`.
-- Chỉ stage và commit các file thuộc đúng phạm vi thay đổi.
+| Đối tượng sử dụng | Đội ngũ Sale Học Viện Cà Phê |
+| Thiết bị chính | Máy tính bảng; đồng thời hỗ trợ Web/PWA |
+| Mục đích | Tư vấn trực tiếp cho khách hàng |
+| Phạm vi | Ứng dụng nội bộ |
+| Công nghệ chính | Expo, React Native, React Native Web |
+| Phiên bản đang hoạt động | [hocviencaphehcm.vercel.app](https://hocviencaphehcm.vercel.app) |
 
 ## Bản quyền
 
-Mã nguồn và nội dung thuộc Học Viện Cà Phê. Dự án được duy trì cho mục đích sử dụng nội bộ; không tự động cấp quyền sao chép, phân phối hoặc tái sử dụng khi chưa có chấp thuận.
-
+Mã nguồn và nội dung thuộc Học Viện Cà Phê. Dự án được duy trì cho mục đích sử dụng nội bộ.
